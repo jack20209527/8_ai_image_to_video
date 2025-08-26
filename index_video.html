@@ -578,12 +578,53 @@
             console.log('【分辨率初始化】完成，默认值 =', nativeSel.value);
         }
 
+        // 绑定模型选择（仿照分辨率下拉）
+        function bindModelSelect(){
+            var btn = document.getElementById('id_btn_model');
+            var text = document.getElementById('id_text_model');
+            var nativeSel = document.getElementById('id_select_model');
+            if(!btn || !text || !nativeSel){ console.warn('【模型初始化】未找到模型相关控件'); return; }
+            var sd = new SelectDropdown();
+            var items = [
+                { title:'Google VEO3',  meta:'高质量 • 稳定表现', dot:'#a78bfa' },
+                { title:'RunWay Gen-4', meta:'高质量 • 创意镜头', dot:'#60a5fa' },
+                { title:'Midjourney',   meta:'风格化 • 表现力强', dot:'#f59e0b' }
+            ];
+            function activeIndex(){
+                var val = nativeSel.value;
+                for (var i=0;i<items.length;i++){ if(items[i].title===val) return i; }
+                // 由于 select 的 value 与 title 不一致（示例值为480p/720p/1080p），这里用显示文本兜底
+                var fallback = text ? text.textContent : '';
+                for (var j=0;j<items.length;j++){ if(items[j].title===fallback) return j; }
+                return 0;
+            }
+            btn.addEventListener('click', function(e){
+                e.stopPropagation();
+                console.log('【模型点击】当前 =', text ? text.textContent : '');
+                sd.show(btn, items, activeIndex(), function(i, it){
+                    // 同步显示文本
+                    if(text) text.textContent = it.title;
+                    // 同步原生 select（为了表单/可访问性），将 option 的选中更新到与 title 同名项
+                    try{
+                        var matched = null;
+                        for (var k=0;k<nativeSel.options.length;k++){
+                            if(nativeSel.options[k].text === it.title){ matched = nativeSel.options[k]; break; }
+                        }
+                        if(matched){ nativeSel.value = matched.value; }
+                    }catch(err){ console.warn('【模型选择】同步原生select失败：', err); }
+                    console.log('【模型变更】新值 =', it.title);
+                });
+            });
+            console.log('【模型初始化】完成，默认 =', text ? text.textContent : '');
+        }
+
         // -------- 页面初始化入口（含兜底）--------
         function init_all_components(){
             try { console.log('【DOM就绪】开始初始化组件'); } catch(_) {}
             try { initSidebarSelection && initSidebarSelection(); } catch(err){ console.error('【初始化错误】侧边栏初始化失败：', err); }
             try { bindTopNavDropdowns && bindTopNavDropdowns(); } catch(err){ console.error('【初始化错误】顶栏初始化失败：', err); }
             try { bindResolutionSelect && bindResolutionSelect(); } catch(err){ console.error('【初始化错误】分辨率初始化失败：', err); }
+            try { bindModelSelect && bindModelSelect(); } catch(err){ console.error('【初始化错误】模型初始化失败：', err); }
             try { console.log('【DOM就绪】初始化结束'); } catch(_) {}
         }
 
