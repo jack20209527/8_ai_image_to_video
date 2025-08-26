@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Image Enhancement Privacy Policy | Secure & Private Photo Upscaler - Flux Kontext AI</title>
+    
+    <meta name="description" content="Discover how Flux Kontext AI protects your privacy while providing free, secure, and watermark-free AI image enhancement and upscaling. Learn about our data protection, temporary storage, and encryption policies for your photos. No registration required.">
+    
+    <meta name="keywords" content="ai image enhancement privacy, free photo upscaler, secure ai photo editor, no watermark, online image privacy, data protection, ai upscaling, photo privacy policy, image security, flux kontext ai">
+
+    <link rel="canonical" href="https://flux-kontext-ai.org/privacy/"/>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Privacy Policy - Free AI Image Enhancement & Secure Photo Upscaler | Flux Kontext AI">
+    <meta property="og:description" content="Your privacy is our priority. Learn how Flux Kontext AI keeps your photos secure and private during free AI enhancement and upscaling. No watermark, no registration, advanced encryption.">
+    <meta property="og:image" content="path/to/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Privacy Policy - Free AI Image Enhancement & Secure Photo Upscaler | Flux Kontext AI">
+    <meta name="twitter:description" content="Your privacy is our priority. Learn how Flux Kontext AI keeps your photos secure and private during free AI enhancement and upscaling. No watermark, no registration, advanced encryption.">
+    <meta name="twitter:image" content="path/to/og-image.jpg">
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Photo HD Converter">
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GNVQX6Z9"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-59GNVQX6Z9');
+    </script>
+    
+    <script src="../tailwind.js"></script>
+    <link rel="stylesheet" href="../tailwind.css">
+    <script src="../js/my-common-util.js"></script>
+    <script src="../js/my-dropdown-menu.js"></script>
+    <script src="../js/my-loading-util.js"></script>
+    <script src="../js/my-local-storage-util.js"></script>
+    <script src="../js/my-login.js"></script>
+    <script src="../js/my-footer.js"></script>
+
+    <style>
+        /* 基础样式 */
+        body {
+            background-color: #0A0A0B;
+            color: #fff;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF3366 0%, #9D34DA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 上传区域样式 */
+        .upload-area {
+            width: 100%;
+            height: 400px;
+            /* 固定高度 */
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .upload-area.drag-over {
+            border-color: #FF3366;
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        /* 预览区域样式 */
+        .preview-container {
+            width: 100%;
+            height: 400px;
+            /* 与上传区域保持相同高度 */
+            position: relative;
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 测试面板样式 */
+        .test-panel {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            padding: 4px;
+            background: linear-gradient(135deg, #FF3366, #9D34DA);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+
+
+</head>
+
+<body class="min-h-screen">
+    <!-- 粒子背景容器 -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none" style="z-index: -1;"></div>
+
+    <!-- 导航栏 -->
+   <!-- 导航栏部分 -->
+   <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-start h-20 items-center">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent">
+                        Photo HD Converter
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="pt-24 pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 页面标题 -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold gradient-text mb-4">Privacy Policy for Free AI Image Enhancement</h1>
+                <p class="text-gray-400">We protect your privacy while you enjoy free, secure, and watermark-free AI photo upscaling and enhancement online.</p>
+            </div>
+
+            <!-- 隐私政策内容 -->
+            <div class="space-y-8 text-gray-300">
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">1. Information We Collect</h2>
+                    <p class="mb-4">When you use Flux Kontext AI's free online image enhancement and upscaling services, we may collect:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Images you upload for AI enhancement or upscaling</li>
+                        <li>Basic usage data (enhancement options, processing time, device/browser info)</li>
+                        <li>IP address for security and anti-abuse</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">2. How We Use Your Information</h2>
+                    <p class="mb-4">We use your information only to:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Process and enhance your images with AI</li>
+                        <li>Improve our free AI enhancement algorithms and user experience</li>
+                        <li>Provide technical support and ensure service security</li>
+                        <li>Prevent abuse and maintain a safe, watermark-free platform</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">3. Image Data Privacy</h2>
+                    <p class="mb-4">Your privacy is our top priority. For all uploaded images:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>All images are processed securely and encrypted in transit</li>
+                        <li>We do not permanently store your original or enhanced images</li>
+                        <li>Images are automatically deleted from our servers after processing</li>
+                        <li>We never share your images or data with third parties</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">4. Data Security</h2>
+                    <p class="mb-4">We use industry-leading security measures to protect your data:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>SSL/TLS encrypted data transmission</li>
+                        <li>Secure, regularly audited server infrastructure</li>
+                        <li>Automatic deletion of all images after enhancement</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">5. Your Rights</h2>
+                    <p class="mb-4">You have the right to:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Request deletion of your data at any time</li>
+                        <li>Access information about your data usage</li>
+                        <li>Opt-out of data collection where applicable</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-white mb-4">6. Contact Us</h2>
+                    <p class="mb-4">If you have any questions about our privacy policy or how we protect your photos, please contact us at:</p>
+                    <p class="ml-4">robert20249527@gmail.com</p>
+                </section>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- 页脚 -->
+    <!-- 通用页脚组件 -->
+    <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+        <!-- footer.js 会将内容注入到这里 -->
+    </footer>
+
+    <script src=".././js/particles.js"></script>
+    <script>
+        // 初始化粒子效果
+        document.addEventListener('DOMContentLoaded', () => {
+            new ParticleSystem();
+        });
+
+        // 文件上传相关
+        const uploadArea = document.querySelector('.upload-area');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const statusModal = document.getElementById('status-modal');
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Image Editor & Photo Enhancer | Free AI Image Upscaler & Restoration - Flux Kontext AI</title>
+    <meta name="description" content="Experience the next generation of AI image editing and enhancement. Instantly upscale, restore, and transform your photos with Flux Kontext AI—free, no watermark, and no registration required. Enjoy character consistency, fast results, and professional-grade image quality.">
+    <meta name="keywords" content="ai image editor, ai photo enhancer, free image upscaler, photo restoration, hd image converter, batch image processing, character consistency, no watermark, online image enhancement, ai photo editing tool">
+
+    <link rel="canonical" href="https://flux-kontext-ai.org/profile/"/>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="My Enhanced Photos Portfolio - Photo HD Converter">
+    <meta property="og:description" content="Browse your collection of AI-enhanced photos. View stunning before & after results of our professional image upscaling technology.">
+    <meta property="og:image" content="path/to/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="My Enhanced Photos Portfolio - Photo HD Converter">
+    <meta name="twitter:description" content="Browse your collection of AI-enhanced photos. View stunning before & after results of our professional image upscaling technology.">
+    <meta name="twitter:image" content="path/to/og-image.jpg">
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="noindex, follow">
+    <meta name="author" content="Photo HD Converter">
+    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GNVQX6Z9"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-59GNVQX6Z9');
+    </script>
+    
+    <script src="../tailwind.js"></script>
+    <link rel="stylesheet" href="../tailwind.css">
+    <script src="../js/my-common-util.js"></script>
+    <script src="../js/my-dropdown-menu.js"></script>
+    <script src="../js/my-loading-util.js"></script>
+    <script src="../js/my-local-storage-util.js"></script>
+    <script src="../js/my-login.js"></script>
+    <script src="../js/my-footer.js"></script>
+
+    <!-- 下拉布局 -->
+    <script>
+
+        let page_number = 1;
+
+        let isLoggedIn = true; // 模拟登录状态
+        const localUser = LocalStorageUtil.getUserObject();
+        if (localUser) {
+            isLoggedIn = true;
+            console.log('本地数据-昵称:', localUser.name);
+            console.log('本地数据-头像:', localUser.head_url);
+            console.log('本地数据-uid:', localUser.uid);
+            console.log('本地数据-project_id:', localUser.project_id);
+            console.log('本地数据-积分:', localUser.jifen);
+            console.log('本地数据-token:', localUser.token);
+            console.log('本地数据-token_expire:', localUser.token_expire);
+
+            // 不能在这直接调用这个获取，因为这个id还没有形成，必须要等DOM加载完成,才能正确获取id
+            // document.getElementById('id_profile_credit').innerText = `Has ${localUser.jifen} credit`;
+
+        } else {
+            console.log('本地数据为空');
+            isLoggedIn = false;
+        }
+
+        function login() {
+
+            window.open('../login', '_self');
+            // 跳转回首页
+            // window.location.href = './index.html';
+        }
+
+        function logout() {
+            console.log('登出============');
+            // 模拟登出操作
+            LocalStorageUtil.removeUserItem();
+            isLoggedIn = false;
+            updateUI();
+            // 跳转回首页
+            window.location.href = '/';
+        }
+
+        function updateUI() {
+            if (localUser) {
+                console.log('存在.....');
+            }
+            console.log('updateUI------: ', isLoggedIn);
+            console.log('updateUI------: ', localUser.jifen);
+
+            document.getElementById('id_profile_credit').innerText = `Has ${localUser.jifen} credit`;
+
+            const loginButton = document.getElementById('btn_login');
+            const userInfo = document.getElementById('user-info');
+            const userName = document.getElementById('user-name');
+            const userAvatar = document.getElementById('user-avatar');
+
+            if (isLoggedIn) {
+                loginButton.classList.add('hidden');
+                userInfo.classList.remove('hidden');
+                userName.textContent = localUser.name; // 可以根据实际情况动态设置
+                userAvatar.src = localUser.head_url// "https://i.pravatar.cc/150?img=32"; // 可以根据实际情况动态设置
+            } else {
+                loginButton.classList.remove('hidden');
+                userInfo.classList.add('hidden');
+            }
+        }
+
+        // 初始化代码
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('[Init] DOM加载完成，开始初始化');
+
+            updateUI()
+
+            DropdownMenuUtil.init('user-avatar', ['Logout'], -10, 18, 80, (item, index) => {
+                logout();
+            });
+
+            // 生成图片
+            ClickUtil.onClick('id_jump_to_create', () => {
+                window.open('../', '_self');
+            });
+        });
+
+        // 一打开网页就要加载图片
+        // get_more_images((images, totalPages, error) => {
+        //     if (error) {
+        //         console.error('获取图片失败:', error);
+        //         return;
+        //     }
+            
+        //     // 处理返回的图片数据
+        //     console.log('获取到的图片:', images);
+        //     console.log('总页数:', totalPages);
+            
+        //     // 这里可以进行其他操作，比如更新UI等
+        //     if (images && images.length > 0) {
+        //         // 处理图片数据
+        //         images.forEach(image => {
+        //             console.log('原图:', image.image_original);
+        //             console.log('生成图:', image.image_generated);
+        //         });
+        //     }
+        // });
+
+    </script>
+
+
+    <style>
+        body {
+            background-color: #0A0A0B;
+            color: #fff;
+        }
+
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .image-card {
+            break-inside: avoid;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 51, 102, 0.3);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF3366 0%, #9D34DA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.1) 0%, rgba(157, 52, 218, 0.1) 100%);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .aspect-w-4 {
+            position: relative;
+            padding-bottom: 75%;
+        }
+
+        .aspect-w-4 > * {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏部分 -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-start h-20 items-center">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent">
+                        AI Photo Enhancement Gallery
+                    </span>
+                </a>
+
+                <!-- 右侧内容：桌面端导航 + 移动端头像和菜单 -->
+                <div class="flex items-center ml-auto">
+                    <!-- 导航链接和按钮 - 桌面端 -->
+                    <div class="flex items-center space-x-8">
+
+                        <button id="id_jump_to_create" class="px-6 py-2 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full text-white text-sm font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300">
+                            Create New
+                        </button>
+
+                        <!-- 桌面端登录状态 -->
+                        <button id="btn_login"
+                            class="glow px-6 py-2.5 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[#FF3366]/20"
+                            onclick="login()">
+                            Login
+                        </button>
+
+                        <div id="user-info" class="hidden flex items-center space-x-3">
+                            <span id="user-name" class="text-white cursor-pointer">Jack Wilson</span>
+                            <img id="user-avatar" class="w-10 h-10 rounded-full ring-2 ring-[#FF3366]/30 cursor-pointer" 
+                                alt="user avatar">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+
+
+    <!-- 个人信息区域 -->
+    <div class="pt-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-center md:text-left mb-8 md:mb-0">
+                    <h1 class="text-3xl font-bold gradient-text mb-2">My Portfolio</h1>
+                    <p id="id_profile_total_images" class="text-gray-400"></p>
+                    <h1 class="text-3xl font-bold gradient-text mb-2">Credit</h1>
+                    <p id="id_profile_credit" class="text-gray-400"></p>
+                </div>
+
+                </div>
+                <!-- <div class="flex space-x-4">
+                    <button class="px-6 py-2 glass rounded-full text-white hover:border-[#FF3366]/30 transition-all duration-300">
+                        按时间排序 ▼
+                    </button>
+                    <button class="px-6 py-2 glass rounded-full text-white hover:border-[#FF3366]/30 transition-all duration-300">
+                        筛选 ▼
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容展示区域 -->
+    <div class="w-full min-h-[calc(100vh-64px-200px)] relative">
+        <!-- 加载状态 -->
+        <div id="loading-state" class="hidden w-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div class="flex flex-col items-center justify-center">
+                <div class="relative">
+                    <div class="w-24 h-24 rounded-full border-t-2 border-b-2 border-[#FF3366] loading-spinner"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <svg class="w-12 h-12 text-[#FF3366]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="mt-6 text-lg text-white/90 font-medium">Loading your work...</p>
+                <p class="mt-2 text-sm text-gray-400">Please wait a moment</p>
+            </div>
+        </div>
+
+        <!-- 空状态 -->
+        <div id="empty-state" class="hidden w-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div class="flex flex-col items-center justify-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-full blur-xl opacity-70 animate-pulse"></div>
+                    <div class="relative w-24 h-24 glass rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="mt-8 text-2xl font-bold text-white">There are no works yet</h3>
+                <p class="mt-4 text-gray-400 text-center max-w-sm">
+                    Start creating your first AI-enhanced image and bring mundane photos to life
+                </p>
+                <button onclick="window.location.href='../'" class="mt-8 px-8 py-3 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] text-white rounded-full font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                    Create Now
+                </button>
+            </div>
+        </div>
+
+        <!-- 图片网格容器 -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="image-grid" class="masonry-grid">
+                <!-- 图片将由 JavaScript 动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 通用页脚组件 -->
+    <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+        <!-- footer.js 会将内容注入到这里 -->
+    </footer>
+
+    <script src=".././js/profile.js"></script>
+
+</body>
+</html> 

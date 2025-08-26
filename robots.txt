@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://flux-kontext-ai.org/sitemap_8.xml
