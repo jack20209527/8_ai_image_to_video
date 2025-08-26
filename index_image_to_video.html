@@ -184,6 +184,69 @@
                             </div>
                         </div>
 
+                        <!-- 宽高比选择（与图片一致的卡片式样式） -->
+                        <div class="mt-6">
+                            <div class="flex items-end justify-between">
+                                <div>
+                                    <h3 class="text-white text-base font-semibold">Aspect Ratio</h3>
+                                    <p class="text-gray-400 text-xs mt-1">Choose the appropriate aspect ratio.</p>
+                                </div>
+                            </div>
+                            <!-- 隐藏域：存储当前选中的宽高比值，默认 9:16 -->
+                            <input id="id_input_aspect_ratio" type="hidden" value="9:16">
+
+                            <!-- 选项卡片容器 -->
+                            <div id="id_group_aspect_ratio" class="mt-3 grid grid-cols-5 gap-3">
+                                <!-- 单个卡片：默认灰色；hover 与选中均为粉色高亮 -->
+                                <button data-value="16:9" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                    <div class="h-full w-full p-3 relative">
+                                        <!-- 预留标签空间，剩余高度中居中展示比例方块 -->
+                                        <div class="h-full flex items-center justify-center pb-6">
+                                            <!-- 16:9 预览块 -->
+                                            <div class="ar-block w-14 h-8 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                        </div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">16:9</div>
+                                    </div>
+                                </button>
+                                <button data-value="9:16" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                    <div class="h-full w-full p-3 relative">
+                                        <div class="h-full flex items-center justify-center pb-6">
+                                            <!-- 9:16 预览块 -->
+                                            <div class="ar-block w-7 h-11 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                        </div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">9:16</div>
+                                    </div>
+                                </button>
+                                <button data-value="4:3" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                    <div class="h-full w-full p-3 relative">
+                                        <div class="h-full flex items-center justify-center pb-6">
+                                            <!-- 4:3 预览块 -->
+                                            <div class="ar-block w-12 h-9 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                        </div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">4:3</div>
+                                    </div>
+                                </button>
+                                <button data-value="3:4" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                    <div class="h-full w-full p-3 relative">
+                                        <div class="h-full flex items-center justify-center pb-6">
+                                            <!-- 3:4 预览块 -->
+                                            <div class="ar-block w-9 h-12 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                        </div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">3:4</div>
+                                    </div>
+                                </button>
+                                <button data-value="1:1" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                    <div class="h-full w-full p-3 relative">
+                                        <div class="h-full flex items-center justify-center pb-6">
+                                            <!-- 1:1 预览块 -->
+                                            <div class="ar-block w-10 h-10 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                        </div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">1:1</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Duration -->
                         <div class="mt-4">
                             <label class="block text-sm text-gray-300 mb-2">时长</label>
@@ -564,6 +627,51 @@
             console.log('【分辨率初始化】完成，默认值 =', nativeSel.value);
         }
 
+        // 绑定宽高比选择
+        function bindAspectRatioSelect(){
+            // 容器、隐藏域
+            var group = document.getElementById('id_group_aspect_ratio');
+            var input = document.getElementById('id_input_aspect_ratio');
+            if(!group || !input){ console.warn('【宽高比初始化】未找到控件'); return; }
+            var items = group.querySelectorAll('.ar-item');
+
+            // 切换选中样式的函数
+            function setActive(target){
+                for(var i=0;i<items.length;i++){
+                    items[i].classList.remove('ar-active','ring-2','ring-pink-500/30','border-pink-500/40');
+                    // 将文字与占位颜色恢复（默认灰色）
+                    var label = items[i].querySelector('.ar-label');
+                    var block = items[i].querySelector('.ar-block');
+                    if(label){ label.classList.remove('text-pink-400','font-semibold'); label.classList.add('text-gray-300'); }
+                    if(block){ block.classList.remove('bg-pink-500'); block.classList.add('bg-white/10'); }
+                }
+                target.classList.add('ar-active','ring-2','ring-pink-500/30','border-pink-500/40');
+                var label2 = target.querySelector('.ar-label');
+                var block2 = target.querySelector('.ar-block');
+                if(label2){ label2.classList.remove('text-gray-300'); label2.classList.add('text-pink-400','font-semibold'); }
+                if(block2){ block2.classList.remove('bg-white/10'); block2.classList.add('bg-pink-500'); }
+            }
+
+            // 绑定点击事件
+            for(var j=0;j<items.length;j++){
+                (function(el){
+                    el.addEventListener('click', function(){
+                        var val = el.getAttribute('data-value');
+                        input.value = val; // 写入隐藏域
+                        setActive(el);    // 切换高亮
+                        console.log('【宽高比变更】新值 =', val);
+                    });
+                })(items[j]);
+            }
+
+            // 根据隐藏域初始值设置一次选中
+            var init = input.value || '9:16';
+            for(var k=0;k<items.length;k++){
+                if(items[k].getAttribute('data-value') === init){ setActive(items[k]); break; }
+            }
+            console.log('【宽高比初始化】完成，默认 =', input.value);
+        }
+
         // 绑定模型选择（仿照分辨率下拉）
         function bindModelSelect(){
             var btn = document.getElementById('id_btn_model');
@@ -610,6 +718,7 @@
             try { initSidebarSelection && initSidebarSelection(); } catch(err){ console.error('【初始化错误】侧边栏初始化失败：', err); }
             try { bindTopNavDropdowns && bindTopNavDropdowns(); } catch(err){ console.error('【初始化错误】顶栏初始化失败：', err); }
             try { bindResolutionSelect && bindResolutionSelect(); } catch(err){ console.error('【初始化错误】分辨率初始化失败：', err); }
+            try { bindAspectRatioSelect && bindAspectRatioSelect(); } catch(err){ console.error('【初始化错误】宽高比初始化失败：', err); }
             try { bindModelSelect && bindModelSelect(); } catch(err){ console.error('【初始化错误】模型初始化失败：', err); }
             try { console.log('【DOM就绪】初始化结束'); } catch(_) {}
         }
