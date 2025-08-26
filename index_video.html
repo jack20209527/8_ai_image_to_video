@@ -79,7 +79,7 @@
             <aside class="h-[calc(100vh-64px)] sticky top-14 bg-[#0b0e13] border border-white/5 rounded-lg overflow-hidden">
                 <div class="h-full overflow-y-auto pr-2 custom-scroll">
                     <div class="p-3">
-                        <div class="text-xs text-gray-400 mb-2">Seedance Model</div>
+                        <div class="text-xs text-gray-400 mb-2">AI Video</div>
                         <nav class="space-y-1">
                             <button class="sb-item">
                                 <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
@@ -97,20 +97,6 @@
                                 <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h10M4 17h7"/></svg>
                                 <span class="sb-text">Multi-Shot Storytelling</span>
                             </button>
-                        </nav>
-                    </div>
-
-                    <div class="px-3 mt-4">
-                        <div class="text-xs text-gray-400 mb-2">Popular Model</div>
-                        <nav class="space-y-1">
-                            <button class="sb-item">
-                                <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 16l5-4-5-4v8z"/><rect x="3" y="4" width="18" height="16" rx="3"/></svg>
-                                <span class="sb-text">Video Effects</span>
-                                <span class="ml-auto text-[10px] bg-red-500/20 text-red-300 rounded px-1.5 py-0.5">New</span>
-                            </button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg><span class="sb-text">Veo3</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span class="sb-text">Hailuo AI</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8v8H8z"/></svg><span class="sb-text">Kling AI</span></button>
                         </nav>
                     </div>
 
@@ -142,7 +128,7 @@
                         <!-- 选择模型 -->
                         <div class="mt-4">
                             <label class="block text-sm text-gray-300 mb-1">选择模型</label>
-                            <div class="relative w-40">
+                            <div class="relative mt-2 w-40">
                                 <!-- 原生 select 保留但隐藏，用于同步值与可访问性 -->
                                 <select id="id_select_model" class="hidden">
                                     <option value="480p" selected>Google VEO3</option>
@@ -162,7 +148,7 @@
                             <label class="block text-sm text-gray-300 mb-1">图像</label>
                         </div>
                         <!-- Upload area -->
-                        <div id="uploadCard" class="mt-4 rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm">
+                        <div id="uploadCard" class="mt-2 rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm">
                             <div class="w-11 h-11 rounded-full bg-[#1b2330] flex items-center justify-center mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 7.5L12 3m0 0L7.5 7.5M12 3v13.5" />
@@ -172,6 +158,12 @@
                             <div class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF, WEBP</div>
                             <input id="fileInput" type="file" accept="image/*" class="hidden" />
                             <button id="chooseFile" class="mt-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm">选择图片</button>
+                        </div>
+
+                        <!-- Prompt -->
+                        <div class="mt-4">
+                            <label class="block text-sm text-gray-300 mb-1">提示词</label>
+                            <textarea id="prompt" rows="10" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
                         </div>
 
                         <!-- 分辨率-选择 -->
@@ -199,12 +191,6 @@
                                 <div id="durationDots" class="flex items-center gap-2"></div>
                                 <div class="text-sm text-gray-400"><span id="durationText">5</span>s</div>
                             </div>
-                        </div>
-
-                        <!-- Prompt -->
-                        <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">提示词</label>
-                            <textarea id="prompt" rows="4" class="w-full px-3 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
                         </div>
 
                         <!-- Actions -->
