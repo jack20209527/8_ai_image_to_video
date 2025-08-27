@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flux Kontext AI | Free AI Text-to-Image Editing with Character Consistency</title>
+    <title>AI Image to Video</title>
     <meta name="description" content="Flux Kontext AI is a revolutionary free AI text-to-image editing tool. Instantly make precise, consistent edits to your photos and digital art using natural language instructions. Enjoy character consistency, fast results, and professional-grade image enhancement. No watermark, no registration required. Try Flux Kontext for creative, accurate, and user-friendly AI image editing.">
     <meta name="keywords" content="photo hd converter, ai image upscaler, image quality enhancer, 4k image upscaler, image resolution enhancer, photo quality improver, ai photo enhancement, upscale image online, free image upscaler, batch image upscaler, image enlarger without quality loss, hd photo converter online, ai image enhancement tool, photo resolution increaser">
     <script src="../tailwind.js"></script>
     <link rel="stylesheet" href="../tailwind.css">
     <link rel="stylesheet" href="../css/home.css">
     <link rel="canonical" href="https://flux-kontext-ai.org"/>
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
     
     <script src="../js/my_nav.js"></script>
     <script src="../js/custom-toast.js"></script>
@@ -56,77 +57,9 @@
 </head>
 
 <body class="bg-[#0f1115] text-gray-200">
-    <!-- Top Navigation -->
-    <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
-        <div class="max-w-[1400px] mx-auto h-full px-4 flex items-center">
-            <div class="flex items-center gap-2 text-xl font-semibold select-none">
-                <span class="text-[#6aa7ff]">Seedance</span>
-                <span class="text-white">AI</span>
-            </div>
-            <!-- 桌面端导航 -->
-            <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
-                <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    AI 视频
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <button id="id_btn_nav_effects" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    视频特效
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <button id="id_btn_nav_image" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    AI 图片
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <button id="id_btn_nav_gallery" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    画廊
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    价格
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-            </nav>
-            <div class="ml-auto flex items-center gap-3">
-                <!-- Avatar -->
-                <button class="ml-1 w-8 h-8 rounded-full bg-gradient-to-r from-[#344151] to-[#1e2633] text-xs text-white flex items-center justify-center">不息</button>
-            
-                <!-- 移动端菜单按钮 - 三条横线 -->
-                <button id="id_btn_mobile_more" class="lg:hidden p-2 rounded-md bg-white/5 hover:bg-white/10" title="菜单">
-                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
 
-            </div>
-        </div>
-        
-        <!-- 移动端菜单 -->
-        <div id="id_mobile_menu" class="lg:hidden absolute top-full left-0 right-0 bg-[#0b0d12]/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
-            <div class="px-4 py-3 space-y-2">
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    AI 视频
-                </button>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    视频特效
-                </button>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    AI 图片
-                </button>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    画廊
-                </button>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    价格
-                </button>
-                <div class="border-t border-white/10 my-2"></div>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    我的创作
-                </button>
-                <button class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
-                    博客
-                </button>
-            </div>
-        </div>
+    <!-- 通用顶部组件 -->
+    <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
     </header>
 
     <!-- Sidebar + Main -->
