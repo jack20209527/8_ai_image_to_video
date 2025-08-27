@@ -32,6 +32,7 @@
                 <span class="text-[#6aa7ff]">Seedance</span>
                 <span class="text-white">AI</span>
             </div>
+            <!-- 桌面端导航 -->
             <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
                 <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
                     AI 视频
@@ -55,6 +56,12 @@
                 </button>
             </nav>
             <div class="ml-auto flex items-center gap-3">
+                <!-- 移动端菜单按钮 -->
+                <button id="id_btn_mobile_more" class="lg:hidden p-2 rounded-md bg-white/5 hover:bg-white/10" title="菜单">
+                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
                 <!-- Language -->
                 <button id="langBtn" class="px-3 h-8 rounded-md bg-white/5 hover:bg-white/10 text-sm flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-300"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.938 9H16.5a15.96 15.96 0 00-1.54-6.236A8.003 8.003 0 0119.938 11zM12 20a13.96 13.96 0 01-2.062-7H14.06A13.96 13.96 0 0112 20zM9.94 11a11.963 11.963 0 011.724-5.52c.11-.196.226-.39.344-.58.118.19.234.384.344.58A11.963 11.963 0 0114.06 11H9.94zM9.04 4.764A15.96 15.96 0 007.5 11H4.062A8.003 8.003 0 019.04 4.764zM4.062 13H7.5a15.96 15.96 0 001.54 6.236A8.003 8.003 0 014.062 13zM14.96 19.236A15.96 15.96 0 0016.5 13h3.438a8.003 8.003 0 01-4.978 6.236z"/></svg>
@@ -64,12 +71,6 @@
                 <button id="themeToggle" class="p-2 rounded-md bg-white/5 hover:bg-white/10" title="切换主题">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-300">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0112 21.75 9.75 9.75 0 1112 2.25c.434 0 .862.028 1.283.083a.75.75 0 01.33 1.35 7.5 7.5 0 008.139 10.819.75.75 0 01.001 1.5z" />
-                    </svg>
-                </button>
-                <!-- 移动端更多按钮 -->
-                <button id="id_btn_mobile_more" class="lg:hidden p-2 rounded-md bg-white/5 hover:bg-white/10" title="更多">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-300">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
                 <!-- Avatar -->
@@ -108,18 +109,18 @@
 
     <!-- Sidebar + Main -->
     <div class="pt-14 max-w-[1400px] mx-auto px-4">
-        <div class="grid grid-cols-[260px,1fr] gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
             <!-- Sidebar -->
             <aside class="hidden lg:block h-[calc(100vh-64px)] sticky top-14 bg-[#0b0e13] border border-white/5 rounded-lg overflow-hidden">
                 <div class="h-full overflow-y-auto pr-2 custom-scroll">
                     <div class="p-3">
                         <div class="text-xs text-gray-400 mb-2">AI Video</div>
                         <nav class="space-y-1">
-                            <button class="sb-item sb-active">
+                            <button class="sb-item">
                                 <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
                                 <span class="sb-text">Text to Video</span>
                             </button>
-                            <button class="sb-item">
+                            <button class="sb-item sb-active">
                                 <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
                                 <span class="sb-text">Image to Video</span>
                             </button>
@@ -160,6 +161,23 @@
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
                             </div>
+                        </div>
+
+                        <!-- Input method -->
+                        <div class="mt-4">
+                            <label class="block text-sm text-gray-300 mb-1">图像</label>
+                        </div>
+                        <!-- Upload area -->
+                        <div id="uploadCard" class="mt-2 rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm">
+                            <div class="w-11 h-11 rounded-full bg-[#1b2330] flex items-center justify-center mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 7.5L12 3m0 0L7.5 7.5M12 3v13.5" />
+                                </svg>
+                            </div>
+                            <div class="text-gray-300">点击上传或拖拽到此处</div>
+                            <div class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF, WEBP</div>
+                            <input id="fileInput" type="file" accept="image/*" class="hidden" />
+                            <button id="chooseFile" class="mt-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm">选择图片</button>
                         </div>
 
                         <!-- Prompt -->
@@ -283,12 +301,13 @@
                             </div>
                         </div>
                     </section>
+                    
                 </div>
 
                 <!-- Veo3 产品介绍 -->
                 <section class="bg-[#0b0e13] border border-white/5 mt-4 rounded-lg p-4 lg:p-6">
-                    <div class="text-center mb-8">
-                        <h2 class="text-xl lg:text-2xl font-bold mb-4">
+                    <div class="text-center mb-6 lg:mb-8">
+                        <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">
                             <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Veo3</span>
                             <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"> 音频视频生成器</span>
                         </h2>
@@ -297,7 +316,7 @@
                         </p>
                     </div>
 
-                    <div class="text-center mb-6 lg:mb-8">
+                    <div class="text-center mb-6">
                         <h3 class="text-lg font-semibold">
                             <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">Veo3 AI</span>
                             <span class="bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent"> 功能亮点</span>
@@ -305,7 +324,7 @@
                     </div>
 
                     <!-- 功能亮点卡片 -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
                         <div class="bg-[#1a1d26] border border-blue-500/20 rounded-xl p-4">
                             <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-3">
                                 <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -432,6 +451,37 @@
             try { console.error('【Promise未处理异常】', e.reason); } catch(_) {}
         });
 
+        // Input method
+        const imUpload = document.getElementById('im-upload');
+        const uploadCard = document.getElementById('uploadCard');
+        
+
+        // Upload
+        const chooseFile = document.getElementById('chooseFile');
+        const fileInput = document.getElementById('fileInput');
+        const previewImg = document.getElementById('previewImg');
+        const previewVideo = document.getElementById('previewVideo');
+        chooseFile.addEventListener('click',()=>fileInput.click());
+        uploadCard.addEventListener('dragover',e=>{e.preventDefault();uploadCard.classList.add('ring-2','ring-blue-500/40')});
+        uploadCard.addEventListener('dragleave',()=>uploadCard.classList.remove('ring-2','ring-blue-500/40'));
+        uploadCard.addEventListener('drop',e=>{e.preventDefault();uploadCard.classList.remove('ring-2','ring-blue-500/40'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);});
+        fileInput.addEventListener('change',e=>{if(e.target.files[0]) handleFile(e.target.files[0]);});
+        function handleFile(file){
+            const url = URL.createObjectURL(file);
+            previewVideo.classList.add('hidden');
+            previewImg.classList.remove('hidden');
+            previewImg.src = url;
+        }
+
+        // Link input
+        const imgUrl = document.getElementById('imgUrl');
+        imgUrl && imgUrl.addEventListener('change',()=>{
+            if(!imgUrl.value) return;
+            previewVideo.classList.add('hidden');
+            previewImg.classList.remove('hidden');
+            previewImg.src = imgUrl.value;
+        });
+
         // Duration dots (5s, 10s, 15s, 30s)
         const durationDots = document.getElementById('durationDots');
         const durationText = document.getElementById('durationText');
@@ -475,7 +525,8 @@
         });
 
         // ------------------------------
-        // Sidebar selection interactions
+        // 侧边栏
+        // 想要让谁显示选中状态，就给谁设置为 sb-active
         // ------------------------------
         function initSidebarSelection(){
             console.log('【侧边栏初始化】开始绑定侧边栏点击事件');
@@ -786,38 +837,16 @@
             console.log('【模型初始化】完成，默认 =', text ? text.textContent : '');
         }
 
-        // -------- 页面初始化入口（含兜底）--------
-        function init_all_components(){
-            try { console.log('【DOM就绪】开始初始化组件'); } catch(_) {}
-            try { initSidebarSelection && initSidebarSelection(); } catch(err){ console.error('【初始化错误】侧边栏初始化失败：', err); }
-            try { bindTopNavDropdowns && bindTopNavDropdowns(); } catch(err){ console.error('【初始化错误】顶栏初始化失败：', err); }
-            try { bindResolutionSelect && bindResolutionSelect(); } catch(err){ console.error('【初始化错误】分辨率初始化失败：', err); }
-            try { bindAspectRatioSelect && bindAspectRatioSelect(); } catch(err){ console.error('【初始化错误】宽高比初始化失败：', err); }
-            try { bindModelSelect && bindModelSelect(); } catch(err){ console.error('【初始化错误】模型初始化失败：', err); }
-            try { bindSidebarRoute && bindSidebarRoute(); } catch(err){ console.error('【初始化错误】侧栏路由失败：', err); }
-            try { bindMobileMenu && bindMobileMenu(); } catch(err){ console.error('【初始化错误】移动端菜单失败：', err); }
-            try { console.log('【DOM就绪】初始化结束'); } catch(_) {}
-        }
-
-        // 优先使用 DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', function(){
-            init_all_components();
-        });
-
-        // 移动端菜单绑定
+        // 绑定移动端菜单
         function bindMobileMenu(){
-            console.log('【移动端菜单】开始初始化移动端菜单');
             var moreBtn = document.getElementById('id_btn_mobile_more');
             var mobileMenu = document.getElementById('id_mobile_menu');
-            
-            if(!moreBtn || !mobileMenu){
-                console.warn('【移动端菜单】未找到移动端菜单相关控件');
-                return;
-            }
+            if(!moreBtn || !mobileMenu){ console.warn('【移动端菜单】未找到相关控件'); return; }
             
             // 切换菜单显示状态
             function toggleMenu(){
-                if(mobileMenu.classList.contains('hidden')){
+                var isHidden = mobileMenu.classList.contains('hidden');
+                if(isHidden){
                     mobileMenu.classList.remove('hidden');
                     console.log('【移动端菜单】显示菜单');
                 } else {
@@ -852,6 +881,24 @@
             
             console.log('【移动端菜单】初始化完成');
         }
+
+        // -------- 页面初始化入口（含兜底）--------
+        function init_all_components(){
+            try { console.log('【DOM就绪】开始初始化组件'); } catch(_) {}
+            try { initSidebarSelection && initSidebarSelection(); } catch(err){ console.error('【初始化错误】侧边栏初始化失败：', err); }
+            try { bindTopNavDropdowns && bindTopNavDropdowns(); } catch(err){ console.error('【初始化错误】顶栏初始化失败：', err); }
+            try { bindResolutionSelect && bindResolutionSelect(); } catch(err){ console.error('【初始化错误】分辨率初始化失败：', err); }
+            try { bindAspectRatioSelect && bindAspectRatioSelect(); } catch(err){ console.error('【初始化错误】宽高比初始化失败：', err); }
+            try { bindModelSelect && bindModelSelect(); } catch(err){ console.error('【初始化错误】模型初始化失败：', err); }
+            try { bindSidebarRoute && bindSidebarRoute(); } catch(err){ console.error('【初始化错误】侧栏路由失败：', err); }
+            try { bindMobileMenu && bindMobileMenu(); } catch(err){ console.error('【初始化错误】移动端菜单失败：', err); }
+            try { console.log('【DOM就绪】初始化结束'); } catch(_) {}
+        }
+
+        // 优先使用 DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function(){
+            init_all_components();
+        });
 
         // 侧栏路由绑定：Text to Video / Image to Video 按钮跳转
         function bindSidebarRoute(){

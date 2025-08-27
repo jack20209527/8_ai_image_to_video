@@ -61,15 +61,17 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
     
         const menuContainer = document.createElement('div');
         menuContainer.id = 'dropdown-menu-container';
-        menuContainer.className = 'fixed mt-1 px-2 bg-[#1a1a1a] rounded-[4px] shadow-lg py-2 border border-[#FF3366]/20 transition-all duration-300';
+        // 外观：深色背景、圆角、轻边框与柔和阴影，符合截图风格
+        menuContainer.className = 'fixed z-[1000] mt-2 p-2 rounded-[8px] bg-[#1a1d26] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.45),inset_0_0_0_1px_rgba(255,255,255,0.03)]';
         menuContainer.style.width = `${options.width}px`;
         menuContainer.style.zIndex = '1000';
     
-        // 创建菜单项
+        // 创建菜单项（仅样式变更，不改逻辑）
         menuItems.forEach((item, index) => {
             const menuItem = document.createElement('a');
             menuItem.href = '#';
-            menuItem.className = 'flex items-center justify-center py-2 text-sm text-white hover:bg-[#FF3366]/20 hover:rounded-[4px] transition-colors';
+            // 外观：较大内边距、圆角、默认浅灰文字；hover 提升亮度；点击短暂红色强调
+            menuItem.className = 'block w-full text-left my-1 px-4 py-3 rounded-[6px] text-[14px] leading-[12px] text-[#e5e7eb] hover:bg-white/10 hover:text-red-500 active:text-red-500 active:bg-white/10 transition-colors';
             menuItem.textContent = item;
     
             menuItem.addEventListener('click', (e) => {
@@ -128,5 +130,9 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
             document.addEventListener('click', this.outsideClickHandler);
         }, 0);
     }
+
+    // 用户点击后主动关闭
+    static hide(){ try { DropdownMenuUtil.getInstance().hide(); } catch(_) {} }
+    
 }
 

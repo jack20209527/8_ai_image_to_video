@@ -246,7 +246,7 @@
             <!-- 右侧内容：桌面端导航 + 移动端头像和菜单 -->
             <div class="flex items-center ml-auto">
                 <!-- 导航链接和按钮 - 桌面端 -->
-                <div class="hidden md:flex items-center space-x-5">
+                <div class="hidden lg:flex items-center space-x-5">
                     <a id="my_record" data-lan="nav.my_work"
                         class="text-gray-300 cursor-pointer hover:text-white transition-colors">My Works</a>
 
@@ -283,7 +283,7 @@
                 </div>
 
                 <!-- 移动端头像和用户信息 + 菜单按钮 -->
-                <div class="flex md:hidden items-center">
+                <div class="flex lg:hidden items-center">
                     <!-- 未登录状态 -->
                     <button id="btn_login_mobile" data-lan="nav.btn_login"
                         class="glow px-4 py-2 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[#FF3366]/20 mr-3"
@@ -298,9 +298,9 @@
                             alt="用户头像">
                     </div>
 
-                    <!-- 移动端菜单按钮 -->
-                    <button id="mobile-menu-button" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- 移动端更多按钮 -->
+                    <button id="id_btn_mobile_more" class="p-2 rounded-md bg-white/5 hover:bg-white/10" title="更多">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-300">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </button>
@@ -309,15 +309,22 @@
         </div>
 
         <!-- 移动端菜单 -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 bg-black/20 backdrop-blur-lg rounded-lg mt-2">
-                <a id="mobile-my-record"  data-lan="nav.my_works"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10 cursor-pointer">
+        <div id="id_mobile_menu" class="lg:hidden absolute top-full left-0 right-0 bg-[#0b0d12]/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
+            <div class="px-4 py-3 space-y-2">
+                <a id="mobile-my-record" data-lan="nav.my_works"
+                    class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
                     My Works
                 </a>
                 <a href="#pricing" id="mobile-pricing" data-lan="nav.price"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10 cursor-pointer">
+                    class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
                     Price
+                </a>
+                <div class="border-t border-white/10 my-2"></div>
+                <a href="#pricing" data-lan="nav.price_card" class="w-full text-left px-3 py-2 rounded-md hover:bg-white/5 text-sm text-gray-300 hover:text-white transition">
+                    <div class="flex items-center space-x-2">
+                        <img src="./img/credit_cart.jpg" alt="credit_cart" class="w-4 h-4">
+                        <span id="mobile-credit-cart-text" class="text-gray-300 hover:text-white transition-colors">0</span>
+                    </div>
                 </a>
                 <!-- <button id="mobile-language-btn"
                     class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/10 flex items-center justify-between">
@@ -358,16 +365,36 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     // 获取必要的DOM元素
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('id_btn_mobile_more');
+    const mobileMenu = document.getElementById('id_mobile_menu');
     // const languageModal = document.getElementById('language-modal');
     // const mobileLanguageBtn = document.getElementById('mobile-language-btn');
     // const closeLanguageModal = document.getElementById('close-language-modal');
     // const currentLanguageText = document.getElementById('mobile-current-language');
     
     // 移动端菜单按钮点击事件
-    mobileMenuButton.addEventListener('click', () => {
+    mobileMenuButton.addEventListener('click', (e) => {
+        e.stopPropagation();
         mobileMenu.classList.toggle('hidden');
+        console.log('【移动端菜单】切换菜单显示状态');
+    });
+
+    // 点击菜单外部关闭菜单
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】点击外部关闭菜单');
+            }
+        }
+    });
+
+    // 监听窗口大小变化，在大屏幕时自动隐藏菜单
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            console.log('【移动端菜单】窗口变大，自动隐藏菜单');
+        }
     });
 
     // 打开语言选择弹窗
@@ -408,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userInfo = document.getElementById('user-info-mobile');
         const userName = document.getElementById('user-name-mobile');
         const userAvatar = document.getElementById('user-avatar-mobile');
+        const mobileCreditCartText = document.getElementById('mobile-credit-cart-text');
 
         if (isLoggedIn) {
             loginButton.classList.add('hidden');
@@ -415,10 +443,20 @@ document.addEventListener('DOMContentLoaded', () => {
             userInfo.classList.add('flex');
             userName.textContent = localUser.name;
             userAvatar.src = localUser.head_url;
+            
+            // 同步积分到移动端
+            if (mobileCreditCartText) {
+                mobileCreditCartText.textContent = localUser.credits || '0';
+            }
         } else {
             loginButton.classList.remove('hidden');
             userInfo.classList.add('hidden');
             userInfo.classList.remove('flex');
+            
+            // 重置移动端积分
+            if (mobileCreditCartText) {
+                mobileCreditCartText.textContent = '0';
+            }
         }
     }
 
@@ -440,6 +478,59 @@ document.addEventListener('DOMContentLoaded', () => {
             login();
         }
     });
+
+    // 移动端菜单绑定
+    function bindMobileMenu(){
+        console.log('【移动端菜单】开始初始化移动端菜单');
+        var moreBtn = document.getElementById('id_btn_mobile_more');
+        var mobileMenu = document.getElementById('id_mobile_menu');
+        
+        if(!moreBtn || !mobileMenu){
+            console.warn('【移动端菜单】未找到移动端菜单相关控件');
+            return;
+        }
+        
+        // 切换菜单显示状态
+        function toggleMenu(){
+            var isHidden = mobileMenu.classList.contains('hidden');
+            if(isHidden){
+                mobileMenu.classList.remove('hidden');
+                console.log('【移动端菜单】显示菜单');
+            } else {
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】隐藏菜单');
+            }
+        }
+        
+        // 绑定更多按钮点击事件
+        moreBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            toggleMenu();
+        });
+        
+        // 点击菜单外部关闭菜单
+        document.addEventListener('click', function(e){
+            if(!mobileMenu.contains(e.target) && !moreBtn.contains(e.target)){
+                if(!mobileMenu.classList.contains('hidden')){
+                    mobileMenu.classList.add('hidden');
+                    console.log('【移动端菜单】点击外部关闭菜单');
+                }
+            }
+        });
+        
+        // 监听窗口大小变化，在大屏幕时自动隐藏菜单
+        window.addEventListener('resize', function(){
+            if(window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')){
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】窗口变大，自动隐藏菜单');
+            }
+        });
+        
+        console.log('【移动端菜单】初始化完成');
+    }
+
+    // 调用移动端菜单绑定函数
+    bindMobileMenu();
 });
 </script>
 
@@ -455,9 +546,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <!-- 主要内容区域 - 左右两栏布局 -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex flex-col xl:flex-row gap-8">
                 <!-- 左侧输入区域 -->
-                <div class="w-full lg:w-1/2">
+                <div class="w-full xl:w-1/2">
                     <!-- 选项卡切换 -->
                     <div class="flex justify-center mb-6">
                         <div class="glass rounded-full p-1 inline-flex">
@@ -650,7 +741,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
                 <!-- 右侧视频展示区域 -->
-                <div class="w-full lg:w-1/2 mt-6 lg:mt-0">
+                <div class="w-full xl:w-1/2 mt-6 xl:mt-0">
                     <div class="glass rounded-xl h-full min-h-[350px] sm:min-h-[400px] lg:min-h-[500px] relative overflow-hidden">
                         <div class="absolute top-3 left-3 px-3 py-1 bg-black/50 rounded-full text-sm z-10">AI 视频生成演示</div>
                         
