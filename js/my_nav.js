@@ -1,33 +1,30 @@
-// 顶部导航栏和移动菜单
+// 顶部导航栏、移动适配菜单、左侧边栏
 
-// 页脚布局内容
+// 页面顶部导航栏布局内容
 const nav_header_content = `
         <div class="max-w-[1400px] mx-auto h-full px-4 flex items-center">
             <div class="flex items-center gap-2 text-xl font-semibold select-none">
                 <span class="text-[#6aa7ff]">Seedance</span>
                 <span class="text-white">AI</span>
             </div>
-            <!-- 桌面端导航 -->
+            <!-- 正常的顶部导航 -->
             <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
-                <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
+                <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     AI 视频
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <button id="id_btn_nav_image" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
+                <button id="id_btn_nav_image" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     AI 图片
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <button id="id_btn_nav_effects" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
-                    视频特效
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <button id="id_btn_nav_gallery" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
+                <button id="id_btn_nav_see" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     画廊
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-white cursor-pointer">
+                <button id="id_btn_nav_blog" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
+                    博客
+                </button>
+                <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     价格
-                    <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
             </nav>
             <div class="ml-auto flex items-center gap-3">
@@ -75,11 +72,6 @@ const nav_header_content = `
                     <div class="text-[12px] tracking-wide text-gray-400 mb-2">Popular Model</div>
                     <nav class="space-y-1">
                         <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
-                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.39 4.84L20 8l-4 3.9L17 18l-5-2.6L7 18l1-6.1L4 8l5.61-1.16L12 2z"/></svg>
-                            <span>视频特效</span>
-                            <span class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white">New</span>
-                        </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
                             <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
                             <span>Veo3</span>
                         </button>
@@ -97,45 +89,207 @@ const nav_header_content = `
         </div>
 `;
 
+// 左侧边栏布局内容，通用的
+const left_sidebar_content = `
+        <div class="h-full overflow-y-auto pr-2 ">
+            <div class="p-3">
+                <div class="text-xs text-gray-400 mb-2">AI Video</div>
+                <nav class="space-y-2">
+                    <button id="id_btn_nav_text_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
+                        <span class="text-[0.92rem]">Text to Video</span>
+                    </button>
+                    <button id="id_btn_nav_image_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-red-500 bg-[#18202b] outline outline-1 outline-blue-500/35">
+                        <svg class="w-[18px] h-[18px] text-red-500 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+                        <span class="text-[0.92rem]">Image to Video</span>
+                    </button>
+                </nav>
+            </div>
 
+            <div class="px-3 mt-4">
+                <div class="text-xs text-gray-400 mb-2">AI Image</div>
+                <nav class="space-y-2">
+                    <button id="id_btn_nav_text_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
+                        <span class="text-[0.92rem]">Text to Image</span>
+                    </button>
+                    <button id="id_btn_nav_image_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                        <span class="text-[0.92rem]">Image to Image</span>
+                    </button>
+                </nav>
+            </div>
+
+        </div>
+`;
 
 // 包括左侧和顶部导航的点击
 // path_level: ../ 或者 ./
-function init_nav_event(path_level){
+// left_sidebar_index: 按钮的序号，从上往下，从0开始
+function init_nav_event(path_level, left_sidebar_index){
 
     document.addEventListener('DOMContentLoaded', () => {
         console.log('[Init] DOM加载完成，开始设置 --- 导航条的监听事件 {path_level: ' + path_level + '}');
 
-        const headerElement = document.querySelector('header');
-        if (headerElement) {
-            headerElement.innerHTML = nav_header_content;
+        // ----------------------------- 顶部 添加内容 -----------------------------
+        // 添加 顶部导航栏
+        const topHeaderElement = document.querySelector('header');
+        if (topHeaderElement) {
+            topHeaderElement.innerHTML = nav_header_content;
+        }
+
+        // 添加 左侧边栏 布局内容
+        const leftHeaderElement = document.querySelector('aside');
+        if (leftHeaderElement) {
+            leftHeaderElement.innerHTML = left_sidebar_content;
         }
 
 
-        // 点击导航栏 视频 
+        // ----------------------------- 顶部导航栏 - 设置点击 -----------------------------
+        // 工具：箭头旋转控制
+        function rotateArrow(btnId, toOpen){
+            try{
+                var btn = document.getElementById(btnId);
+                if(!btn) return;
+                var svg = btn.querySelector('svg');
+                if(!svg) return;
+                svg.classList.add('transition-transform','duration-8900');
+                if(toOpen){ svg.classList.add('rotate-180'); }
+                else { svg.classList.remove('rotate-180'); }
+            }catch(_){}
+        }
+
+        // 点击顶部导航栏 AI视频 
         DropdownMenuUtil.init('id_btn_nav_video', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
-        });
-        
-        //左侧导航: 跳转到 文生视频页面
-        ClickUtil.onClick('id_btn_nav_text_to_video', () => {
-            console.log(`选择了: id_btn_nav_text_to_video`);
+            // 关闭时箭头回位
+        }, () => { rotateArrow('id_btn_nav_video', false); });
+
+        document.getElementById('id_btn_nav_video')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_video', true); });
+
+        // 点击顶部导航栏 AI图片 
+        DropdownMenuUtil.init('id_btn_nav_image', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
+            console.log(`选择了: ${item}, 索引: ${index}  `);
+            DropdownMenuUtil.hide();
+        }, () => { rotateArrow('id_btn_nav_image', false); });
+        document.getElementById('id_btn_nav_image')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_image', true); });
+
+        // 点击顶部导航栏 图片和视频组
+        ClickUtil.onClick('id_btn_nav_see', () => {
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
-        //左侧导航: 跳转到 图生视频页面
+        ClickUtil.onClick('id_btn_nav_blog', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+        ClickUtil.onClick('id_btn_nav_pricing', () => {
+            // 显示 价格弹窗
+        });
+
+        // ----------------------------- 左侧导航栏 -----------------------------
+        //点击左侧导航: 文生视频
+        ClickUtil.onClick('id_btn_nav_text_to_video', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+        //点击左侧导航: 图生视频
         ClickUtil.onClick('id_btn_nav_image_to_video', () => {
-            console.log(`选择了: id_btn_nav_image_to_video`);
             window.location.href = path_level + "image-to-video/index.html";
         });
+
+        //点击左侧导航: 文生图
+        ClickUtil.onClick('id_btn_nav_text_to_image', () => {
+            window.location.href = path_level + "text-to-image/index.html"; // ../
+        });
+        //点击左侧导航: 图生图
+        ClickUtil.onClick('id_btn_nav_image_to_image', () => {
+            window.location.href = path_level + "image-to-image/index.html";
+        });
+
         // 移动端菜单
         bindMobileMenu ();
 
+        set_left_sidebar_active (left_sidebar_index);
 
     });
 }
 
-// 绑定移动端菜单
+function set_left_sidebar_active(left_sidebar_index){
+    try{
+        // 收集左侧边栏内的所有按钮（按从上到下顺序）
+        var aside = document.querySelector('aside');
+        if(!aside) return;
+        var btnList = aside.querySelectorAll('nav button');
+        if(!btnList || btnList.length===0) return;
+
+        // 若未传入序号，则不主动改动现有默认选中（保留初始模板中的选中态）
+        var hasIndex = (typeof left_sidebar_index === 'number') && left_sidebar_index >= 0 && left_sidebar_index < btnList.length;
+        if(!hasIndex){
+            // 仍需确保 hover 时图标跟随文字变红（为所有未绑定项补齐hover绑定）
+            for(var k=0;k<btnList.length;k++){
+                bindHoverIconColor(btnList[k]);
+            }
+            return;
+        }
+
+        // 统一的选中与未选中样式（基于 Tailwind）
+        var activeBtnClasses = ['text-red-500','bg-[#18202b]','outline','outline-1','outline-blue-500/35'];
+        var inactiveBtnBase = ['flex','items-center','gap-2','w-full','px-3','py-2','rounded-md'];
+        var inactiveColorClasses = ['text-slate-300','hover:bg-white/5','hover:text-red-500'];
+
+        // hover 时图标颜色跟随
+        function bindHoverIconColor(btn){
+            if(btn.getAttribute('data-hover-bound') === '1') return;
+            btn.setAttribute('data-hover-bound','1');
+            btn.addEventListener('mouseenter', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.add('text-red-500'); } }catch(_){} });
+            btn.addEventListener('mouseleave', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.remove('text-red-500'); s.classList.add('text-slate-400'); } }catch(_){} });
+        }
+
+        // 清除所有按钮的选中样式，并恢复未选中配色
+        for(var i=0;i<btnList.length;i++){
+            var btn = btnList[i];
+            // 去掉可能存在的选中样式
+            activeBtnClasses.forEach(function(c){ btn.classList.remove(c); });
+            // 确保基础布局类存在
+            inactiveBtnBase.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+            // 恢复未选中配色
+            inactiveColorClasses.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+
+            // 图标颜色：未选中为 text-slate-400
+            try{
+                var svg = btn.querySelector('svg');
+                if(svg){
+                    svg.classList.remove('text-red-500');
+                    if(!svg.classList.contains('text-slate-400')) svg.classList.add('text-slate-400');
+                }
+            }catch(_){ }
+
+            // 绑定 hover 时图标变红
+            bindHoverIconColor(btn);
+        }
+
+        // 设置目标按钮为选中态
+        var target = btnList[left_sidebar_index];
+        if(target){
+            // 去掉未选中配色中的文字色，避免冲突
+            target.classList.remove('text-slate-300');
+            // 添加选中配色
+            activeBtnClasses.forEach(function(c){ if(!target.classList.contains(c)) target.classList.add(c); });
+
+            // 图标设为 red-500（选中态常驻）
+            try{
+                var svg2 = target.querySelector('svg');
+                if(svg2){
+                    svg2.classList.remove('text-slate-400');
+                    if(!svg2.classList.contains('text-red-500')) svg2.classList.add('text-red-500');
+                }
+            }catch(_){ }
+        }
+    }catch(err){
+        console.error('[左侧选中态] 设置失败: ', err);
+    }
+}
+
+// 绑定移动端菜单 - 内部函数
 function bindMobileMenu(){
     var moreBtn = document.getElementById('id_btn_mobile_more');
     var mobileMenu = document.getElementById('id_mobile_menu');

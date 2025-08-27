@@ -24,75 +24,49 @@
     
     <script src="../js/my-lan-config.js"></script>
     <script src="../js/my-lan-manager.js"></script>
-    <!-- <script src="../js/common-ui-components.js"></script> -->
 
-        <!-- 下拉布局 -->
-        <script>
-            // 设置导航条的按钮的点击事件
-            init_nav_event ("../");
+    <!-- 设置登录、初始化顶部导航、侧边栏 -->
+    <script>
+        // 设置导航条的按钮的点击事件
+        init_nav_event ("../", 1);
 
-            // 以下是自身页面的点击
-            document.addEventListener('DOMContentLoaded', () => {
-    
-                // 选择模型 
-                DropdownMenuUtil.init('id_btn_model', ['Google VOE3', 'Vidu', 'RunWay Gen-4'], 0, 1, 220, (item, index) => {
-                    console.log(`选择了: ${item}, 索引: ${index}  `);
-                    var text = document.getElementById('id_text_model');
-                    text.innerHTML = item;
-                    DropdownMenuUtil.hide();
-                });
+        // 以下是自身页面的点击
+        document.addEventListener('DOMContentLoaded', () => {
 
-                // 选择模分辨率
-                DropdownMenuUtil.init('id_btn_resolution', ['480p', '960p', '1024p'], 0, 1, 220, (item, index) => {
-                    console.log(`选择了: ${item}, 索引: ${index}  `);
-                    var text = document.getElementById('id_text_resolution');
-                    text.innerHTML = item;
-                    DropdownMenuUtil.hide();
-                });
-    
-                
+            // 选择模型 
+            DropdownMenuUtil.init('id_btn_model', ['Google VOE3', 'Vidu', 'RunWay Gen-4'], 0, 1, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                var text = document.getElementById('id_text_model');
+                text.innerHTML = item;
+                DropdownMenuUtil.hide();
             });
-        </script>
+
+            // 选择模分辨率
+            DropdownMenuUtil.init('id_btn_resolution', ['480p', '960p', '1024p'], 0, 1, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                var text = document.getElementById('id_text_resolution');
+                text.innerHTML = item;
+                DropdownMenuUtil.hide();
+            });
+
+            
+        });
+    </script>
 
 </head>
 
 <body class="bg-[#0f1115] text-gray-200">
 
-    <!-- 通用顶部组件 -->
+    <!-- 通用顶部导航组件 -->
     <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
     </header>
 
     <!-- Sidebar + Main -->
     <div class="pt-14 max-w-[1400px] mx-auto px-4">
         <div class="grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
-            <!-- Sidebar -->
+
+            <!-- 通用侧边栏组件 -->
             <aside class="hidden lg:block h-[calc(100vh-64px)] sticky top-14 bg-[#0b0e13] border border-white/5 rounded-lg overflow-hidden">
-                <div class="h-full overflow-y-auto pr-2 custom-scroll">
-                    <div class="p-3">
-                        <div class="text-xs text-gray-400 mb-2">AI Video</div>
-                        <nav class="space-y-1">
-                            <button id="id_btn_nav_text_to_video" class="sb-item">
-                                <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
-                                <span class="sb-text">Text to Video</span>
-                            </button>
-                            <button id="id_btn_nav_image_to_video" class="sb-item sb-active">
-                                <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
-                                <span class="sb-text">Image to Video</span>
-                            </button>
-                        </nav>
-                    </div>
-
-                    <div class="px-3 mt-4">
-                        <div class="text-xs text-gray-400 mb-2">AI Image</div>
-                        <nav class="space-y-1">
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg><span class="sb-text">
-                                Text to Image</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg><span class="sb-text">
-                                Image to Image</span></button>
-                        </nav>
-                    </div>
-
-                </div>
             </aside>
 
             <!-- Main -->
@@ -359,35 +333,6 @@
         </div>
     </div>
 
-    <style>
-        .custom-scroll::-webkit-scrollbar{width:10px}
-        .custom-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:8px}
-        .custom-scroll::-webkit-scrollbar-track{background:transparent}
-        /* Sidebar unified styles */
-        .sb-item{display:flex;align-items:center;gap:.5rem;width:100%;padding:.5rem .75rem;border-radius:.5rem;color:#cbd5e1}
-        .sb-item:hover{background:rgba(255,255,255,.05);color:#e5e7eb}
-        .sb-item .sb-text{font-size:.92rem}
-        .sb-ico{width:18px;height:18px;color:#9aa4b2}
-        .sb-active{background:#18202b;color:#fff;outline:1px solid rgba(59,130,246,.35)}
-        .sb-active .sb-ico{color:#9ec1ff}
- 
-         /* Dropdown menu (通用弹窗) */
-         .dd-menu{position:fixed;z-index:60;background:#1a1d26;border-radius:14px;border:1px solid rgba(255,255,255,.06);box-shadow:0 20px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);min-width:220px;padding:10px}
-         .dd-menu .dd-item{display:flex;align-items:center;border-radius:10px;color:#e5e7eb;font-size:16px;line-height:22px;padding:10px 14px;cursor:pointer}
-         .dd-menu .dd-item:hover{background:rgba(255,255,255,.06)}
-         .dd-menu .dd-item.dd-active{background:rgba(255,255,255,.08);color:#ff3d75}
-         .dd-menu .dd-sep{height:1px;background:rgba(255,255,255,.06);margin:6px 4px}
-
-        /* Select style dropdown (跟随触发宽度) */
-        .sd-menu{position:fixed;z-index:60;background:linear-gradient(180deg,#2a2a2f 0%,#232325 100%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.03);padding:8px;opacity:0;transform:translateY(-6px) scale(.98);transition:opacity .16s ease, transform .18s ease}
-        .sd-menu.show{opacity:1;transform:translateY(0) scale(1)}
-        .sd-menu .sd-item{display:flex;align-items:center;gap:10px;border-radius:10px;color:#e6e6e8;font-size:16px;line-height:22px;padding:10px 12px;cursor:pointer;height:42px;margin:4px 0}
-        .sd-menu .sd-item:hover{background:rgba(255,255,255,.07)}
-        .sd-menu .sd-item .sd-meta{display:none}
-        .sd-menu .sd-item .dot{width:10px;height:10px;border-radius:9999px}
-        .sd-menu .sd-item.sd-active{background:rgba(255,255,255,.1)}
-        .sd-menu .sd-check{margin-left:auto;color:#e6e6e8}
-    </style>
 
     <script>
         console.log('开始执行js代码 ....');

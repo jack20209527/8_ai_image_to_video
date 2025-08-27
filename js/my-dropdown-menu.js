@@ -9,6 +9,7 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
     constructor() {
         this.activeMenu = null;
         this.outsideClickHandler = null;
+        this.onHideCallback = null; // 弹窗关闭回调
     }
 
     static instance = null;
@@ -23,7 +24,7 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
     /**
      * 初始化下拉菜单
      */
-    static init(buttonId, menuItems, offsetX = 0, offsetY = 4, width = 192, onSelect = null) {
+    static init(buttonId, menuItems, offsetX = 0, offsetY = 4, width = 192, onSelect = null, onHide = null) {
         // 移除 DOMContentLoaded 事件监听
         const button = document.getElementById(buttonId);
         if (button) {
@@ -34,7 +35,8 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
                     offsetX,
                     offsetY,
                     width,
-                    onSelect
+                    onSelect,
+                    onHide
                 });
             });
         } else {
@@ -55,9 +57,11 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
             offsetX: 0,
             offsetY: 4,
             width: 192,
-            onSelect: null
+            onSelect: null,
+            onHide: null
         };
         options = { ...defaultOptions, ...options };
+        this.onHideCallback = (typeof options.onHide === 'function') ? options.onHide : null;
     
         const menuContainer = document.createElement('div');
         menuContainer.id = 'dropdown-menu-container';
@@ -111,6 +115,9 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
                 document.removeEventListener('click', this.outsideClickHandler);
                 this.outsideClickHandler = null;
             }
+            // 触发 onHide 回调
+            try { if (typeof this.onHideCallback === 'function') this.onHideCallback(); } catch(_) {}
+            this.onHideCallback = null;
 
         }
     }
