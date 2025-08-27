@@ -89,34 +89,19 @@
                                 <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
                                 <span class="sb-text">Image to Video</span>
                             </button>
-                            <button class="sb-item">
-                                <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/></svg>
-                                <span class="sb-text">Animation</span>
-                            </button>
-                            <button class="sb-item">
-                                <svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h10M4 17h7"/></svg>
-                                <span class="sb-text">Multi-Shot Storytelling</span>
-                            </button>
                         </nav>
                     </div>
 
                     <div class="px-3 mt-4">
                         <div class="text-xs text-gray-400 mb-2">AI Image</div>
                         <nav class="space-y-1">
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg><span class="sb-text">文字生成图片</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg><span class="sb-text">Flux Kontext</span></button>
+                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg><span class="sb-text">
+                                Text to Image</span></button>
+                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg><span class="sb-text">
+                                Image to Image</span></button>
                         </nav>
                     </div>
 
-                    <div class="px-3 mt-4 pb-4">
-                        <div class="text-xs text-gray-400 mb-2">User Menus</div>
-                        <nav class="space-y-1">
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M6 20a6 6 0 0112 0"/></svg><span class="sb-text">积分</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M7 4v6M4 15h16M17 12v6"/></svg><span class="sb-text">我的创作</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 12a5 5 0 100-10 5 5 0 000 10z"/><path d="M20 21a8 8 0 10-16 0"/></svg><span class="sb-text">个人资料</span></button>
-                            <button class="sb-item"><svg class="sb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l-7-7 1.41-1.41L11 16.17l7.59-7.59L20 10l-8 10z"/></svg><span class="sb-text">功能建议</span></button>
-                        </nav>
-                    </div>
                 </div>
             </aside>
 
@@ -401,7 +386,8 @@
         });
 
         // ------------------------------
-        // Sidebar selection interactions
+        // 侧边栏
+        // 想要让谁显示选中状态，就给谁设置为 sb-active
         // ------------------------------
         function initSidebarSelection(){
             console.log('【侧边栏初始化】开始绑定侧边栏点击事件');
