@@ -476,6 +476,7 @@
             // 生成过程中禁用按钮
             setGenerateButtonState(false);
             startGenerate  (); // 开始真正生成
+            
             // simulate().then(function(res){
             //     // 到点后再切换，防止外部其它逻辑提前把 loader 隐藏
             //     if(res.ok){ 
@@ -494,62 +495,31 @@
         });
 
         async function startGenerate() {
-            if (isLoggedIn) {
-                               // If logged in, do nothing, continue execution
-            } else {
-                login();
-                return;
-            }
+            // 仅图片生成视频面板
+            if (!isLoggedIn) { login(); return; }
 
             try {
-                // 判断当前是哪个面板
-                const isTextToVideo = !document.getElementById('text-to-video-panel').classList.contains('hidden');
-                
-                let prompt, hasFile = false, aspectRatio, resolution, duration;
-                
-                if (isTextToVideo) {
-                    // 文本生成视频
-                    prompt = document.getElementById('video-prompt').value || '';
-                    aspectRatio = document.getElementById('aspect-ratio').value;
-                    resolution = document.getElementById('resolution').value;
-                    duration = document.getElementById('video-duration').value;
-                } else {
-                    // 图片生成视频
-                    hasFile = fileInput && fileInput.files && fileInput.files[0];
-                    prompt = document.getElementById('image-video-prompt').value || '';
-                    aspectRatio = document.getElementById('img-aspect-ratio').value;
-                    resolution = document.getElementById('img-resolution').value;
-                    duration = document.getElementById('img-video-duration').value;
-                    
-                    if (!hasFile) {
-                        alert('Please upload a reference image');
-                        return;
-                    }
-                }
-                
-                if (!prompt) {
-                    alert('Please enter a prompt');
-                    return;
-                }
-                // prompt = "Create an ASMR video with close-up shots of glass fruits—blood orange with reddish interior, lemon with crystalline interior, green apple-like fruit, red glass raspberry, and dragon fruit with pinkish-red skin and white interior—sliced slowly on a wooden cutting board. Use macro camera views, soft lighting, and ASMR audio like knife-cutting glass sounds and subtle kitchen ambiance. No text or subtitles. This is a reasoned guess based on the video's description, as the exact prompt isn't available.Shot in extreme macro perspective, a flawless, crystal-clear, and detail-rich [insert the object you want to cut, e.g., glass strawberry] rests on a wooden cutting board bathed in warm lighting. The camera gently pushes and pulls, capturing the rainbow-like glimmers and prismatic refractions on the surface of the [insert object, e.g., glass strawberry]. The angle alternates between top-down and a 45-degree side view, freezing the moment the knife slices into the fragile";
-                // prompt = "Cinematic, documentary-style video. A group of massive, heavily bearded Viking warriors, clad in leather, fur, and horned helmets, wander through a brightly lit, modern IKEA store. They look utterly bewildered and out of place.\nDynamic shots: One Viking tries to decipher the assembly instructions for a \"BILLY\" bookcase as if it were an ancient runestone. Another tests the durability of a \"POÄNG\" armchair by cautiously sitting in it, causing it to creak alarmingly. A third, massive Viking stands in the kitchen section, fascinated by a refrigerator's automatic ice dispenser, catching ice cubes in his helmet with childlike wonder.\nThe climax is them discovering the IKEA food court. They bypass the meatballs and instead try to pay for a hotdog with a single, large, ancient gold coin, causing chaos at the register. The scene is shot with a slightly comedic, Wes Anderson-style symmetry.\nAudio: The distant, sterile hum of the department store, mixed with the Vikings' deep, guttural Old Norse whispers, the clanking of their gear, and a quirky, upbeat instrumental track.";
-                prompt = "A cute baby playing with toys in a sunny nursery, laughing and crawling around with natural movements and expressions."  ;
+                // 收集表单数据（当前页面只有图生视频）
+                var hasFile = fileInput && fileInput.files && fileInput.files[0];
+                var promptEl = document.getElementById('id_prompt_input');
+                var prompt = promptEl ? promptEl.value.trim() : '';
+                var arEl = document.getElementById('id_input_aspect_ratio');
+                var aspectRatio = arEl ? arEl.value : '';
+                var resolution = (document.getElementById('id_text_resolution')||{}).innerText || '';
+                var duration = (document.getElementById('id_text_duration')||{}).innerText || '';
 
-                // 显示加载状态
+                if (!hasFile) { alert('Please upload a reference image'); return; }
+                if (!prompt) { alert('Please enter a prompt'); return; }
+
+                // 加载中
                 LoadingUtil.show('Generating Video', 'AI is creating your baby video, please wait...');
 
-                // 准备表单数据
+                // 组装表单
                 const formData = new FormData();
-                
-                // 如果是图片生成视频且有文件
-                if (!isTextToVideo && hasFile) {
-                    formData.append('file', fileInput.files[0]);
-                    console.log("Image selected and added to FormData");
-                }
+                formData.append('file', fileInput.files[0]);
 
-                // 准备参数
                 const jsonData = {
-                    "opt": isTextToVideo ? "0" : "1", // 0 for text-to-video, 1 for image-to-video
+                    "opt": "1", // 当前为图片转视频
                     "uid": localUser ? localUser.uid : 0,
                     "my_token": localUser ? localUser.token : "",
                     "project_id": GlobalConfig.project_id,
@@ -566,35 +536,41 @@
                     // "safety_tolerance": 2,
                     // "seed": 0
                 };
-
                 formData.append('param', JSON.stringify(jsonData));
 
-                // 发送请求
-                const response = await fetch(GlobalConfig.url + "/go/v/cr", {
-                    method: 'POST',
-                    body: formData
-                });
+                console.log('param str :: ', JSON.stringify(jsonData));
+                console.log('formData :: ', formData);
 
+                const response = await fetch(GlobalConfig.url + "/go/v/cr", { method: 'POST', body: formData });
                 const result = await response.json();
                 console.log("Processing result:", result);
 
                 if (response.ok && result.code === 200) {
-                    // 显示生成的视频
-                    displayGeneratedVideo(result);
-                    LoadingUtil.hide();
+                    // 兜底解析可播放地址
+                    var data = result.data || {};
+                    var url = data.result_url;
+                    console.log('url :: ', url);
+                    if (url) {
+                        showSuccess(url);
+                    } else {
+                        showError();
+                        alert('Generation succeeded but no playable url returned');
+                    }
                 } else if (result.code === 1000018) {
                     alert('Insufficient credits, please recharge');
-                    LoadingUtil.hide();
+                    showError();
                 } else {
                     console.log(result.msg || 'Processing failed');
-                    LoadingUtil.hide();
+                    showError();
                     alert('Video generation failed: ' + (result.msg || 'Unknown error'));
                 }
-                
             } catch (error) {
                 console.error('Processing failed:', error);
-                LoadingUtil.hide();
+                showError();
                 alert('Video generation failed: ' + error.message);
+            } finally {
+                LoadingUtil.hide();
+                setGenerateButtonState(true);
             }
         }
         
