@@ -13,13 +13,13 @@
     <link rel="canonical" href="https://flux-kontext-ai.org"/>
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     
+    <script src="../js/my-local-storage-util.js"></script>
+    <script src="../js/my-login.js"></script>
     <script src="../js/my_nav.js"></script>
     <script src="../js/custom-toast.js"></script>
     <script src="../js/my-common-util.js"></script>
     <script src="../js/my-dropdown-menu.js"></script>
     <script src="../js/my-loading-util.js"></script>
-    <script src="../js/my-local-storage-util.js"></script>
-    <script src="../js/my-login.js"></script>
     <script src="../js/my-footer.js"></script>
     
     <script src="../js/my-lan-config.js"></script>
@@ -76,6 +76,7 @@
 
     <!-- 通用顶部导航组件 -->
     <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
+
     </header>
 
     <!-- Sidebar + Main -->
@@ -95,13 +96,6 @@
                         <div class="mt-4">
                             <label class="block text-sm text-gray-300 mb-1">选择模型</label>
                             <div class="relative mt-2 w-full sm:w-40">
-                                <!-- 原生 select 保留但隐藏，用于同步值与可访问性 -->
-                                <select id="id_select_model" class="hidden">
-                                    <option value="480p" selected>Google VEO3</option>
-                                    <option value="720p">RunWay Gen-4</option>
-                                    <option value="1080p">Midjourney</option>
-                                </select>
-                                <!-- 触发按钮：宽度继承容器，右侧箭头 -->
                                 <button id="id_btn_model" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
                                     <span id="id_text_model">Google VOE3</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -145,7 +139,7 @@
                             <label class="block text-sm text-gray-300 mb-1">选择分辨率</label>
                             <div class="relative w-full sm:w-40">
                                 <!-- 触发按钮：宽度继承容器，右侧箭头 -->
-                                <button id="id_btn_resolution" class="w-full appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
+                                <button id="id_btn_resolution" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
                                     <span id="id_text_resolution">480p</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
@@ -157,7 +151,7 @@
                             <label class="block text-sm text-gray-300 mb-1">选择时长</label>
                             <div class="relative w-full sm:w-40">
                                 <!-- 触发按钮：宽度继承容器，右侧箭头 -->
-                                <button id="id_btn_duration" class="w-full appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
+                                <button id="id_btn_duration" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
                                     <span id="id_text_duration">5s</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
@@ -299,107 +293,89 @@
                     
                 </div>
 
-                <!-- Veo3 产品介绍 -->
+                <!-- Veo3 产品介绍（通用模块：标题 + 亮点 + 口碑 + FAQ + CTA） -->
                 <section class="bg-[#0b0e13] border border-white/5 mt-4 rounded-lg p-4 lg:p-6">
+                    <!-- 标题与简介 -->
                     <div class="text-center mb-6 lg:mb-8">
                         <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">
-                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Veo3</span>
+                            <span class="text-white">Veo3</span>
                             <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"> 音频视频生成器</span>
                         </h2>
-                        <p class="text-gray-300 text-sm leading-6 max-w-2xl mx-auto">
-                            Google 革命性AI视频生成模型,带来720P高清画质、同步音频与前沿AI技术。支持文本或图片秒创专业视频。
+                        <p class="text-gray-300 text-sm leading-6 max-w-3xl mx-auto">
+                            基于前沿的视频生成大模型，Veo3 为图片到视频、文本到视频提供一站式创作能力。它支持镜头运动、风格化控制、角色一致性
+                            与原生音频合成，让作品兼具“画面张力”和“声音叙事”。无论你是营销团队、工作室，还是独立创作者，都能以更低成本、
+                            更高效率产出专业级短片。
                         </p>
                     </div>
 
-                    <div class="text-center mb-6">
-                        <h3 class="text-lg font-semibold">
-                            <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">Veo3 AI</span>
-                            <span class="bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent"> 功能亮点</span>
-                        </h3>
+                    <!-- 核心能力亮点（3列，移动端1列） -->
+                    <div class="text-center mb-4">
+                        <h3 class="text-lg font-semibold text-white">核心能力亮点</h3>
                     </div>
-
-                    <!-- 功能亮点卡片 -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
-                        <div class="bg-[#1a1d26] border border-blue-500/20 rounded-xl p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-10">
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
                             <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-3">
-                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
-                                </svg>
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                             </div>
-                            <h4 class="text-white font-semibold mb-2">原生音频生成</h4>
-                            <p class="text-gray-400 text-sm leading-5">
-                                革命性功能,自动生成同步对白、音乐和音效,无需额外音频编辑,Veo3 一站式交付完整视听体验。
-                            </p>
+                            <h4 class="text-white font-semibold mb-2">原生音频 · 同步对白/音乐/音效</h4>
+                            <p class="text-gray-400 text-sm leading-6">一键生成多轨音频并自动与画面对齐，免去复杂的配乐与音效剪辑工作，直出即可用于社媒与广告物料。</p>
                         </div>
-
-                        <div class="bg-[#1a1d26] border border-purple-500/20 rounded-xl p-4">
-                            <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-3">
-                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
+                            <div class="w-12 h-12 bg-indigo-500/20 rounded-full flex items-center justify-center mb-3">
+                                <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             </div>
-                            <h4 class="text-white font-semibold mb-2">提示词理解更强</h4>
-                            <p class="text-gray-400 text-sm leading-5">
-                                先进AI理解能力,将复杂描述精准转化为画面。可描述镜头角度、运动和风格,实现精细创作控制。
-                            </p>
+                            <h4 class="text-white font-semibold mb-2">镜头/运动/风格控制</h4>
+                            <p class="text-gray-400 text-sm leading-6">支持提示词指定景别、机位、运动轨迹与光影风格；可套用预设并叠加微调，保证画面统一和风格一致。</p>
                         </div>
-
-                        <div class="bg-[#1a1d26] border border-green-500/20 rounded-xl p-4">
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
                             <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-3">
-                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                            </svg>
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                             </div>
-                            <h4 class="text-white font-semibold mb-2">高画质真实感</h4>
-                            <p class="text-gray-400 text-sm leading-5">
-                                专业720P分辨率,物理仿真真实。每帧细节丰富,光影自然,动作逼真。
-                            </p>
+                            <h4 class="text-white font-semibold mb-2">更清晰的画质与角色一致性</h4>
+                            <p class="text-gray-400 text-sm leading-6">720P 清晰度、细节保真与运动连贯性优化，人物与主体在多个镜头中保持一致，适合品牌物料与剧情短片。</p>
                         </div>
                     </div>
 
-                    <!-- FAQ 常见问题 -->
-                    <div class="space-y-4">
-                        <div class="bg-[#1a1d26] rounded-xl p-4">
-                            <h4 class="text-white font-semibold mb-2">Veo3 有哪些独特优势?</h4>
-                            <p class="text-gray-400 text-sm leading-5">
-                                Veo3 原生音频生成,自动同步对白、音乐和音效。区别于 Sora 等竞品,Veo3 提供完整视听体验,提示词理解和角色一致性更强。
-                            </p>
-                        </div>
+                    <!-- 口碑评价（6卡：1/2/3列自适应） -->
+                    <div class="text-center mb-4">
+                        <h3 class="text-lg font-semibold text-white">创作者如何评价</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-10">
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">亚历克斯，创意总监</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">节省了数小时的后期制作成本，现在我们可以在几分钟内从概念生成艺术短场景。</p></div>
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">米娅，婚礼工作室老板</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">将一张照片动画化并构建完整氛围是不可思议的，我的客户都惊呆了。</p></div>
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">杰森，广告代理机构策略师</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">从静态到影像的转化极大提升了创作效率，也改变了我们的视频制作流程。</p></div>
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">莉拉，数字艺术家</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">终于有一个真正理解创意提示的工具，我的艺术第一次感觉如此生动。</p></div>
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">托马斯，独立电影制作人</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">拍摄前做试镜头非常有用，仅一张图片的运动看起来出奇真实。</p></div>
+                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">萨拉，社交媒体创作者</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">一个提示就能把照片变成动感短片，非常适合在 Instagram 讲故事。</p></div>
+                    </div>
 
-                        <div class="bg-[#1a1d26] rounded-xl p-4">
-                            <h4 class="text-white font-semibold mb-2">Veo3 极速与高质有何区别?</h4>
-                            <div class="text-gray-400 text-sm leading-5 space-y-2">
-                                <p><strong class="text-white">Veo3 极速(50积分):</strong> 优化速度,效果优秀,支持1张图片上传,适合快速创作和社交媒体。</p>
-                                <p><strong class="text-white">Veo3 高质(150积分):</strong> 画质更佳,细节更丰富,支持最多3张图片,适合专业项目和复杂场景。</p>
+                    <!-- FAQ -->
+                    <div class="text-center mb-4">
+                        <h3 class="text-lg font-semibold text-white">常见问题</h3>
+                    </div>
+                    <div class="space-y-4 mb-6 lg:mb-10">
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">1</span><div><h4 class="text-white font-semibold">什么是图像转视频生成器？</h4><p class="mt-1 text-gray-400 text-sm leading-6">它是将静态图片转化为动态视频的AI工具，特别适合广告创意、产品展示与社交媒体内容，帮助你以更低成本快速产出专业短片。</p></div></div></div>
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-sm">2</span><div><h4 class="text-white font-semibold">需要设计或剪辑基础吗？</h4><p class="mt-1 text-gray-400 text-sm leading-6">不需要。上传图片与提示词，选择时长与宽高比，即可自动生成。也可叠加风格预设获得一致的品牌表现。</p></div></div></div>
+                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-300 flex items-center justify-center text-sm">3</span><div><h4 class="text-white font-semibold">可以自定义结果风格吗？</h4><p class="mt-1 text-gray-400 text-sm leading-6">支持。你可以通过提示词与参数控制风格、镜头与运动；也可以使用预设模板快速复用配置，适用于团队协作。</p></div></div></div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="rounded-2xl p-5 lg:p-8 bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 border border-white/10">
+                        <div class="text-center">
+                            <h3 class="text-xl lg:text-2xl font-bold text-white">准备让你的图片动起来了吗？</h3>
+                            <p class="text-gray-200 text-sm lg:text-base mt-2 max-w-3xl mx-auto">加入数千创作者，用 Seedance AI 将静态图片转为精彩短片。今天升级，解锁更快渲染与更高质量，并优先体验顶级模型。</p>
+                            <div class="mt-4">
+                                <a href="#" class="inline-flex items-center justify-center px-5 py-2.5 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-sm lg:text-base">立即开始创作</a>
                             </div>
-                        </div>
-
-                        <div class="bg-[#1a1d26] rounded-xl p-4">
-                            <h4 class="text-white font-semibold mb-2">Veo3 视频参数有哪些?</h4>
-                            <p class="text-gray-400 text-sm leading-5">
-                                所有 Veo3 视频均为720P分辨率、8秒时长,画质高且带同步音频。极速与高质模式技术参数一致,高质模式画面更精细。
-                            </p>
-                        </div>
-
-                        <div class="bg-[#1a1d26] rounded-xl p-4">
-                            <h4 class="text-white font-semibold mb-2">生成视频需要多少积分?</h4>
-                            <p class="text-gray-400 text-sm leading-5 mb-3">积分消耗取决于所选AI模型,公平且实惠:</p>
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center bg-blue-600/20 rounded-lg px-4 py-2">
-                                    <span class="text-white text-sm">Veo3 Fast</span>
-                                    <span class="text-white text-sm">50 Credits</span>
-                                </div>
-                                <div class="flex justify-between items-center bg-purple-600/20 rounded-lg px-4 py-2">
-                                    <span class="text-white text-sm">Veo3 Quality</span>
-                                    <span class="text-white text-sm">150 Credits</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-500 text-xs mt-3">
-                                两种模式均支持文本转视频和图片转视频。极速模式限1张图片,高质模式最多3张。生成失败不扣积分!
-                            </p>
                         </div>
                     </div>
                 </section>
+
+
+                <!-- 通用页脚组件 -->
+                <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+                    <!-- footer.js 会将内容注入到这里 -->
+                </footer>
 
             </main>
         </div>
@@ -500,24 +476,130 @@
             showLoading();
             // 生成过程中禁用按钮
             setGenerateButtonState(false);
-
-            simulate().then(function(res){
-                // 到点后再切换，防止外部其它逻辑提前把 loader 隐藏
-                if(res.ok){ 
-                    if (res.index == 1) {
-                        showSuccess(res.url); 
-                    } else if (res.index == 2) {
-                        showSuccess(res.url); 
-                    }
-                }
-                else { 
-                    showError(); 
-                }
-                // 生成完成后重新启用按钮
-                setGenerateButtonState(true);
-            });
+            startGenerate  (); // 开始真正生成
+            // simulate().then(function(res){
+            //     // 到点后再切换，防止外部其它逻辑提前把 loader 隐藏
+            //     if(res.ok){ 
+            //         if (res.index == 1) {
+            //             showSuccess(res.url); 
+            //         } else if (res.index == 2) {
+            //             showSuccess(res.url); 
+            //         }
+            //     }
+            //     else { 
+            //         showError(); 
+            //     }
+            //     // 生成完成后重新启用按钮
+            //     setGenerateButtonState(true);
+            // });
         });
 
+        async function startGenerate() {
+            if (isLoggedIn) {
+                               // If logged in, do nothing, continue execution
+            } else {
+                login();
+                return;
+            }
+
+            try {
+                // 判断当前是哪个面板
+                const isTextToVideo = !document.getElementById('text-to-video-panel').classList.contains('hidden');
+                
+                let prompt, hasFile = false, aspectRatio, resolution, duration;
+                
+                if (isTextToVideo) {
+                    // 文本生成视频
+                    prompt = document.getElementById('video-prompt').value || '';
+                    aspectRatio = document.getElementById('aspect-ratio').value;
+                    resolution = document.getElementById('resolution').value;
+                    duration = document.getElementById('video-duration').value;
+                } else {
+                    // 图片生成视频
+                    hasFile = fileInput && fileInput.files && fileInput.files[0];
+                    prompt = document.getElementById('image-video-prompt').value || '';
+                    aspectRatio = document.getElementById('img-aspect-ratio').value;
+                    resolution = document.getElementById('img-resolution').value;
+                    duration = document.getElementById('img-video-duration').value;
+                    
+                    if (!hasFile) {
+                        alert('Please upload a reference image');
+                        return;
+                    }
+                }
+                
+                if (!prompt) {
+                    alert('Please enter a prompt');
+                    return;
+                }
+                // prompt = "Create an ASMR video with close-up shots of glass fruits—blood orange with reddish interior, lemon with crystalline interior, green apple-like fruit, red glass raspberry, and dragon fruit with pinkish-red skin and white interior—sliced slowly on a wooden cutting board. Use macro camera views, soft lighting, and ASMR audio like knife-cutting glass sounds and subtle kitchen ambiance. No text or subtitles. This is a reasoned guess based on the video's description, as the exact prompt isn't available.Shot in extreme macro perspective, a flawless, crystal-clear, and detail-rich [insert the object you want to cut, e.g., glass strawberry] rests on a wooden cutting board bathed in warm lighting. The camera gently pushes and pulls, capturing the rainbow-like glimmers and prismatic refractions on the surface of the [insert object, e.g., glass strawberry]. The angle alternates between top-down and a 45-degree side view, freezing the moment the knife slices into the fragile";
+                // prompt = "Cinematic, documentary-style video. A group of massive, heavily bearded Viking warriors, clad in leather, fur, and horned helmets, wander through a brightly lit, modern IKEA store. They look utterly bewildered and out of place.\nDynamic shots: One Viking tries to decipher the assembly instructions for a \"BILLY\" bookcase as if it were an ancient runestone. Another tests the durability of a \"POÄNG\" armchair by cautiously sitting in it, causing it to creak alarmingly. A third, massive Viking stands in the kitchen section, fascinated by a refrigerator's automatic ice dispenser, catching ice cubes in his helmet with childlike wonder.\nThe climax is them discovering the IKEA food court. They bypass the meatballs and instead try to pay for a hotdog with a single, large, ancient gold coin, causing chaos at the register. The scene is shot with a slightly comedic, Wes Anderson-style symmetry.\nAudio: The distant, sterile hum of the department store, mixed with the Vikings' deep, guttural Old Norse whispers, the clanking of their gear, and a quirky, upbeat instrumental track.";
+                prompt = "A cute baby playing with toys in a sunny nursery, laughing and crawling around with natural movements and expressions."  ;
+
+                // 显示加载状态
+                LoadingUtil.show('Generating Video', 'AI is creating your baby video, please wait...');
+
+                // 准备表单数据
+                const formData = new FormData();
+                
+                // 如果是图片生成视频且有文件
+                if (!isTextToVideo && hasFile) {
+                    formData.append('file', fileInput.files[0]);
+                    console.log("Image selected and added to FormData");
+                }
+
+                // 准备参数
+                const jsonData = {
+                    "opt": isTextToVideo ? "0" : "1", // 0 for text-to-video, 1 for image-to-video
+                    "uid": localUser ? localUser.uid : 0,
+                    "my_token": localUser ? localUser.token : "",
+                    "project_id": GlobalConfig.project_id,
+                    "product_id": GlobalConfig.product_id,
+                    "device_info": "6789",
+
+                    "prompt": prompt,
+                    "model": GlobalConfig.default_model,
+                    "title": "Baby Video",
+                    "tags": "funny,video"
+                    // "aspect_ratio": aspectRatio,
+                    // "resolution": resolution,
+                    // "duration": duration,
+                    // "safety_tolerance": 2,
+                    // "seed": 0
+                };
+
+                formData.append('param', JSON.stringify(jsonData));
+
+                // 发送请求
+                const response = await fetch(GlobalConfig.url + "/go/v/cr", {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                console.log("Processing result:", result);
+
+                if (response.ok && result.code === 200) {
+                    // 显示生成的视频
+                    displayGeneratedVideo(result);
+                    LoadingUtil.hide();
+                } else if (result.code === 1000018) {
+                    alert('Insufficient credits, please recharge');
+                    LoadingUtil.hide();
+                } else {
+                    console.log(result.msg || 'Processing failed');
+                    LoadingUtil.hide();
+                    alert('Video generation failed: ' + (result.msg || 'Unknown error'));
+                }
+                
+            } catch (error) {
+                console.error('Processing failed:', error);
+                LoadingUtil.hide();
+                alert('Video generation failed: ' + error.message);
+            }
+        }
+        
+        
         function simulate(){
             return new Promise(function(resolve){
                 setTimeout(function(){
@@ -653,3 +735,4 @@
 
 </body>
 </html>
+

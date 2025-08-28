@@ -31,9 +31,27 @@ const nav_header_content = `
                 </button>
             </nav>
             <div class="ml-auto flex items-center gap-3">
-                <!-- Avatar -->
-                <button class="ml-1 w-8 h-8 rounded-full bg-gradient-to-r from-[#344151] to-[#1e2633] text-xs text-white flex items-center justify-center">不息</button>
             
+                <!-- 顶部导航: 积分 -->
+                <a href="#pricing"  class="text-white cursor-pointer hover:text-white transition-colors" >
+                    <div id="id_nav_credit_cart_layouot" class="flex items-center h-8 px-2 space-x-1 rounded-[8px] bg-[#23232b] border border-white/10 hover:bg-[#33333b]">
+                        <img src="../img/credit_solid.png" alt="credit_cart" class="w-6 h-6">
+                        <span id="id_nav_credit_cart_text" class="text-white text-sm">0</span>
+                    </div>
+                </a>
+
+                <!-- 顶部导航: 头像部分 -->
+                <div id="id_nav_user_info_layout" class="hidden flex items-center space-x-3">
+                    <span id="id_nav_user_name" class="text-white text-sm cursor-pointer">Jack Wilson</span>
+                    <img id="id_nav_user_avatar" class="w-8 h-8 rounded-full ring-2 ring-[#FF3366]/30 cursor-pointer" 
+                         src="https://pub-078f2a206c974966a55246e7ce00f4dd.r2.dev/icon_common_default.jpg"   alt="head">
+                </div>
+
+                <!-- 顶部导航: 登录按钮 -->
+                <button id="id_btn_nav_login" class="hidden w-16 h-8 rounded-[8px] bg-red-600 hover:bg-red-500 text-white font-medium flex items-center justify-center gap-2 transition-all duration-200 ">
+                    <span class="text-sm">登录</span>
+                </button>
+
                 <!-- 移动端菜单按钮 - 三条横线 -->
                 <button id="id_btn_mobile_more" class="lg:hidden p-2 rounded-md bg-white/5 hover:bg-white/10" title="菜单">
                     <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,6 +187,11 @@ function init_nav_event(path_level, left_sidebar_index){
             leftHeaderElement.innerHTML = left_sidebar_content;
         }
 
+        // 设置 导航栏的登录状态 - 初始值，必须等待dom加载完成
+        refreshUser ();
+        isLoggedIn = false; // 模拟登录状态
+        updateUI();
+        refreshJifen();
 
         // ----------------------------- 顶部导航栏 - 设置点击 -----------------------------
         // 工具：箭头旋转控制
@@ -265,6 +288,72 @@ function init_nav_event(path_level, left_sidebar_index){
 
     });
 }
+
+// ---------------------- 处理登录部分  begin ----------------------------
+let isLoggedIn = true; // 定义变量
+let localUser = LocalStorageUtil.getUserObject();
+
+function login() {
+    window.open('./login', '_self');
+}
+
+function logout() {
+    console.log('登出...');
+    LocalStorageUtil.removeUserItem();
+    refreshUser ();
+    updateUI();
+    refreshJifen();
+}
+
+function updateUI() {
+    const id_btn_nav_login = document.getElementById('id_btn_nav_login');
+    const id_nav_user_info_layout = document.getElementById('id_nav_user_info_layout');
+    const id_nav_user_name = document.getElementById('id_nav_user_name');
+    const id_nav_user_avatar = document.getElementById('id_nav_user_avatar');
+
+    if (isLoggedIn) {
+        id_btn_nav_login.classList.add('hidden');
+        id_nav_user_info_layout.classList.remove('hidden');
+        id_nav_user_name.textContent = localUser && localUser.name ? localUser.name : 'Jack'; // Can be set dynamically based on actual situation
+        id_nav_user_avatar.src = localUser && localUser.head_url ? localUser.head_url : 'https://pub-078f2a206c974966a55246e7ce00f4dd.r2.dev/icon_common_default.jpg';// "https://i.pravatar.cc/150?img=32"; // Can be set dynamically based on actual situation
+        
+    } else {
+        id_btn_nav_login.classList.remove('hidden');
+        id_nav_user_info_layout.classList.add('hidden');
+    }
+}
+
+function refreshUser () {
+    localUser = LocalStorageUtil.getUserObject();
+    console.log('localUser: ', localUser);
+    console.log(localUser == null);
+
+    if (localUser) {
+        isLoggedIn = true;
+        console.log('本地数据-昵称:', localUser.name);
+        console.log('本地数据-头像:', localUser.head_url);
+        console.log('本地数据-uid:', localUser.uid);
+        console.log('本地数据-project_id:', localUser.project_id);
+        console.log('本地数据-积分:', localUser.jifen);
+        console.log('本地数据-token:', localUser.token);
+        console.log('本地数据-token_expire:', localUser.token_expire);
+        refreshJifen();
+    } else {
+        console.log('本地数据为空');
+        isLoggedIn = false;
+    }
+}
+
+function refreshJifen() {
+    const jifenSpan = document.getElementById('id_nav_credit_cart_text');
+    const localUser = LocalStorageUtil.getUserObject();
+    if (jifenSpan) {
+        jifenSpan.textContent = localUser && localUser.jifen ? localUser.jifen : '0';
+    }
+}
+
+// ---------------------- 处理登录部分  end ----------------------------
+
 
 function set_left_sidebar_active(left_sidebar_index){
     try{
