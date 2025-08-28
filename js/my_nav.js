@@ -42,7 +42,7 @@ const nav_header_content = `
 
                 <!-- 顶部导航: 头像部分 -->
                 <div id="id_nav_user_info_layout" class="hidden flex items-center space-x-3">
-                    <span id="id_nav_user_name" class="text-white text-sm cursor-pointer">Jack Wilson</span>
+                    <span id="id_nav_user_name" class="text-white text-sm">Jack Wilson</span>
                     <img id="id_nav_user_avatar" class="w-8 h-8 rounded-full ring-2 ring-[#FF3366]/30 cursor-pointer" 
                          src="https://pub-078f2a206c974966a55246e7ce00f4dd.r2.dev/icon_common_default.jpg"   alt="head">
                 </div>
@@ -248,20 +248,15 @@ function init_nav_event(path_level, left_sidebar_index){
         });
 
         // 点击顶部导航栏 头像布局
-        ClickUtil.onClick('id_nav_user_avatar', () => {
-            // ../
-            // 选择分辨率
-            DropdownMenuUtil.init('id_nav_user_avatar', ['Blog1', 'Blog2', 'Blog3', '退出'], -190, 10, 220, (item, index) => {
-                console.log(`选择了: ${item}, 索引: ${index}  `);
-                if(item == '价格'){
-                    window.location.href = path_level + "pricing/index.html"; // ../
-                }else if(item == '退出'){
-                    logout();
-                }
-
-                DropdownMenuUtil.hide();
-            });
-
+        // 选择分辨率
+        DropdownMenuUtil.init('id_nav_user_avatar', ['价格', '退出'], -190, 10, 220, (item, index) => {
+            console.log(`选择了: ${item}, 索引: ${index}  `);
+            if(item == '价格'){
+                // window.location.href = path_level + "pricing/index.html"; // ../
+            }else if(item == '退出'){
+                logout();
+            }
+            DropdownMenuUtil.hide();
         });
 
         // 点击顶部导航栏 登录
