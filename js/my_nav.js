@@ -207,20 +207,35 @@ function init_nav_event(path_level, left_sidebar_index){
             }catch(_){}
         }
 
-        // 点击顶部导航栏 AI视频 
+        // 悬停即显示：AI 视频
         DropdownMenuUtil.init('id_btn_nav_video', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
-            // 关闭时箭头回位
         }, () => { rotateArrow('id_btn_nav_video', false); });
-        document.getElementById('id_btn_nav_video')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_video', true); });
+        (function(){
+            var btn = document.getElementById('id_btn_nav_video');
+            if(btn){
+                btn.addEventListener('mouseenter', function(){
+                    rotateArrow('id_btn_nav_video', true);
+                    DropdownMenuUtil.show('id_btn_nav_video', ['Blog1','Blog2','Blog3'], 0, 8, 200, (item, index)=>{ DropdownMenuUtil.hide(); }, ()=>{ rotateArrow('id_btn_nav_video', false); });
+                });
+            }
+        })();
 
-        // 点击顶部导航栏 AI图片 
+        // 悬停即显示：AI 图片
         DropdownMenuUtil.init('id_btn_nav_image', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
         }, () => { rotateArrow('id_btn_nav_image', false); });
-        document.getElementById('id_btn_nav_image')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_image', true); });
+        (function(){
+            var btn = document.getElementById('id_btn_nav_image');
+            if(btn){
+                btn.addEventListener('mouseenter', function(){
+                    rotateArrow('id_btn_nav_image', true);
+                    DropdownMenuUtil.show('id_btn_nav_image', ['Blog1','Blog2','Blog3'], 0, 8, 200, (item, index)=>{ DropdownMenuUtil.hide(); }, ()=>{ rotateArrow('id_btn_nav_image', false); });
+                });
+            }
+        })();
 
         // 点击顶部导航栏 探索
         ClickUtil.onClick('id_btn_nav_see', () => {
