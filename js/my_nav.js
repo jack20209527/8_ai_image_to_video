@@ -120,7 +120,7 @@ const left_sidebar_content = `
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
                         <span class="text-[0.92rem]">Text to Video</span>
                     </button>
-                    <button id="id_btn_sidebar_image_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-red-500 bg-[#18202b] outline outline-1 outline-blue-500/35">
+                    <button id="id_btn_sidebar_image_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-red-500 bg-[#18202b]">
                         <svg class="w-[18px] h-[18px] text-red-500 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
                         <span class="text-[0.92rem]">Image to Video</span>
                     </button>
@@ -411,7 +411,9 @@ function set_left_sidebar_active(left_sidebar_index){
         }
 
         // 统一的选中与未选中样式（基于 Tailwind）
-        var activeBtnClasses = ['text-red-500','bg-[#18202b]','outline','outline-1','outline-blue-500/35'];
+        // 去掉外部边框
+        var activeBtnClasses = ['text-red-500','bg-[#18202b]'];
+        // var activeBtnClasses = ['text-red-500','bg-[#18202b]','outline','outline-1','outline-blue-500/35'];
         var inactiveBtnBase = ['flex','items-center','gap-2','w-full','px-3','py-2','rounded-md'];
         var inactiveColorClasses = ['text-slate-300','hover:bg-white/5','hover:text-red-500'];
 
