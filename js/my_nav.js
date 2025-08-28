@@ -2,7 +2,7 @@
 
 // 页面顶部导航栏布局内容
 const nav_header_content = `
-        <div class="max-w-[1400px] mx-auto h-full px-4 flex items-center">
+        <div class="mx-auto h-full px-4 flex items-center">
             <div class="flex items-center gap-2 text-xl font-semibold select-none">
                 <span class="text-[#6aa7ff]">Seedance</span>
                 <span class="text-white">AI</span>
@@ -18,10 +18,13 @@ const nav_header_content = `
                     <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
                 <button id="id_btn_nav_see" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    画廊
+                    探索
                 </button>
                 <button id="id_btn_nav_blog" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     博客
+                </button>
+                <button id="id_btn_nav_my_works" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
+                    我的创作
                 </button>
                 <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     价格
@@ -95,11 +98,11 @@ const left_sidebar_content = `
             <div class="p-3">
                 <div class="text-xs text-gray-400 mb-2">AI Video</div>
                 <nav class="space-y-2">
-                    <button id="id_btn_nav_text_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                    <button id="id_btn_sidebar_text_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
                         <span class="text-[0.92rem]">Text to Video</span>
                     </button>
-                    <button id="id_btn_nav_image_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-red-500 bg-[#18202b] outline outline-1 outline-blue-500/35">
+                    <button id="id_btn_sidebar_image_to_video" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-red-500 bg-[#18202b] outline outline-1 outline-blue-500/35">
                         <svg class="w-[18px] h-[18px] text-red-500 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
                         <span class="text-[0.92rem]">Image to Video</span>
                     </button>
@@ -109,13 +112,35 @@ const left_sidebar_content = `
             <div class="px-3 mt-4">
                 <div class="text-xs text-gray-400 mb-2">AI Image</div>
                 <nav class="space-y-2">
-                    <button id="id_btn_nav_text_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                    <button id="id_btn_sidebar_text_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
                         <span class="text-[0.92rem]">Text to Image</span>
                     </button>
-                    <button id="id_btn_nav_image_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                    <button id="id_btn_sidebar_image_to_image" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
                         <span class="text-[0.92rem]">Image to Image</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="px-3 mt-4">
+                <div class="text-xs text-gray-400 mb-2">User Menus</div>
+                <nav class="space-y-2">
+                    <button id="id_btn_sidebar_see" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                        <span class="text-[0.92rem]">探索</span>
+                    </button>
+                    <button id="id_btn_sidebar_blog" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
+                        <span class="text-[0.92rem]">博客</span>
+                    </button>
+                    <button id="id_btn_sidebar_my_works" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
+                        <span class="text-[0.92rem]">我的创作</span>
+                    </button>
+                    <button id="id_btn_sidebar_pricing" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                        <span class="text-[0.92rem]">价格</span>
                     </button>
                 </nav>
             </div>
@@ -165,7 +190,6 @@ function init_nav_event(path_level, left_sidebar_index){
             DropdownMenuUtil.hide();
             // 关闭时箭头回位
         }, () => { rotateArrow('id_btn_nav_video', false); });
-
         document.getElementById('id_btn_nav_video')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_video', true); });
 
         // 点击顶部导航栏 AI图片 
@@ -175,34 +199,63 @@ function init_nav_event(path_level, left_sidebar_index){
         }, () => { rotateArrow('id_btn_nav_image', false); });
         document.getElementById('id_btn_nav_image')?.addEventListener('click', function(){ rotateArrow('id_btn_nav_image', true); });
 
-        // 点击顶部导航栏 图片和视频组
+        // 点击顶部导航栏 探索
         ClickUtil.onClick('id_btn_nav_see', () => {
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
+
+        // 点击顶部导航栏 博客
         ClickUtil.onClick('id_btn_nav_blog', () => {
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
+
+        // 点击顶部导航栏 我的创作
+        ClickUtil.onClick('id_btn_nav_my_works', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+
+        // 点击顶部导航栏 价格
         ClickUtil.onClick('id_btn_nav_pricing', () => {
             // 显示 价格弹窗
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
         //点击左侧导航: 文生视频
-        ClickUtil.onClick('id_btn_nav_text_to_video', () => {
+        ClickUtil.onClick('id_btn_sidebar_text_to_video', () => {
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
         //点击左侧导航: 图生视频
-        ClickUtil.onClick('id_btn_nav_image_to_video', () => {
+        ClickUtil.onClick('id_btn_sidebar_image_to_video', () => {
             window.location.href = path_level + "image-to-video/index.html";
         });
 
         //点击左侧导航: 文生图
-        ClickUtil.onClick('id_btn_nav_text_to_image', () => {
+        ClickUtil.onClick('id_btn_sidebar_text_to_image', () => {
             window.location.href = path_level + "text-to-image/index.html"; // ../
         });
         //点击左侧导航: 图生图
-        ClickUtil.onClick('id_btn_nav_image_to_image', () => {
+        ClickUtil.onClick('id_btn_sidebar_image_to_image', () => {
             window.location.href = path_level + "image-to-image/index.html";
+        });
+
+        // 点击左侧导航 探索
+        ClickUtil.onClick('id_btn_sidebar_see', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+
+        // 点击左侧导航 博客
+        ClickUtil.onClick('id_btn_sidebar_blog', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+
+        // 点击左侧导航 我的创作
+        ClickUtil.onClick('id_btn_sidebar_my_works', () => {
+            window.location.href = path_level + "text-to-video/index.html"; // ../
+        });
+
+        // 点击左侧导航 价格
+        ClickUtil.onClick('id_btn_sidebar_pricing', () => {
+            // 显示 价格弹窗
         });
 
         // 移动端菜单

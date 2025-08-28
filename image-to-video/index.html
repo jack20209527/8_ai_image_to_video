@@ -25,6 +25,15 @@
     <script src="../js/my-lan-config.js"></script>
     <script src="../js/my-lan-manager.js"></script>
 
+    <style>
+        /* 旋转小点动画（让 orbit 容器转起来） */
+        @keyframes orbit-rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+        .orbit{animation:orbit-rot 2.6s linear infinite;will-change:transform}
+        /* 轻微上下浮动（用于中心图标，可选） */
+        @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-4px)}100%{transform:translateY(0)}}
+        .floaty{animation:floaty 2.2s ease-in-out infinite}
+    </style>
+
     <!-- 设置登录、初始化顶部导航、侧边栏 -->
     <script>
         // 设置导航条的按钮的点击事件
@@ -41,10 +50,18 @@
                 DropdownMenuUtil.hide();
             });
 
-            // 选择模分辨率
+            // 选择分辨率
             DropdownMenuUtil.init('id_btn_resolution', ['480p', '960p', '1024p'], 0, 1, 220, (item, index) => {
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_resolution');
+                text.innerHTML = item;
+                DropdownMenuUtil.hide();
+            });
+
+            // 选择时长
+            DropdownMenuUtil.init('id_btn_duration', ['5s', '10s', '30s'], 0, 1, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                var text = document.getElementById('id_text_duration');
                 text.innerHTML = item;
                 DropdownMenuUtil.hide();
             });
@@ -62,7 +79,7 @@
     </header>
 
     <!-- Sidebar + Main -->
-    <div class="pt-14 max-w-[1400px] mx-auto px-4">
+    <div class="pt-14 mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
 
             <!-- 通用侧边栏组件 -->
@@ -97,7 +114,9 @@
                             <label class="block text-sm text-gray-300 mb-1">图像</label>
                         </div>
                         <!-- Upload area -->
-                        <div id="uploadCard" class="mt-2 rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm">
+                        <div id="uploadCard" class="mt-2 relative rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm cursor-pointer">
+                            <!-- 默认内容 -->
+                            <div id="uploadDefault" class="flex flex-col items-center justify-center">
                             <div class="w-11 h-11 rounded-full bg-[#1b2330] flex items-center justify-center mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 7.5L12 3m0 0L7.5 7.5M12 3v13.5" />
@@ -105,19 +124,25 @@
                             </div>
                             <div class="text-gray-300">点击上传或拖拽到此处</div>
                             <div class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF, WEBP</div>
+                                <button id="chooseFile" class="mt-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm">
+                                    选择图片</button>
+                            </div>
+                            <!-- 预览图片 -->
+                            <img id="uploadPreview" src="" alt="preview" class="hidden absolute inset-0 w-full h-full object-contain p-3" />
+                            <!-- 移除按钮（默认隐藏） -->
+                            <button id="id_btn_remove_upload" class="hidden absolute bottom-2 right-2 px-3 py-1.5 bg-red-500/80 hover:bg-red-500 text-white text-xs rounded">移除</button>
                             <input id="fileInput" type="file" accept="image/*" class="hidden" />
-                            <button id="chooseFile" class="mt-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm">选择图片</button>
                         </div>
 
-                        <!-- Prompt -->
+                        <!-- 输入提示词 -->
                         <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">提示词</label>
-                            <textarea id="prompt" rows="10" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
+                            <label class="block text-sm text-gray-300 mb-1">输入提示词</label>
+                            <textarea id="id_prompt_input" rows="6" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
                         </div>
 
-                        <!-- 分辨率-选择 -->
+                        <!-- 选择分辨率 -->
                         <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">分辨率</label>
+                            <label class="block text-sm text-gray-300 mb-1">选择分辨率</label>
                             <div class="relative w-full sm:w-40">
                                 <!-- 触发按钮：宽度继承容器，右侧箭头 -->
                                 <button id="id_btn_resolution" class="w-full appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
@@ -127,7 +152,19 @@
                             </div>
                         </div>
 
-                        <!-- 宽高比选择（与图片一致的卡片式样式） -->
+                        <!-- 选择时长 -->
+                        <div class="mt-4">
+                            <label class="block text-sm text-gray-300 mb-1">选择时长</label>
+                            <div class="relative w-full sm:w-40">
+                                <!-- 触发按钮：宽度继承容器，右侧箭头 -->
+                                <button id="id_btn_duration" class="w-full appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
+                                    <span id="id_text_duration">5s</span>
+                                    <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 选择宽高比（与图片一致的卡片式样式） -->
                         <div class="mt-6">
                             <div class="flex items-end justify-between">
                                 <div>
@@ -138,88 +175,123 @@
                             <!-- 隐藏域：存储当前选中的宽高比值，默认 9:16 -->
                             <input id="id_input_aspect_ratio" type="hidden" value="9:16">
 
-                            <!-- 选项卡片容器 -->
+                            <!-- 选择比例的布局 3:4  16:9 -->
                             <div id="id_group_aspect_ratio" class="mt-3 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 lg:gap-3">
-                                <!-- 单个卡片：默认灰色；hover 与选中均为粉色高亮 -->
-                                <button data-value="16:9" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                <!-- 单个卡片：默认灰色；hover 与选中均为红色高亮 -->
+                                <button data-value="16:9" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-red-500/30 hover:border-red-500/40">
                                     <div class="h-full w-full p-3 relative">
                                         <!-- 预留标签空间，剩余高度中居中展示比例方块 -->
                                         <div class="h-full flex items-center justify-center pb-6">
                                             <!-- 16:9 预览块 -->
-                                            <div class="ar-block w-14 h-8 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                            <div class="ar-block w-14 h-8 rounded-md bg-white/10 group-hover:bg-red-500"></div>
                                         </div>
-                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">16:9</div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-red-400 group-hover:font-semibold">16:9</div>
                                     </div>
                                 </button>
-                                <button data-value="9:16" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                <button data-value="9:16" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-red-500/30 hover:border-red-500/40">
                                     <div class="h-full w-full p-3 relative">
                                         <div class="h-full flex items-center justify-center pb-6">
                                             <!-- 9:16 预览块 -->
-                                            <div class="ar-block w-7 h-11 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                            <div class="ar-block w-7 h-11 rounded-md bg-white/10 group-hover:bg-red-500"></div>
                                         </div>
-                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">9:16</div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-red-400 group-hover:font-semibold">9:16</div>
                                     </div>
                                 </button>
-                                <button data-value="4:3" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                <button data-value="4:3" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-red-500/30 hover:border-red-500/40">
                                     <div class="h-full w-full p-3 relative">
                                         <div class="h-full flex items-center justify-center pb-6">
                                             <!-- 4:3 预览块 -->
-                                            <div class="ar-block w-12 h-9 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                            <div class="ar-block w-12 h-9 rounded-md bg-white/10 group-hover:bg-red-500"></div>
                                         </div>
-                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">4:3</div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-red-400 group-hover:font-semibold">4:3</div>
                                     </div>
                                 </button>
-                                <button data-value="3:4" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                <button data-value="3:4" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-red-500/30 hover:border-red-500/40">
                                     <div class="h-full w-full p-3 relative">
                                         <div class="h-full flex items-center justify-center pb-6">
                                             <!-- 3:4 预览块 -->
-                                            <div class="ar-block w-9 h-12 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                            <div class="ar-block w-9 h-12 rounded-md bg-white/10 group-hover:bg-red-500"></div>
                                         </div>
-                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">3:4</div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-red-400 group-hover:font-semibold">3:4</div>
                                     </div>
                                 </button>
-                                <button data-value="1:1" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-pink-500/30 hover:border-pink-500/40">
+                                <button data-value="1:1" class="ar-item group rounded-xl bg-white/5 border border-white/10 h-24 transition hover:ring-2 hover:ring-red-500/30 hover:border-red-500/40">
                                     <div class="h-full w-full p-3 relative">
                                         <div class="h-full flex items-center justify-center pb-6">
                                             <!-- 1:1 预览块 -->
-                                            <div class="ar-block w-10 h-10 rounded-md bg-white/10 group-hover:bg-pink-500"></div>
+                                            <div class="ar-block w-10 h-10 rounded-md bg-white/10 group-hover:bg-red-500"></div>
                                         </div>
-                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-pink-400 group-hover:font-semibold">1:1</div>
+                                        <div class="ar-label absolute bottom-2 left-0 right-0 text-center text-gray-300 text-base group-hover:text-red-400 group-hover:font-semibold">1:1</div>
                                     </div>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Duration -->
-                        <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-2">时长</label>
-                            <div class="flex items-center gap-3">
-                                <div id="durationDots" class="flex items-center gap-2"></div>
-                                <div class="text-sm text-gray-400"><span id="durationText">5</span>s</div>
-                            </div>
+                        <!-- 积分要求信息 -->
+                        <div class="mt-4 flex items-center gap-2 text-sm text-gray-400">
+                            <img src="../img/credit_solid.png" alt="credit_cart" class="w-4 h-4">
+                            <span>Credits required: </span>
+                            <span id="id_credit_required_number">20</span>
                         </div>
 
-                        <!-- Actions -->
-                        <div class="mt-4 flex items-center gap-3">
-                            <button id="btnGenerate" class="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-sm">生成预览</button>
+                        <!-- 生成按钮 -->
+                        <div class="mt-3 flex items-center gap-3">
+                            <button id="id_btn_generate" class="w-full py-3 rounded-[8px] bg-red-600 hover:bg-red-500 text-white font-medium text-lg flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-500">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <span>生成预览</span>
+                            </button>
                         </div>
                     </section>
 
-                    <!-- Right preview card -->
+                    <!-- 右侧显示卡片和生成结果的区域 -->
                     <section class="bg-[#0b0e13] border border-white/5 rounded-lg p-3">
                         <div class="text-xs text-gray-400 mb-2">由 Seedance 1.0 Pro 驱动</div>
                         <div class="relative aspect-video bg-[#0f131a] rounded-lg overflow-hidden border border-white/10">
-                            <img id="previewImg" src="../img/image_content3.jpg" alt="preview" class="w-full h-full object-cover hidden" />
-                            <video id="previewVideo" class="w-full h-full object-cover" autoplay loop muted playsinline>
+                            
+                            <img id="id_preview_image" src="../img/image_content3.jpg" alt="preview" class="w-full h-full object-cover hidden" />
+                            
+                            <video id="id_preview_video" class="w-full h-full object-cover" autoplay loop muted playsinline>
                                 <source src="https://www.muse-steamer.com/caseVideos/e75beee00148cbf0a28c0cfcf2fdc199_1920_1080.mp4" type="video/mp4">
                             </video>
-                            <div id="loader" class="absolute inset-0 bg-black/40 backdrop-blur hidden items-center justify-center">
-                                <div class="w-10 h-10 border-2 border-white/20 border-t-blue-500 rounded-full animate-spin"></div>
+                            
+                            <div id="id_loading_layout" class="absolute inset-0 bg-black/60 backdrop-blur hidden flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="relative w-20 h-20 mx-auto">
+                                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/25 to-cyan-500/25 blur-xl"></div>
+                                        <div class="absolute inset-[6px] rounded-full bg-white/5 border border-white/10"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <svg class="w-9 h-9 text-blue-300 animate-pulse floaty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="M7 17l10-10"/></svg>
+                                        </div>
+                                        <!-- 环绕小点 -->
+                                        <div class="absolute inset-0 orbit">
+                                            <span class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-400"></span>
+                                            <span class="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                            <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                                            <span class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 text-gray-200">正在为你创作…</div>
+                                    <div class="text-xs text-gray-400 mt-1">您可以继续流量其他部分功能，完成后可以在作品页查看</div>
+                                </div>
                             </div>
+                            
+                            <!-- 失败遮罩 -->
+                            <div id="id_result_error" class="hidden absolute inset-0 bg-black/50 backdrop-blur flex items-center justify-center text-center">
+                                <div>
+                                    <div class="mx-auto w-12 h-12 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mb-3">
+                                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                                    </div>
+                                    <div class="text-white font-medium">生成失败</div>
+                                    <div class="text-xs text-gray-400 mt-1">Insufficient credits</div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="mt-3">
                             <div class="text-sm text-gray-300 mb-1">提示词</div>
-                            <div id="promptEcho" class="text-xs text-gray-400 bg-white/5 border border-white/10 rounded p-3 leading-6">
+                            <div id="id_prompt_result" class="text-xs text-gray-400 bg-white/5 border border-white/10 rounded p-3 leading-6">
                                 The ice blue Porsche speeds out from the night's high-rise...
                             </div>
                         </div>
@@ -340,60 +412,37 @@
         // Input method
         const imUpload = document.getElementById('im-upload');
         const uploadCard = document.getElementById('uploadCard');
-        
+
         // Upload
-        const chooseFile = document.getElementById('chooseFile');
         const fileInput = document.getElementById('fileInput');
-        const previewImg = document.getElementById('previewImg');
-        const previewVideo = document.getElementById('previewVideo');
-        chooseFile.addEventListener('click',()=>fileInput.click());
+
+        // 生成视频
+        const id_btn_generate = document.getElementById('id_btn_generate');
+        const id_preview_image = document.getElementById('id_preview_image');
+        const id_preview_video = document.getElementById('id_preview_video');
+        const id_result_error = document.getElementById('id_result_error');
+        const id_loading_layout = document.getElementById('id_loading_layout');
+        
         uploadCard.addEventListener('dragover',e=>{e.preventDefault();uploadCard.classList.add('ring-2','ring-blue-500/40')});
         uploadCard.addEventListener('dragleave',()=>uploadCard.classList.remove('ring-2','ring-blue-500/40'));
         uploadCard.addEventListener('drop',e=>{e.preventDefault();uploadCard.classList.remove('ring-2','ring-blue-500/40'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);});
         fileInput.addEventListener('change',e=>{if(e.target.files[0]) handleFile(e.target.files[0]);});
         
         function handleFile(file){
+            if(!file || !file.type || !file.type.startsWith('image/')) return;
+            // 显示预览
             const url = URL.createObjectURL(file);
-            previewVideo.classList.add('hidden');
-            previewImg.classList.remove('hidden');
-            previewImg.src = url;
-        }
-
-        // Duration dots (5s, 10s, 15s, 30s)
-        const durationDots = document.getElementById('durationDots');
-        const durationText = document.getElementById('durationText');
-        const DURS = [5,10,15,30];
-        let currentDur = 5;
-        DURS.forEach(d=>{
-            const b = document.createElement('button');
-            b.className = 'w-2.5 h-2.5 rounded-full bg-white/10 hover:bg-white/20';
-            b.title = d+'s';
-            b.addEventListener('click',()=>{currentDur=d;durationText.textContent=d;refreshDots();});
-            durationDots.appendChild(b);
-        });
-        function refreshDots(){
-            [...durationDots.children].forEach((el,i)=>{
-                const active = DURS[i]===currentDur;
-                el.className = 'w-2.5 h-2.5 rounded-full ' + (active? 'bg-blue-500' : 'bg-white/10 hover:bg-white/20');
-            });
-        }
-        refreshDots();
-
-        // 生成视频
-        const btnGenerate = document.getElementById('btnGenerate');
-        const loader = document.getElementById('loader');
-        const prompt = document.getElementById('prompt');
-        const promptEcho = document.getElementById('promptEcho');
-        btnGenerate.addEventListener('click',async()=>{
-            loader.classList.remove('hidden');
-            promptEcho.textContent = (prompt.value||'').trim() || 'The ice blue Porsche speeds out from the night\'s high-rise...';
-            await new Promise(r=>setTimeout(r,800));
-            // show demo video if no image chosen
-            if(previewImg.classList.contains('hidden')){
-                previewVideo.classList.remove('hidden');
+            const preview = document.getElementById('uploadPreview');
+            const btnRemove = document.getElementById('id_btn_remove_upload');
+            const uploadDefault = document.getElementById('uploadDefault');
+            if(preview && btnRemove && uploadDefault){
+                preview.src = url;
+                preview.classList.remove('hidden');
+                btnRemove.classList.remove('hidden');
+                uploadDefault.classList.add('hidden');
             }
-            loader.classList.add('hidden');
-        });
+        }
+
 
         // 绑定宽高比选择
         function bindAspectRatioSelect(){
@@ -406,18 +455,18 @@
             // 切换选中样式的函数
             function setActive(target){
                 for(var i=0;i<items.length;i++){
-                    items[i].classList.remove('ar-active','ring-2','ring-pink-500/30','border-pink-500/40');
+                    items[i].classList.remove('ar-active','ring-2','ring-red-500/30','border-red-500/40');
                     // 将文字与占位颜色恢复（默认灰色）
                     var label = items[i].querySelector('.ar-label');
                     var block = items[i].querySelector('.ar-block');
-                    if(label){ label.classList.remove('text-pink-400','font-semibold'); label.classList.add('text-gray-300'); }
-                    if(block){ block.classList.remove('bg-pink-500'); block.classList.add('bg-white/10'); }
+                    if(label){ label.classList.remove('text-red-400','font-semibold'); label.classList.add('text-gray-300'); }
+                    if(block){ block.classList.remove('bg-red-500'); block.classList.add('bg-white/10'); }
                 }
-                target.classList.add('ar-active','ring-2','ring-pink-500/30','border-pink-500/40');
+                target.classList.add('ar-active','ring-2','ring-red-500/30','border-red-500/40');
                 var label2 = target.querySelector('.ar-label');
                 var block2 = target.querySelector('.ar-block');
-                if(label2){ label2.classList.remove('text-gray-300'); label2.classList.add('text-pink-400','font-semibold'); }
-                if(block2){ block2.classList.remove('bg-white/10'); block2.classList.add('bg-pink-500'); }
+                if(label2){ label2.classList.remove('text-gray-300'); label2.classList.add('text-red-400','font-semibold'); }
+                if(block2){ block2.classList.remove('bg-white/10'); block2.classList.add('bg-red-500'); }
             }
 
             // 绑定点击事件
@@ -441,6 +490,164 @@
         }
 
         bindAspectRatioSelect ();
+
+        // 生成视频 按钮
+        id_btn_generate.addEventListener('click', function(){
+            if(id_btn_generate.disabled) {
+                return; // 如果按钮被禁用，不执行操作
+            }
+
+            showLoading();
+            // 生成过程中禁用按钮
+            setGenerateButtonState(false);
+
+            simulate().then(function(res){
+                // 到点后再切换，防止外部其它逻辑提前把 loader 隐藏
+                if(res.ok){ 
+                    if (res.index == 1) {
+                        showSuccess(res.url); 
+                    } else if (res.index == 2) {
+                        showSuccess(res.url); 
+                    }
+                }
+                else { 
+                    showError(); 
+                }
+                // 生成完成后重新启用按钮
+                setGenerateButtonState(true);
+            });
+        });
+
+        function simulate(){
+            return new Promise(function(resolve){
+                setTimeout(function(){
+                    var index =    2; // 0: 失败 1图片 2视频
+                    if (index == 0) {
+                        resolve({ok:false, index:0});
+                    } else if (index == 1) {
+                        resolve({ok:true, index:1, url:'https://babyaivideogenerator.online/img/ai_baby_video_generator.mp4'});
+                    } else if (index == 2) {
+                        resolve({ok:true, index:2, url:'http://127.0.0.1:5500/img/image_content12.jpg'});
+                    }
+                },4*1000);
+            });
+        }
+
+        // ------- 生成状态模拟（仅控制右侧已有容器，不改其他逻辑） -------
+        function showLoading(){
+            hideAll ();
+            id_loading_layout.classList.remove('hidden');
+        }
+        function showError(){
+            hideAll ();
+            id_result_error.classList.remove('hidden');
+        }
+        function showSuccess(url){
+            hideAll();
+            var isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
+            if(isVideo){
+                try{ id_preview_video.innerHTML=''; var s=document.createElement('source'); s.src=url; s.type='video/mp4'; id_preview_video.appendChild(s); id_preview_video.load(); }catch(_){ }
+                id_preview_video.classList.remove('hidden');
+            }else{
+                id_preview_image.src = url;
+                id_preview_image.classList.remove('hidden');
+            }
+        }
+
+        function hideAll(){
+            id_preview_image.classList.add('hidden');
+            id_preview_video.classList.add('hidden');
+            id_result_error.classList.add('hidden');
+            id_loading_layout.classList.add('hidden');
+        }
+
+        // ------- 生成状态模拟结束 -------
+
+        // 设置生成按钮状态的函数
+        function setGenerateButtonState(enabled) {
+            var btn = document.getElementById('id_btn_generate');
+            if(!btn) return;
+            
+            if(enabled) {
+                // 启用状态：可点击，红色背景，有hover效果
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-600', 'text-gray-400');
+                btn.classList.add('bg-red-600', 'text-white', 'hover:bg-red-700');
+            } else {
+                // 禁用状态：不可点击，深灰色背景，深灰色文字
+                btn.disabled = true;
+                btn.classList.add('opacity-100', 'cursor-not-allowed', 'bg-gray-600', 'text-gray-400');
+                btn.classList.remove('bg-red-600', 'text-white', 'hover:bg-red-700');
+            }
+        }
+
+        // 页面加载完成后，默认禁用按钮
+        document.addEventListener('DOMContentLoaded', function() {
+            setGenerateButtonState(false);
+            
+            // 监听提示词输入框，根据内容动态设置按钮状态
+            var promptInput = document.getElementById('id_prompt_input');
+            if(promptInput) {
+                // 初始检查一次
+                checkPromptInput();
+                
+                // 实时监听所有可能的输入事件
+                promptInput.addEventListener('input', checkPromptInput);
+                promptInput.addEventListener('keyup', checkPromptInput);
+                promptInput.addEventListener('keydown', checkPromptInput);
+                promptInput.addEventListener('paste', checkPromptInput);
+                promptInput.addEventListener('cut', checkPromptInput);
+                promptInput.addEventListener('change', checkPromptInput);
+                
+                // 添加中文日志，方便调试
+                console.log('【提示词监听】已绑定实时监听事件');
+            } else {
+                console.warn('【提示词监听】未找到输入框元素');
+            }
+        });
+        
+        // 检查提示词输入框内容的函数
+        function checkPromptInput() {
+            var promptInput = document.getElementById('id_prompt_input');
+            if(!promptInput) return;
+            
+            var content = promptInput.value.trim(); // 去除首尾空格
+            var hasContent = content.length > 0;
+            
+            if(hasContent) {
+                // 有内容时启用按钮
+                setGenerateButtonState(true);
+                console.log('【提示词监听】检测到内容，启用生成按钮');
+            } else {
+                // 无内容时禁用按钮
+                setGenerateButtonState(false);
+                console.log('【提示词监听】内容为空，禁用生成按钮');
+            }
+        }
+
+        // 点击上传区域/按钮，触发系统选择
+        uploadCard.addEventListener('click', function(e){
+            // 避免点击移除按钮时也触发
+            if(e.target && (e.target.id === 'id_btn_remove_upload')) return;
+            fileInput && fileInput.click();
+        });
+
+        // 移除按钮：恢复默认样式
+        (function(){
+            var btnRemove = document.getElementById('id_btn_remove_upload');
+            var preview = document.getElementById('uploadPreview');
+            var uploadDefault = document.getElementById('uploadDefault');
+            if(btnRemove){
+                btnRemove.addEventListener('click', function(e){
+                    e.stopPropagation();
+                    // 清空文件并还原
+                    try{ fileInput.value = ''; }catch(_){ }
+                    if(preview){ preview.src=''; preview.classList.add('hidden'); }
+                    if(uploadDefault){ uploadDefault.classList.remove('hidden'); }
+                    btnRemove.classList.add('hidden');
+                });
+            }
+        })();
 
     </script>
 
