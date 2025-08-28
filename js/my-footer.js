@@ -36,7 +36,7 @@ const footerContent = `
     
             <!-- 版权信息 -->
             <div class="mt-8 md:mt-6 pt-6 md:pt-8 border-t border-white/10 text-center">
-                <p class="text-sm md:text-base text-gray-400">&copy; 2024 EnhancePix. All rights reserved.</p>
+                <p class="text-sm md:text-base text-gray-400">&copy; 2025 EnhancePix. All rights reserved.</p>
             </div>
         </div>
 `;

@@ -4,96 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Photo HD Converter | AI Image Enhancement Platform</title>
-    <meta name="description" content="Sign in to access your AI photo enhancement account. Unlock premium features for HD image conversion, 4K upscaling, and batch processing. Transform your photos with professional AI technology.">
-    <meta name="keywords" content="photo hd converter login, ai image enhancer account, photo upscaler signin, image enhancement platform, ai photo editor login, hd converter account, image quality enhancer access">
-
-    <link rel="canonical" href="https://flux-kontext-ai.org/login/"/>
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Login to Photo HD Converter - AI Image Enhancement Platform">
-    <meta property="og:description" content="Access your account to enhance photos with AI technology. Transform regular photos into stunning HD quality images.">
-    <meta property="og:image" content="path/to/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Login to Photo HD Converter - AI Image Enhancement Platform">
-    <meta name="twitter:description" content="Access your account to enhance photos with AI technology. Transform regular photos into stunning HD quality images.">
-
-    <!-- Additional SEO Meta Tags -->
-    <meta name="robots" content="noindex, follow">
-    <meta name="author" content="Photo HD Converter">
-    
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
+    <title>AI Image to Video</title>
+    <meta name="description" content="Flux Kontext AI is a revolutionary free AI text-to-image editing tool. Instantly make precise, consistent edits to your photos and digital art using natural language instructions. Enjoy character consistency, fast results, and professional-grade image enhancement. No watermark, no registration required. Try Flux Kontext for creative, accurate, and user-friendly AI image editing.">
+    <meta name="keywords" content="photo hd converter, ai image upscaler, image quality enhancer, 4k image upscaler, image resolution enhancer, photo quality improver, ai photo enhancement, upscale image online, free image upscaler, batch image upscaler, image enlarger without quality loss, hd photo converter online, ai image enhancement tool, photo resolution increaser">
     <script src="../tailwind.js"></script>
     <link rel="stylesheet" href="../tailwind.css">
-    <script src="../js/my-common-util.js"></script>
-    <script src="../js/my-loading-util.js"></script>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="canonical" href="https://flux-kontext-ai.org"/>
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <script src="../js/my-local-storage-util.js"></script>
     <script src="../js/my-login.js"></script>
-
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GNVQX6Z9"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-59GNVQX6Z9');
-    </script>
+    <script src="../js/my_nav.js"></script>
+    <script src="../js/custom-toast.js"></script>
+    <script src="../js/my-common-util.js"></script>
+    <script src="../js/my-dropdown-menu.js"></script>
+    <script src="../js/my-loading-util.js"></script>
+    <script src="../js/my-footer.js"></script>
     
+    <script src="../js/my-lan-config.js"></script>
+    <script src="../js/my-lan-manager.js"></script>
+
     <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: .5;
-            }
-        }
-
-        .rotate-slow {
-            animation: rotate 15s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes float-slow{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+        @keyframes orb{0%{transform:translate(-50%,-50%) rotate(0)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+        .anim-float{animation:float-slow 4s ease-in-out infinite}
+        .anim-orb{animation:orb 18s linear infinite}
     </style>
 
+    <!-- 设置登录、初始化顶部导航、侧边栏 -->
+    <script>
+        // 设置导航条的按钮的点击事件
+        init_nav_event ("../", 1);
+
+        // 隐藏 价格布局、登录按钮、头像布局
+        document.addEventListener('DOMContentLoaded', () => {
+            const id_nav_credit_cart_layouot = document.getElementById('id_nav_credit_cart_layouot');
+            const id_btn_nav_login = document.getElementById('id_btn_nav_login');
+            const id_nav_user_info_layout = document.getElementById('id_nav_user_info_layout');
+
+            id_nav_credit_cart_layouot.classList.add('hidden');
+            id_btn_nav_login.classList.add('hidden');
+            id_nav_user_info_layout.classList.add('hidden');
+        });
+    </script>
+
+    <!-- 谷歌登录-->
     <script>
         //处理谷歌登录响应
         function handleCredentialResponse(response) {
@@ -184,7 +142,8 @@
                         // 隐藏加载状态
                         // document.getElementById('loadingState').classList.add('hidden');
                         LoadingUtil.hide(); // 使用默认提示文本
-                        window.location.href = '../';
+                        // window.location.href = '../';
+                        window.location.href = '../image-to-video/index.html';
 
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
@@ -197,85 +156,99 @@
         }
     </script>
 
+
 </head>
 
-<body class="min-h-screen gradient-bg flex items-center justify-center p-4">
-    <!-- 背景装饰 -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <!-- 左上角装饰 -->
-        <div
-            class="absolute -top-20 -left-20 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
-        </div>
-        <!-- 右下角装饰 -->
-        <div
-            class="absolute -bottom-20 -right-20 w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
-        </div>
-        <!-- 浮动图标装饰 -->
-        <div class="absolute top-1/4 left-1/4 floating">
-            <svg class="w-12 h-12 text-white/30" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14l-5-5 1.41-1.41L10 13.17l7.59-7.59L19 7l-8 10z" />
-            </svg>
-        </div>
-        <div class="absolute bottom-1/4 right-1/4 floating animation-delay-1000">
-            <svg class="w-16 h-16 text-white/20" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-            </svg>
-        </div>
-    </div>
+<body class="bg-[#0f1115] text-gray-200">
 
+    <!-- 通用顶部导航组件 -->
+    <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
+    </header>
+
+    <!-- Sidebar + Main -->
+    <div class="pt-24 mx-auto">
     <!-- 主要内容卡片 -->
-    <div
-        class="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 w-full max-w-xl mx-4 shadow-2xl border border-white/20">
-        <!-- 返回按钮 -->
-        <a href="../" class="absolute top-6 left-6 text-white/80 hover:text-white transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-        </a>
 
-        <!-- Logo和标题 -->
-        <div class="text-center mb-12">
+        <!-- Logo和标题（增强版：暗色+霓虹动效+玻璃卡片） -->
+        <div class="relative mb-12">
+            <!-- 背景霓虹渐变与发光粒子 -->
+            <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-2xl">
+                <div class="absolute left-1/3 top-0 w-[520px] h-[520px] bg-gradient-to-tr from-fuchsia-600/20 via-purple-600/15 to-indigo-500/10 blur-3xl"></div>
+                <div class="absolute right-0 top-8 w-[420px] h-[420px] bg-gradient-to-br from-sky-500/15 to-cyan-400/10 blur-3xl"></div>
+                <div class="absolute left-1/2 top-1/2 anim-orb w-80 h-80 rounded-full border border-white/5" style="transform-origin:center"></div>
+            </div>
+
+            <!-- Logo 霓虹玻璃卡片 -->
             <div class="flex justify-center mb-6">
-                <div class="relative w-24 h-24">
-                    <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-violet-500 rounded-2xl rotate-6">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-2xl rotate-3">
-                    </div>
-                    <div class="relative bg-white rounded-2xl p-4">
-                        <svg class="w-16 h-16 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <div class="relative w-28 h-28 anim-float">
+                    <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-fuchsia-600/40 to-indigo-500/40 blur-md"></div>
+                    <div class="relative rounded-2xl p-4 bg-white/5 backdrop-blur border border-white/10 shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5)]">
+                        <svg class="w-16 h-16 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                     </div>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold text-white mb-2">Welcome back to EnhancePix</h1>
-            <p class="text-white/80">Unleash your creativity and bring every picture back to life.</p>
+
+            <!-- 标题与副标题（发光） -->
+            <h1 class="text-3xl md:text-2xl font-bold text-white text-center tracking-tight">
+                欢迎登录 Seedance AI
+            </h1>
+            <p class="mt-2 text-center text-sm md:text-base text-gray-300">
+                解锁更快的生成、更清晰的画质与更稳定的创作体验。
+            </p>
         </div>
 
-        <!-- 登录按钮区域 -->
-        <div class="space-y-6">
-            <!-- 谷歌登录按钮容器 -->
-            <div class="relative flex justify-center">
-                <div id="g_id_onload"
-                    data-client_id="352749722240-9ihct6lvtbh01520dltd785633b4oo0l.apps.googleusercontent.com"
-                    data-callback="handleCredentialResponse">
-                </div>
-                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
-                    data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+        <!-- 登录按钮区域（旗舰级卡片：发光边框 + 霓虹渐变 + 徽标格子） -->
+        <div class="mx-auto max-w-xl px-4">
+            <div class="relative">
+                <!-- 渐变光晕 -->
+                <div class="absolute inset-0 rounded-[20px] bg-gradient-to-br from-fuchsia-500/20 via-indigo-500/20 to-cyan-500/20 blur-2xl -z-10"></div>
+                <!-- 主卡片 -->
+                <div class="relative rounded-[20px] p-6 md:p-8 bg-[#0c0f16]/80 backdrop-blur-xl border border-white/10 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.7)]">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.6)]"></span>
+                            <span class="text-sm text-gray-300">使用 Google 账号一键登录</span>
+                        </div>
+                        <span class="text-[11px] text-gray-400">安全加密</span>
+                    </div>
+
+                    <div class="relative flex justify-center py-2">
+                        <div id="g_id_onload"
+                            data-client_id="352749722240-9ihct6lvtbh01520dltd785633b4oo0l.apps.googleusercontent.com"
+                            data-callback="handleCredentialResponse">
+                        </div>
+                        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_black"
+                            data-text="continue_with" data-shape="pill" data-logo_alignment="left">
+                        </div>
+                    </div>
+
+                    <!-- 协议提示 -->
+                    <div class="mt-5 text-[12px] text-gray-400 leading-6 text-center">
+                        登录即表示你同意我们的
+                        <a href="../term/" class="text-gray-300 hover:text-red-400 underline underline-offset-4">服务条款</a>
+                        与
+                        <a href="../privacy/" class="text-gray-300 hover:text-red-400 underline underline-offset-4">隐私政策</a>
+                    </div>
+
+                    <!-- 卖点徽标（可选） -->
+                    <div class="mt-6 grid grid-cols-3 gap-3 text-center text-[11px] md:text-xs text-gray-400">
+                        <div class="rounded-md bg-white/5 py-2 border border-white/10">更快生成</div>
+                        <div class="rounded-md bg-white/5 py-2 border border-white/10">720P清晰</div>
+                        <div class="rounded-md bg-white/5 py-2 border border-white/10">角色一致</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 底部文字 -->
-        <p class="mt-8 text-center text-sm text-white/60">
-            By logging in, you agree to our
-            <a href=".././term" class="text-white hover:text-white/80 font-medium">Terms of Service</a>
-            和
-            <a href=".././privacy" class="text-white hover:text-white/80 font-medium">Privacy Policy</a>
-        </p>
+
+        <!-- 通用页脚组件 -->
+        <footer class="bg-[#0A0A0B] text-white mt-16 py-12 md:py-20">
+            <!-- footer.js 会将内容注入到这里 -->
+        </footer>
+
+
     </div>
 </body>
 

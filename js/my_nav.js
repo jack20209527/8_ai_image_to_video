@@ -33,7 +33,7 @@ const nav_header_content = `
             <div class="ml-auto flex items-center gap-3">
             
                 <!-- 顶部导航: 积分 -->
-                <a href="#pricing"  class="text-white cursor-pointer hover:text-white transition-colors" >
+                <a class="text-white cursor-pointer hover:text-white transition-colors" >
                     <div id="id_nav_credit_cart_layouot" class="flex items-center h-8 px-2 space-x-1 rounded-[8px] bg-[#23232b] border border-white/10 hover:bg-[#33333b]">
                         <img src="../img/credit_solid.png" alt="credit_cart" class="w-6 h-6">
                         <span id="id_nav_credit_cart_text" class="text-white text-sm">0</span>
@@ -189,7 +189,7 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 设置 导航栏的登录状态 - 初始值，必须等待dom加载完成
         refreshUser ();
-        isLoggedIn = false; // 模拟登录状态
+        // isLoggedIn = false; // 模拟登录状态
         updateUI();
         refreshJifen();
 
@@ -240,6 +240,33 @@ function init_nav_event(path_level, left_sidebar_index){
         // 点击顶部导航栏 价格
         ClickUtil.onClick('id_btn_nav_pricing', () => {
             // 显示 价格弹窗
+        });
+
+        // 点击顶部导航栏 积分布局
+        ClickUtil.onClick('id_nav_credit_cart_layouot', () => {
+            // 显示 价格弹窗
+        });
+
+        // 点击顶部导航栏 头像布局
+        ClickUtil.onClick('id_nav_user_avatar', () => {
+            // ../
+            // 选择分辨率
+            DropdownMenuUtil.init('id_nav_user_avatar', ['Blog1', 'Blog2', 'Blog3', '退出'], -190, 10, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                if(item == '价格'){
+                    window.location.href = path_level + "pricing/index.html"; // ../
+                }else if(item == '退出'){
+                    logout();
+                }
+
+                DropdownMenuUtil.hide();
+            });
+
+        });
+
+        // 点击顶部导航栏 登录
+        ClickUtil.onClick('id_btn_nav_login', () => {
+            window.location.href = path_level + "login/index.html"; // ../
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
