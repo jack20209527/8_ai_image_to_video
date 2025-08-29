@@ -27,7 +27,17 @@ class GlobalConfig {
     // static url = 'https://linkprohub.top';
     static url = 'http://localhost:39603';
 
- 
+    // 图片生成类型
+    static API_NANO = "/go/generate_nano_image"
+    static API_FLUX = "/go/kon_create"
+    
+    static TYPE_IMAGE_NANO = "0";   // 图片生成类型 nona
+    static TYPE_IMAGE_FLUX = "1";   // 图片生成类型 flux
+
+
+    static TYPE_IMAGE_TO_VIDEO = "2";
+
+
 }
 
 

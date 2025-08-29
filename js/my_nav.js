@@ -331,7 +331,7 @@ let isLoggedIn = true; // 定义变量
 let localUser = LocalStorageUtil.getUserObject();
 
 function login() {
-    window.open('./login', '_self');
+    window.open('/login', '_self');
 }
 
 function logout() {
@@ -379,6 +379,14 @@ function refreshUser () {
         console.log('本地数据为空');
         isLoggedIn = false;
     }
+}
+
+
+function refreshUserJifen(jifen) {
+    let local_user_temp = LocalStorageUtil.getUserObject();
+    local_user_temp.jifen = jifen;
+    LocalStorageUtil.saveUserObject(local_user_temp);
+    refreshJifen();
 }
 
 function refreshJifen() {
