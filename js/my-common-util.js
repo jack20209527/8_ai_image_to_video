@@ -30,12 +30,14 @@ class GlobalConfig {
     // 图片生成类型
     static API_NANO = "/go/generate_nano_image"
     static API_FLUX = "/go/kon_create"
+    static API_GET_TASK_DETAIL = "/go/v/get_task_detail"
     
     static TYPE_IMAGE_NANO = "0";   // 图片生成类型 nona
     static TYPE_IMAGE_FLUX = "1";   // 图片生成类型 flux
 
 
-    static TYPE_IMAGE_TO_VIDEO = "2";
+    static TYPE_VIDEO_VIDU_IMAGE_TO_VIDEO = "2";
+    static TYPE_VIDEO_VIDU_TEXT_TO_VIDEO = "3";
 
 
 }

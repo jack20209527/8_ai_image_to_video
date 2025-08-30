@@ -464,7 +464,7 @@
             console.log('【宽高比初始化】完成，默认 =', input.value);
         }
 
-        bindAspectRatioSelect ();
+        bindAspectRatioSelect (); 
 
         // 生成视频 按钮
         id_btn_generate.addEventListener('click', function(){
@@ -475,11 +475,224 @@
             showLoading();
             // 生成过程中禁用按钮
             setGenerateButtonState(false);
-            startGenerate  (GlobalConfig.TYPE_IMAGE_NANO); // nano类型
+            // startGenerate  (GlobalConfig.TYPE_IMAGE_NANO); // nano类型
             // startGenerate  (GlobalConfig.TYPE_IMAGE_FLUX); // flux类型
             
+            // startGenerateVideo (GlobalConfig.TYPE_VIDEO_VIDU_IMAGE_TO_VIDEO);
+            let task_id = "859077633999118336"
+            getVideoTaskDetail(task_id);
+
         });
 
+        // 生成vidu视频的，只是请求参数和url不一样
+        async function startGenerateVideo(image_type) {
+            // 仅图片生成视频面板
+            if (!isLoggedIn) { 
+                window.open('/login', '_self');
+                return; 
+            }
+
+            try {
+                // 获取提示词
+                var prompt_temp = document.getElementById('id_prompt_input');
+                var prompt = prompt_temp ? prompt_temp.value.trim() : '';
+                // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
+                // 生成美女图片
+                prompt = "让这个美女微笑，伸出手来，动作可以夸张点，表情也可以夸张点，类似哈哈大笑那种"
+                if (!prompt) { 
+                    alert('Please enter a prompt'); 
+                    return; 
+                }
+                
+                // 收集表单数据（当前页面只有图生视频）
+                var hasFile = fileInput && fileInput.files && fileInput.files[0];
+                var aspect_ratio_temp = document.getElementById('id_input_aspect_ratio');
+                var aspectRatio = aspect_ratio_temp ? aspect_ratio_temp.value : '';
+                var resolution = (document.getElementById('id_text_resolution')||{}).innerText || '';
+                var duration = (document.getElementById('id_text_duration')||{}).innerText || '';
+
+                // 如果是图生图，就要判断这个
+                // if (!hasFile) { 
+                //     alert('Please upload a reference image'); 
+                //     return; 
+                // }
+
+                // 显示加载状态
+                LoadingUtil.show('Generating', 'AI is creating your product, please wait...');
+
+                // 准备表单数据
+                const formData = new FormData();
+
+                // 检查是否有文件被选择
+                if (hasFile) {
+                    formData.append('file', fileInput.files[0]);
+                    console.log("图片已选择并添加到 FormData");
+                } else {
+                    console.log("没有选择图片，使用提示词生成");
+                }
+
+                let jsonData = {
+                                "opt": "3", // 3:图生视频  2:文生视频
+                                "uid": localUser ? localUser.uid : 0,
+                                "project_id": GlobalConfig.project_id,
+                                "product_id": GlobalConfig.product_id,
+                                "device_info": "6789",
+                                "t": "0",
+                };
+
+                if (image_type == GlobalConfig.TYPE_VIDEO_VIDU_TEXT_TO_VIDEO) {
+                    jsonData['prompt'] = prompt;
+                    
+                } else if (image_type == GlobalConfig.TYPE_VIDEO_VIDU_IMAGE_TO_VIDEO) {
+                    jsonData["prompt"] = prompt;
+                    jsonData["model"] = "flux-kontext-pro";
+                    jsonData["image_aspect_ratio"] = "1:1";
+                    jsonData["image_output_format"] = 'jpeg';
+                    jsonData["image_safety_tolerance"] = 2;
+                    jsonData["seed"] = 0;
+                    jsonData["prompt_upsampling"] = false;
+                }
+
+                formData.append('param', JSON.stringify(jsonData));
+
+                console.log('请求的参数 :: ', JSON.stringify(jsonData));
+
+                // 创建视频接口: VEO3 
+                // const response = await fetch(GlobalConfig.url + "/go/v/cr", { method: 'POST', body: formData });
+                
+                let api_text = "/go/v_video";
+                // if (image_type == GlobalConfig.TYPE_IMAGE_NANO) {
+                //     api_text = GlobalConfig.API_NANO;
+                // } else if (image_type == GlobalConfig.TYPE_IMAGE_FLUX) {
+                //     api_text = GlobalConfig.API_NANO;
+                // }
+
+                // 创建 nano 的图片接口
+                const response = await fetch(GlobalConfig.url + api_text, { 
+                    method: 'POST', 
+                    body: formData
+                });
+                const result = await response.json();
+                console.log("Processing result:", result);
+
+                if (response.ok && result.code === 200) {
+                    // 兜底解析可播放地址
+                    var data = result.data || {};
+                    var url = data.result_url;
+                    console.log('url :: ', url);
+                    if (url) {
+                        showSuccess(url);
+
+                        if (data.jifen) {
+                            console.log(`积分已更新: ${data.jifen}`);
+                            refreshUserJifen (data.jifen);
+                        }
+
+                    } else {
+                        showError();
+                        alert('Generation succeeded but no playable url returned');
+                    }
+                } else if (result.code === 1000018) {
+                    alert('Insufficient credits, please recharge');
+                    showError();
+                } else {
+                    console.log(result.msg || 'Processing failed');
+                    showError();
+                    alert('Video generation failed: ' + (result.msg || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Processing failed:', error);
+                showError();
+                alert('Video generation failed: ' + error.message);
+            } finally {
+                LoadingUtil.hide();
+                setGenerateButtonState(true);
+            }
+        }
+   
+       // 生成vidu视频的，只是请求参数和url不一样
+       async function getVideoTaskDetail (task_id) {
+            // 仅图片生成视频面板
+            if (!isLoggedIn) { 
+                window.open('/login', '_self');
+                return; 
+            }
+
+            try {
+                console.log("开始获取任务详情了.")
+
+                let localUser = LocalStorageUtil.getUserObject();
+                console.log('localUser: ', localUser);
+                console.log(localUser == null);
+
+                let jsonData = {
+                                "opt": "0", // 3:图生视频  2:文生视频
+                                "uid": localUser ? localUser.uid : 0,
+                                "project_id": GlobalConfig.project_id,
+                                "product_id": GlobalConfig.product_id,
+                                "device_info": "6789",
+                                "t": "0",
+                                "task_id": task_id,
+                };
+
+                const jsonString = JSON.stringify(jsonData);
+                console.log("请求的参数 :: " + jsonString);
+
+                let api_text = GlobalConfig.API_GET_TASK_DETAIL;
+
+                               // 创建 nano 的图片接口
+                const response = await fetch(GlobalConfig.url + api_text, { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonString
+                });
+                const result = await response.json();
+                console.log("Processing result:", result);
+
+                if (response.ok && result.code === 200) {
+                    // 兜底解析可播放地址
+                    var data = result.data || {};
+
+                    var status = data.status;
+                    var task_id_temp = data.task_id;
+                    var video_url = data.video_url;
+
+                    console.log('status :: ', status);
+                    console.log('task_id_temp :: ', task_id_temp);
+                    console.log('video_url :: ', video_url);
+                    if (video_url) {
+                        showSuccess(video_url);
+
+                        if (data.jifen) {
+                            console.log(`积分已更新: ${data.jifen}`);
+                            refreshUserJifen (data.jifen);
+                        }
+
+                    } else {
+                        showError();
+                        console.log("播放地址为空了")
+                    }
+                } else if (result.code === 1000018) {
+                    showError();
+                    console.log("金额不足")
+                } else {
+                    showError();
+                    console.log(result.msg || 'Processing failed');
+                }
+
+            } catch (error) {
+                console.error('Processing failed:', error);
+                showError();
+                alert('Video generation failed: ' + error.message);
+            } finally {
+                LoadingUtil.hide();
+                console.log("获取任务详情完成");
+                // setGenerateButtonState(true);
+            }
+        }
+    
         // nano 和 flux请求，只是请求参数和url不一样
         async function startGenerate(image_type) {
             // 仅图片生成视频面板
@@ -530,7 +743,6 @@
                 let jsonData = {
                                 "opt": "0", // 0:generate_nano_image,   1: 图片转视频的时候veo这个opt不管用。
                                 "uid": localUser ? localUser.uid : 0,
-                                "my_token": localUser ? localUser.token : "",
                                 "project_id": GlobalConfig.project_id,
                                 "product_id": GlobalConfig.product_id,
                                 "device_info": "6789",
@@ -541,7 +753,7 @@
                     jsonData['prompt'] = prompt;
                     
                 } else if (image_type == GlobalConfig.TYPE_IMAGE_FLUX) {
-                    jsonData["image_prompt"] = prompt;
+                    jsonData["prompt"] = prompt;
                     jsonData["model"] = "flux-kontext-pro";
                     jsonData["image_aspect_ratio"] = "1:1";
                     jsonData["image_output_format"] = 'jpeg';
