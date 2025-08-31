@@ -475,12 +475,13 @@
             showLoading();
             // 生成过程中禁用按钮
             setGenerateButtonState(false);
-            // startGenerate  (GlobalConfig.TYPE_IMAGE_NANO); // nano类型
-            // startGenerate  (GlobalConfig.TYPE_IMAGE_FLUX); // flux类型
-            
-            // startGenerateVideo (GlobalConfig.TYPE_VIDEO_VIDU_IMAGE_TO_VIDEO);
-            let task_id = "859077633999118336"
-            getVideoTaskDetail(task_id);
+                         // startGenerate  (GlobalConfig.TYPE_IMAGE_NANO); // nano类型
+             // startGenerate  (GlobalConfig.TYPE_IMAGE_FLUX); // flux类型
+             
+             // startGenerateVideo (GlobalConfig.TYPE_VIDEO_VIDU_IMAGE_TO_VIDEO);
+             let task_id = "859077633999118336"
+             // 开始循环请求任务详情，间隔3秒，最多请求20次
+             startTaskDetailLoop(task_id, 3, 4);
 
         });
 
@@ -610,8 +611,52 @@
             }
         }
    
-       // 生成vidu视频的，只是请求参数和url不一样
-       async function getVideoTaskDetail (task_id) {
+               // 循环请求任务详情的定时器ID
+        var taskDetailTimer = null;
+        var taskDetailCount = 0; // 当前请求次数
+
+        // 循环获取任务详情的函数
+        function startTaskDetailLoop(task_id, intervalSeconds = 6, maxCount = 20) {
+            // 停止之前的循环
+            stopTaskDetailLoop();
+            
+            console.log(`【任务详情循环】开始循环请求，间隔${intervalSeconds}秒，最大次数${maxCount}次`);
+            
+            // 重置计数器
+            taskDetailCount = 0;
+            
+            // 立即执行一次
+            getVideoTaskDetail(task_id);
+            
+            // 设置定时器循环执行
+            taskDetailTimer = setInterval(function() {
+                taskDetailCount++;
+                console.log(`【任务详情循环】第${taskDetailCount}次请求`);
+                
+                // 检查是否超过最大次数
+                if (taskDetailCount >= maxCount) {
+                    console.log(`【任务详情循环】达到最大次数${maxCount}，停止循环`);
+                    stopTaskDetailLoop();
+                    return;
+                }
+                
+                // 执行请求
+                getVideoTaskDetail(task_id);
+
+            }, intervalSeconds * 1000);
+        }
+
+        // 停止循环请求的函数
+        function stopTaskDetailLoop() {
+            if (taskDetailTimer) {
+                clearInterval(taskDetailTimer);
+                taskDetailTimer = null;
+                console.log(`【任务详情循环】已停止循环请求`);
+            }
+        }
+
+        // 获取任务详情的函数（修改为支持循环控制）
+        async function getVideoTaskDetail(task_id) {
             // 仅图片生成视频面板
             if (!isLoggedIn) { 
                 window.open('/login', '_self');
@@ -655,37 +700,54 @@
                     // 兜底解析可播放地址
                     var data = result.data || {};
 
-                    var status = data.status;
+                    var status = data.status; // "0":生成中，"1":成功，"2":失败
                     var task_id_temp = data.task_id;
                     var video_url = data.video_url;
 
                     console.log('status :: ', status);
                     console.log('task_id_temp :: ', task_id_temp);
                     console.log('video_url :: ', video_url);
-                    if (video_url) {
-                        showSuccess(video_url);
+                    
+                    // 检查状态，如果生成成功则停止循环
+                    if (status === "1") {
+                        console.log("【任务详情循环】生成成功，停止循环请求");
+                        stopTaskDetailLoop();
+                        
+                        if (video_url) {
+                            showSuccess(video_url);
 
-                        if (data.jifen) {
-                            console.log(`积分已更新: ${data.jifen}`);
-                            refreshUserJifen (data.jifen);
+                            if (data.jifen) {
+                                console.log(`积分已更新: ${data.jifen}`);
+                                refreshUserJifen(data.jifen);
+                            }
+                        } else {
+                            showError();
+                            console.log("播放地址为空了")
                         }
-
-                    } else {
+                    } else if (status === "2") {
+                        // 生成失败，停止循环
+                        console.log("【任务详情循环】生成失败，停止循环请求");
+                        stopTaskDetailLoop();
                         showError();
-                        console.log("播放地址为空了")
+                    } else {
+                        // status === "0" 生成中，继续循环
+                        console.log("【任务详情循环】生成中，继续等待...");
                     }
                 } else if (result.code === 1000018) {
                     showError();
                     console.log("金额不足")
+                    stopTaskDetailLoop();
                 } else {
                     showError();
                     console.log(result.msg || 'Processing failed');
+                    stopTaskDetailLoop();
                 }
 
             } catch (error) {
                 console.error('Processing failed:', error);
                 showError();
                 alert('Video generation failed: ' + error.message);
+                stopTaskDetailLoop();
             } finally {
                 LoadingUtil.hide();
                 console.log("获取任务详情完成");
