@@ -41,13 +41,13 @@
     <!-- 设置登录、初始化顶部导航、侧边栏 -->
     <script>
         // 设置导航条的按钮的点击事件
-        init_nav_event ("../", 1);
+        init_nav_event ("../", 2);
 
         // 以下是自身页面的点击
         document.addEventListener('DOMContentLoaded', () => {
 
             // 选择模型 
-            DropdownMenuUtil.init('id_btn_model', ['On-premise Model'], 0, 1, 220, (item, index) => {
+            DropdownMenuUtil.init('id_btn_model', ['Flux Kontext Pro', 'Flux Kontext Max', 'Nano Banana'], 0, 1, 220, (item, index) => {
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_model');
                 text.innerHTML = item;
@@ -83,7 +83,7 @@
                             <label class="block text-sm text-gray-300 mb-1">选择模型</label>
                             <div class="relative mt-2 w-full sm:w-40">
                                 <button id="id_btn_model" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
-                                    <span id="id_text_model">On-Ppremise Model</span>
+                                    <span id="id_text_model">Google VOE3</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
                             </div>
@@ -344,7 +344,7 @@
     </div>
 
     <!-- 处理交互和请求 -->
-    <script src="../js/api_image_to_video.js"></script>
+    <script src="../js/api_text_to_image.js"></script>
 
 </body>
 </html>

@@ -13,15 +13,11 @@
     <link rel="canonical" href="https://flux-kontext-ai.org"/>
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     
-    <script src="../js/my-common-util.js"></script>
-    <script>
-        global_type = GlobalConfig.TYPE_PAGE_IMAGE_TO_VIDEO;
-    </script>
-
     <script src="../js/my-local-storage-util.js"></script>
     <script src="../js/my-login.js"></script>
     <script src="../js/my_nav.js"></script>
     <script src="../js/custom-toast.js"></script>
+    <script src="../js/my-common-util.js"></script>
     <script src="../js/my-dropdown-menu.js"></script>
     <script src="../js/my-loading-util.js"></script>
     <script src="../js/my-footer.js"></script>
@@ -47,13 +43,28 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // 选择模型 
-            DropdownMenuUtil.init('id_btn_model', ['On-premise Model'], 0, 1, 220, (item, index) => {
+            DropdownMenuUtil.init('id_btn_model', ['Google VOE3', 'Vidu', 'RunWay Gen-4'], 0, 1, 220, (item, index) => {
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_model');
                 text.innerHTML = item;
                 DropdownMenuUtil.hide();
             });
 
+            // 选择分辨率
+            DropdownMenuUtil.init('id_btn_resolution', ['480p', '960p', '1024p'], 0, 1, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                var text = document.getElementById('id_text_resolution');
+                text.innerHTML = item;
+                DropdownMenuUtil.hide();
+            });
+
+            // 选择时长
+            DropdownMenuUtil.init('id_btn_duration', ['5s', '10s', '30s'], 0, 1, 220, (item, index) => {
+                console.log(`选择了: ${item}, 索引: ${index}  `);
+                var text = document.getElementById('id_text_duration');
+                text.innerHTML = item;
+                DropdownMenuUtil.hide();
+            });
         });
     </script>
 
@@ -83,7 +94,7 @@
                             <label class="block text-sm text-gray-300 mb-1">选择模型</label>
                             <div class="relative mt-2 w-full sm:w-40">
                                 <button id="id_btn_model" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
-                                    <span id="id_text_model">On-Ppremise Model</span>
+                                    <span id="id_text_model">Google VOE3</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
                             </div>
@@ -118,6 +129,30 @@
                         <div class="mt-4">
                             <label class="block text-sm text-gray-300 mb-1">输入提示词</label>
                             <textarea id="id_prompt_input" rows="6" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
+                        </div>
+
+                        <!-- 选择分辨率 -->
+                        <div class="mt-4">
+                            <label class="block text-sm text-gray-300 mb-1">选择分辨率</label>
+                            <div class="relative w-full sm:w-40">
+                                <!-- 触发按钮：宽度继承容器，右侧箭头 -->
+                                <button id="id_btn_resolution" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
+                                    <span id="id_text_resolution">480p</span>
+                                    <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 选择时长 -->
+                        <div class="mt-4">
+                            <label class="block text-sm text-gray-300 mb-1">选择时长</label>
+                            <div class="relative w-full sm:w-40">
+                                <!-- 触发按钮：宽度继承容器，右侧箭头 -->
+                                <button id="id_btn_duration" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
+                                    <span id="id_text_duration">5s</span>
+                                    <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- 选择宽高比（与图片一致的卡片式样式） -->
@@ -344,7 +379,7 @@
     </div>
 
     <!-- 处理交互和请求 -->
-    <script src="../js/api_image_to_video.js"></script>
+    <script src="../js/my_v_api.js"></script>
 
 </body>
 </html>
