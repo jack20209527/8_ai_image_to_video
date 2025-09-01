@@ -99,7 +99,11 @@ window.DropdownMenuUtil = class DropdownMenuUtil {
     
             menuItem.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (options.onSelect) { options.onSelect(item, index); }
+                console.log(`[DropdownMenuUtil] 点击菜单项: ${item}, 索引: ${index}`);
+                console.log(`[DropdownMenuUtil] options.onSelect: ${options.onSelect}`);
+                if (options.onSelect) { 
+                    options.onSelect(item, index); 
+                }
                 this.hide();
             });
     

@@ -23,7 +23,7 @@ const nav_header_content = `
                 <button id="id_btn_nav_blog" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     博客
                 </button>
-                <button id="id_btn_nav_my_works" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
+                <button id="id_btn_nav_my_creations" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     我的创作
                 </button>
                 <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
@@ -208,8 +208,8 @@ function init_nav_event(path_level, left_sidebar_index){
         }
 
         // 悬停即显示：AI 视频
-        DropdownMenuUtil.init('id_btn_nav_video', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
-            console.log(`选择了: ${item}, 索引: ${index}  `);
+        DropdownMenuUtil.init('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index) => {
+            console.log(`选择了11111: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
         }, () => { rotateArrow('id_btn_nav_video', false); });
         (function(){
@@ -217,14 +217,24 @@ function init_nav_event(path_level, left_sidebar_index){
             if(btn){
                 btn.addEventListener('mouseenter', function(){
                     rotateArrow('id_btn_nav_video', true);
-                    DropdownMenuUtil.show('id_btn_nav_video', ['Blog1','Blog2','Blog3'], 0, 8, 200, (item, index)=>{ DropdownMenuUtil.hide(); }, ()=>{ rotateArrow('id_btn_nav_video', false); });
+                    DropdownMenuUtil.show('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index)=>{ 
+                        if  (index == 0) {
+                            window.location.href = "/text-to-video"; // ../
+                        } else if (index == 1) {
+                            window.location.href = "/image-to-video"; // ../
+                        }
+                        console.log(`选择了3333333: ${item}, 索引: ${index}  `);
+                        DropdownMenuUtil.hide(); 
+                    }, ()=>{ r
+                        rotateArrow('id_btn_nav_video', false); 
+                    });
                 });
             }
         })();
 
         // 悬停即显示：AI 图片
-        DropdownMenuUtil.init('id_btn_nav_image', ['Blog1', 'Blog2', 'Blog3'], 0, 8, 200, (item, index) => {
-            console.log(`选择了: ${item}, 索引: ${index}  `);
+        DropdownMenuUtil.init('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, (item, index) => {
+            console.log(`2222222 选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
         }, () => { rotateArrow('id_btn_nav_image', false); });
         (function(){
@@ -232,7 +242,17 @@ function init_nav_event(path_level, left_sidebar_index){
             if(btn){
                 btn.addEventListener('mouseenter', function(){
                     rotateArrow('id_btn_nav_image', true);
-                    DropdownMenuUtil.show('id_btn_nav_image', ['Blog1','Blog2','Blog3'], 0, 8, 200, (item, index)=>{ DropdownMenuUtil.hide(); }, ()=>{ rotateArrow('id_btn_nav_image', false); });
+                    DropdownMenuUtil.show('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, (item, index)=>{ 
+                        if  (index == 0) {
+                            window.location.href = "/text-to-image"; // ../
+                        } else if (index == 1) {
+                            window.location.href = "/image-to-image"; // ../
+                        }
+                        DropdownMenuUtil.hide(); 
+                    }, ()=>{ 
+                        rotateArrow('id_btn_nav_image', false); 
+                        console.log(`选择了: ${item}, 索引: ${index}  `);
+                    });
                 });
             }
         })();
@@ -242,14 +262,19 @@ function init_nav_event(path_level, left_sidebar_index){
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
 
-        // 点击顶部导航栏 博客
-        ClickUtil.onClick('id_btn_nav_blog', () => {
+        // 点击顶部导航栏 探索
+        ClickUtil.onClick('id_btn_nav_see', () => {
             window.location.href = path_level + "text-to-video/index.html"; // ../
         });
 
+        // 点击顶部导航栏 博客
+        ClickUtil.onClick('id_btn_nav_blog', () => {
+            window.location.href = "/blog"; // ../
+        });
+
         // 点击顶部导航栏 我的创作
-        ClickUtil.onClick('id_btn_nav_my_works', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+        ClickUtil.onClick('id_btn_nav_my_creations', () => {
+            window.location.href = "/my-creations"; // ../
         });
 
         // 点击顶部导航栏 价格
@@ -276,41 +301,41 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 点击顶部导航栏 登录
         ClickUtil.onClick('id_btn_nav_login', () => {
-            window.location.href = path_level + "login/index.html"; // ../
+            window.location.href = "/login"; // ../
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
         //点击左侧导航: 文生视频
         ClickUtil.onClick('id_btn_sidebar_text_to_video', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+            window.location.href = "/text-to-video"; // ../
         });
         //点击左侧导航: 图生视频
         ClickUtil.onClick('id_btn_sidebar_image_to_video', () => {
-            window.location.href = path_level + "image-to-video/index.html";
+            window.location.href = "/image-to-video";
         });
 
         //点击左侧导航: 文生图
         ClickUtil.onClick('id_btn_sidebar_text_to_image', () => {
-            window.location.href = path_level + "text-to-image/index.html"; // ../
+            window.location.href = "/text-to-image"; // ../
         });
         //点击左侧导航: 图生图
         ClickUtil.onClick('id_btn_sidebar_image_to_image', () => {
-            window.location.href = path_level + "image-to-image/index.html";
+            window.location.href = "/image-to-image";
         });
 
         // 点击左侧导航 探索
         ClickUtil.onClick('id_btn_sidebar_see', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+            window.location.href = "/text-to-video"; // ../
         });
 
         // 点击左侧导航 博客
         ClickUtil.onClick('id_btn_sidebar_blog', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+            window.location.href = "/blog"; // ../
         });
 
         // 点击左侧导航 我的创作
         ClickUtil.onClick('id_btn_sidebar_my_works', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+            window.location.href = "/my-creations"; // ../
         });
 
         // 点击左侧导航 价格
