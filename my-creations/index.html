@@ -43,18 +43,6 @@
         // 设置导航条的按钮的点击事件
         init_nav_event ("../", 6);
 
-        // 以下是自身页面的点击
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // 选择模型 
-            DropdownMenuUtil.init('id_btn_model', ['On-premise Model'], 0, 1, 220, (item, index) => {
-                console.log(`选择了: ${item}, 索引: ${index}  `);
-                var text = document.getElementById('id_text_model');
-                text.innerHTML = item;
-                DropdownMenuUtil.hide();
-            });
-
-        });
     </script>
 
 </head>
@@ -87,6 +75,78 @@
                     </button>
                 </div>
 
+
+                <!-- 加载中布局 -->
+                <div id="id_loading_state_layout" class="flex flex-col items-center justify-center min-h-[400px] bg-[#1a1d26] rounded-md mt-4 p-6">
+                    <div class="relative" style="width: 420px; height: 220px;">
+                        <!-- 背景光晕效果（冷色系，暗色风格） -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#2563EB]/25 via-[#06B6D4]/20 to-[#1E293B]/20 rounded-2xl blur-xl"></div>
+                        
+                        <!-- 主容器（玻璃拟态 + 暗色） -->
+                        <div class="relative w-full h-full bg-[#0b0e13]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 overflow-hidden shadow-[0_20px_80px_-20px_rgba(0,0,0,0.7)]">
+                            <!-- 动态背景细纹与渐变流动 -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-[#06B6D4]/10 animate-gradient"></div>
+                            <div class="absolute inset-0 bg-grid opacity-10"></div>
+        
+                            <!-- 内容区域 -->
+                            <div class="relative flex flex-col items-center justify-center h-full select-none">
+                                <!-- 加载动画（中心图标 + 环绕小点） -->
+                                <div class="relative mb-4">
+                                    <!-- 外环发光圈 -->
+                                    <div class="absolute -inset-3 rounded-full bg-gradient-to-tr from-blue-500/20 to-cyan-400/20 blur-xl"></div>
+                                    <!-- 旋转环 -->
+                                    <div class="w-16 h-16 rounded-full border-2 border-transparent loading-spinner" style="border-top-color:#60A5FA;border-bottom-color:#22D3EE"></div>
+                                    <!-- 中心图标 -->
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-300 opacity-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="M7 17l10-10"/></svg>
+                                    </div>
+                                    <!-- 环绕小点（旋转） -->
+                                    <div class="absolute inset-0 orbit">
+                                        <span class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-400"></span>
+                                        <span class="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                                        <span class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400"></span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 文字区域 -->
+                                <div class="text-center">
+                                    <p class="text-[18px] font-semibold text-white mb-1">Your Creations Is Loading...</p>
+                                    <p class="text-gray-400 text-[13px]">您的的作品正在加载中，请稍后...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 空状态布局 -->
+                <div id="id_empty_state_layout" class="hidden flex flex-col items-center justify-center min-h-[400px] bg-[#1a1d26] rounded-md mt-4 p-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-full blur-xl opacity-70 animate-pulse"></div>
+                        <div class="relative w-28 h-28 glass rounded-full flex items-center justify-center">
+                            <svg class="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="mt-6 text-2xl font-bold text-white">没有可展示的作品</h2>
+                    <p class="mt-2 text-gray-400 text-center max-w-sm">
+                        开始创建您的第一个 AI 增强图像，让普通照片焕发新生。
+                    </p>
+                    <button onclick="window.location.href='../'" class="mt-6 px-8 py-3 bg-gradient-to-r from-[#FF3366] to-[#ff0000] text-white rounded-full font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                        立即创建
+                    </button>
+                    <div class="mt-4 text-gray-500">
+                        <p>您可以通过以下方式开始：</p>
+                        <ul class="list-disc list-inside">
+                            <li>上传您的图片</li>
+                            <li>选择视频模板</li>
+                            <li>使用我们的 AI 工具进行创作</li>
+                        </ul>
+                    </div>
+                </div>
+
+
                 <!-- 网格展示作品 -->
                 <div id="grid_container" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- 作品项将通过 JavaScript 动态添加 -->
@@ -101,8 +161,6 @@
         </div>
     </div>
 
-    <!-- 处理交互和请求 -->
-    <script src="../js/api_image_to_video.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -128,100 +186,185 @@
                 loadVideos(); // 加载视频作品
             });
 
-            // 设置按钮为选中状态
-            function setActiveButton(button) {
-                button.classList.add('bg-[#333]', 'text-red-500');
-                button.querySelector('svg').classList.add('text-red-500');
-                button.querySelector('svg').classList.remove('text-slate-400');
-                button.querySelector('span').classList.add('text-red-500');
-                button.querySelector('span').classList.remove('text-slate-400');
-            }
-
-            // 设置按钮为未选中状态
-            function setInactiveButton(button) {
-                button.classList.remove('bg-[#333]', 'text-red-500');
-                button.classList.add('bg-[#1a1d26]', 'text-slate-400');
-                button.querySelector('svg').classList.remove('text-red-500');
-                button.querySelector('svg').classList.add('text-slate-400');
-                button.querySelector('span').classList.remove('text-red-500');
-                button.querySelector('span').classList.add('text-slate-400');
-            }
 
 
-            // 点击图片按钮
-            ClickUtil.onClick('id_btn_my_creations_images', () => {
-                loadImages();
-            });
-
-            // 点击视频按钮
-            ClickUtil.onClick('id_btn_my_creations_videos', () => {
-                loadVideos();
-            });
-
+            const loadingState = document.getElementById('id_loading_state_layout');
+            const emptyState = document.getElementById('id_empty_state_layout');
             const gridContainer = document.getElementById('grid_container');
-            const btnShowImages = document.getElementById('id_btn_show_images');
-            const btnShowVideos = document.getElementById('id_btn_show_videos');
 
             // 默认加载图片作品
-            loadImages();
-
-            // 点击图片按钮
-            btnShowImages.addEventListener('click', () => {
-                loadImages();
-                btnShowImages.classList.add('bg-[#333]');
-                btnShowVideos.classList.remove('bg-[#333]');
-            });
-
-            // 点击视频按钮
-            btnShowVideos.addEventListener('click', () => {
-                loadVideos();
-                btnShowVideos.classList.add('bg-[#333]');
-                btnShowImages.classList.remove('bg-[#333]');
-            });
+            // loadImages();
 
             // 加载图片作品
             function loadImages() {
+
                 gridContainer.innerHTML = ''; // 清空当前内容
-                // 这里可以通过接口获取图片数据
-                const images = [
-                    { url: 'image1.jpg', title: '作品1' },
-                    { url: 'image2.jpg', title: '作品2' },
-                    // 更多图片...
-                ];
-                images.forEach(image => {
-                    const item = document.createElement('div');
-                    item.className = 'bg-[#1a1d26] rounded-md overflow-hidden';
-                    item.innerHTML = `
-                        <img src="${image.url}" alt="${image.title}" class="w-full h-auto">
-                        <div class="p-2 text-center text-white">${image.title}</div>
-                    `;
-                    gridContainer.appendChild(item);
+                loadingState.classList.remove('hidden'); // 显示加载状态
+
+                fetchImages().then(images => {
+
+                    loadingState.classList.add('hidden'); // 隐藏加载状态
+
+                    if (images.length === 0) {
+                        emptyState.classList.remove('hidden'); // 显示空状态
+                    } else {
+                        emptyState.classList.add('hidden'); // 隐藏空状态
+                        images.forEach(image => {
+                            const item = createImageCard(image);
+                            gridContainer.insertAdjacentHTML('beforeend', item);
+                        });
+                    }
+                }).catch(error => {
+                    console.error('加载图片失败:', error);
+                    loadingState.classList.add('hidden'); // 隐藏加载状
+                    emptyState.classList.remove('hidden'); // 显示空状态
                 });
             }
+
+
+            // 创建图片卡片HTML
+            function createImageCard(image) {
+                return `
+                    <div class="image-card bg-white/5 backdrop-blur-lg rounded-lg overflow-hidden group cursor-pointer"
+                        onclick="window.open('${image.generatedUrl}', '_blank')">
+                        <div class="relative aspect-w-4 aspect-h-3">
+                            <img src="${image.generatedUrl}" 
+                                alt="AI generated image" 
+                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        </div>
+                        <div class="p-2 text-center text-white">
+                            <h3 class="text-lg font-semibold">${image.title}</h3>
+                            <p class="text-sm text-gray-400">${image.description}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // fetchImages 函数
+            async function fetchImages(page = 1) {
+                return new Promise((resolve, reject) => {
+                    get_more_images((images, totalPages, error) => {
+                        if (error) {
+                            console.error('获取图片失败:', error);
+                            reject(error);
+                            return;
+                        }
+
+                        if (!images || images.length === 0) {
+                            resolve([]);
+                            return;
+                        }
+
+                        // 转换数据格式以匹配现有的展示逻辑
+                        const formattedImages = images.map(image => ({
+                            id: image.id || Math.random().toString(36).substr(2, 9),
+                            imageUrl: image.image_original, // 使用原图
+                            generatedUrl: image.image_generated, // 生成的图片
+                            title: 'Image Enhancement',
+                            description: 'Use AI to enhance the quality of the photo',
+                            createTime: image.created_at || new Date().toLocaleString(),
+                            status: 'completed'
+                        }));
+
+                        resolve(formattedImages);
+                    });
+                });
+            }
+
 
             // 加载视频作品
             function loadVideos() {
                 gridContainer.innerHTML = ''; // 清空当前内容
-                // 这里可以通过接口获取视频数据
-                const videos = [
-                    { url: 'video1.mp4', title: '视频1' },
-                    { url: 'video2.mp4', title: '视频2' },
-                    // 更多视频...
-                ];
-                videos.forEach(video => {
-                    const item = document.createElement('div');
-                    item.className = 'bg-[#1a1d26] rounded-md overflow-hidden';
-                    item.innerHTML = `
-                        <video controls class="w-full h-auto">
-                            <source src="${video.url}" type="video/mp4">
-                            您的浏览器不支持视频标签。
-                        </video>
-                        <div class="p-2 text-center text-white">${video.title}</div>
-                    `;
-                    gridContainer.appendChild(item);
+                loadingState.classList.remove('hidden'); // 显示加载状态
+
+                fetchVideos().then(videos => {
+
+                    loadingState.classList.add('hidden'); // 隐藏加载状态
+
+                    if (videos.length === 0) {
+                        emptyState.classList.remove('hidden'); // 显示空状态
+                    } else {
+                        emptyState.classList.add('hidden'); // 隐藏空状态
+                        videos.forEach(video => {
+                            
+                        const item = document.createElement('div');
+                        
+                        item.className = 'bg-[#1a1d26] rounded-md overflow-hidden';
+                        item.innerHTML = `
+                            <video controls class="w-full h-auto">
+                                <source src="${video.generatedUrl}" type="video/mp4">
+                                您的浏览器不支持视频标签。
+                            </video>
+                            <div class="p-2 text-center text-white">${video.title}</div>
+                        `;
+                        gridContainer.appendChild(item);
+
+                    });
+                    }
+                    }).catch(error => {
+                    console.error('加载图片失败:', error);
+                    loadingState.classList.add('hidden'); // 隐藏加载状
+                    emptyState.classList.remove('hidden'); // 显示空状态
                 });
             }
+
+
+            async function fetchVideos(page = 1) {
+                return new Promise((resolve, reject) => {
+                    get_more_videos((videos, totalPages, error) => {
+                        if (error) {
+                            console.error('获取图片失败:', error);
+                            reject(error);
+                            return;
+                        }
+
+                        if (!videos || videos.length === 0) {
+                            resolve([]);
+                            return;
+                        }
+
+                        // 转换数据格式以匹配现有的展示逻辑
+                        const formattedImages = videos.map(video => ({
+                            id: video.video_id || Math.random().toString(36).substr(2, 9),
+                            // imageUrl: video.image_original, // 使用原图
+                            generatedUrl: video.video_url, // 生成的图片
+                            title: 'Image Enhancement',
+                            description: 'Use AI to enhance the quality of the photo',
+                            createTime: video.create_at || new Date().toLocaleString(),
+                            status: 'completed'
+                        }));
+
+                        console.log("formattedImages", formattedImages);
+
+                        resolve(formattedImages);
+                    });
+                });
+            }
+
+
         });
+
+
+
+
+        // 设置按钮为选中状态
+        function setActiveButton(button) {
+            button.classList.add('bg-[#333]', 'text-red-500');
+            button.querySelector('svg').classList.add('text-red-500');
+            button.querySelector('svg').classList.remove('text-slate-400');
+            button.querySelector('span').classList.add('text-red-500');
+            button.querySelector('span').classList.remove('text-slate-400');
+        }
+
+        // 设置按钮为未选中状态
+        function setInactiveButton(button) {
+            button.classList.remove('bg-[#333]', 'text-red-500');
+            button.classList.add('bg-[#1a1d26]', 'text-slate-400');
+            button.querySelector('svg').classList.remove('text-red-500');
+            button.querySelector('svg').classList.add('text-slate-400');
+            button.querySelector('span').classList.remove('text-red-500');
+            button.querySelector('span').classList.add('text-slate-400');
+        }
     </script>
 
 </body>
