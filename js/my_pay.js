@@ -128,7 +128,7 @@ function initAllPayPalButton (request_param_create_order, button_container) {
 // 动态获取本地用户信息并构建PayPal参数
 function getCurrentUserPayParam(defaultParam) {
 
-    let localUser = LocalStorageUtil.getUserObject();
+    localUser = LocalStorageUtil.getUserObject();
     console.log("开始刷新支付组件了.")
     console.log('localUser: ', localUser);
     console.log(localUser == null);
@@ -158,7 +158,7 @@ function getCurrentUserPayParam(defaultParam) {
     return defaultParam;
 }
 
-let localUser = LocalStorageUtil.getUserObject();
+localUser = LocalStorageUtil.getUserObject();
 console.log("开始刷新支付组件了.")
 console.log('localUser: ', localUser);
 console.log(localUser == null);
@@ -253,7 +253,7 @@ function startPolling(order_id) {
 
 function get_user_info_by_order_id(order_id) {
 
-    let localUser = LocalStorageUtil.getUserObject();
+    localUser = LocalStorageUtil.getUserObject();
     console.log("开始刷新支付组件了.")
     console.log('localUser: ', localUser);
     console.log(localUser == null);
@@ -303,7 +303,7 @@ function get_user_info_by_order_id(order_id) {
               console.log("正在保存");
   
                 // 获取 JSON 对象
-                const localUser = LocalStorageUtil.getUserObject();
+                localUser = LocalStorageUtil.getUserObject();
                 if (localUser) {
                     console.log('本地数据:', localUser.uid);
                     console.log('本地数据:', localUser.project_id);

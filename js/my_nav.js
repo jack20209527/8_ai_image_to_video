@@ -1,11 +1,21 @@
 // 顶部导航栏、移动适配菜单、左侧边栏
+// <span class="text-[#6aa7ff]">Seedance</span>
+// <span class="text-white">AI</span>
 
 // 页面顶部导航栏布局内容
 const nav_header_content = `
         <div class="mx-auto h-full px-4 flex items-center">
             <div class="flex items-center gap-2 text-xl font-semibold select-none">
-                <span class="text-[#6aa7ff]">Seedance</span>
-                <span class="text-white">AI</span>
+
+                <a href="/" class="flex items-center cursor-pointer">
+                    <div class="rounded-lg flex items-center justify-center">
+                        <img id="id_nav_logo_image" alt="Super AI" class="w-10 h-10 logo-hover" src="/img/logo.png"/>
+                    </div>
+                    <div id="id_nav_logo_text" class="text-xl ml-2 text-white hover:text-red-500 ">
+                        Super AI
+                    </div>
+                </a>
+
             </div>
             <!-- 正常的顶部导航 -->
             <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
@@ -152,7 +162,7 @@ const left_sidebar_content = `
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
                         <span class="text-[0.92rem]">博客</span>
                     </button>
-                    <button id="id_btn_sidebar_my_works" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                    <button id="id_btn_sidebar_my_creations" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
                         <span class="text-[0.92rem]">我的创作</span>
                     </button>
@@ -175,6 +185,7 @@ function init_nav_event(path_level, left_sidebar_index){
         console.log('[Init] DOM加载完成，开始设置 --- 导航条的监听事件 {path_level: ' + path_level + '}');
 
         // ----------------------------- 顶部 添加内容 -----------------------------
+
         // 添加 顶部导航栏
         const topHeaderElement = document.querySelector('header');
         if (topHeaderElement) {
@@ -221,9 +232,9 @@ function init_nav_event(path_level, left_sidebar_index){
                     rotateArrow('id_btn_nav_video', true);
                     DropdownMenuUtil.show('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index)=>{ 
                         if  (index == 0) {
-                            window.location.href = "/text-to-video"; // ../
+                            window.location.href = "/text-to-video"; 
                         } else if (index == 1) {
-                            window.location.href = "/image-to-video"; // ../
+                            window.location.href = "/image-to-video"; 
                         }
                         console.log(`选择了3333333: ${item}, 索引: ${index}  `);
                         DropdownMenuUtil.hide(); 
@@ -246,9 +257,9 @@ function init_nav_event(path_level, left_sidebar_index){
                     rotateArrow('id_btn_nav_image', true);
                     DropdownMenuUtil.show('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, (item, index)=>{ 
                         if  (index == 0) {
-                            window.location.href = "/text-to-image"; // ../
+                            window.location.href = "/text-to-image"; 
                         } else if (index == 1) {
-                            window.location.href = "/image-to-image"; // ../
+                            window.location.href = "/image-to-image"; 
                         }
                         DropdownMenuUtil.hide(); 
                     }, ()=>{ 
@@ -261,17 +272,17 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 点击顶部导航栏 视频特效
         ClickUtil.onClick('id_btn_nav_video_effect', () => {
-            window.location.href = "/video-effect"; // ../
+            window.location.href = "/video-effect"; 
         });
 
         // 点击顶部导航栏 博客
         ClickUtil.onClick('id_btn_nav_blog', () => {
-            window.location.href = "/blog"; // ../
+            window.location.href = "/blog"; 
         });
 
         // 点击顶部导航栏 我的创作
         ClickUtil.onClick('id_btn_nav_my_creations', () => {
-            window.location.href = "/my-creations"; // ../
+            window.location.href = "/my-creations"; 
         });
 
         // 点击顶部导航栏 价格
@@ -291,7 +302,7 @@ function init_nav_event(path_level, left_sidebar_index){
         DropdownMenuUtil.init('id_nav_user_avatar', ['价格', '退出'], -190, 10, 220, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
             if(item == '价格'){
-                // window.location.href = path_level + "pricing/index.html"; // ../
+                // window.location.href = path_level + "pricing/index.html"; 
             }else if(item == '退出'){
                 logout();
             }
@@ -300,14 +311,14 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 点击顶部导航栏 登录
         ClickUtil.onClick('id_btn_nav_login', () => {
-            window.location.href = "/login"; // ../
+            window.location.href = "/login"; 
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
         if (left_sidebar_index != -1) {
             //点击左侧导航: 文生视频
             ClickUtil.onClick('id_btn_sidebar_text_to_video', () => {
-                window.location.href = "/text-to-video"; // ../
+                window.location.href = "/text-to-video"; 
             });
             //点击左侧导航: 图生视频
             ClickUtil.onClick('id_btn_sidebar_image_to_video', () => {
@@ -316,7 +327,7 @@ function init_nav_event(path_level, left_sidebar_index){
 
             //点击左侧导航: 文生图
             ClickUtil.onClick('id_btn_sidebar_text_to_image', () => {
-                window.location.href = "/text-to-image"; // ../
+                window.location.href = "/text-to-image"; 
             });
             //点击左侧导航: 图生图
             ClickUtil.onClick('id_btn_sidebar_image_to_image', () => {
@@ -325,17 +336,17 @@ function init_nav_event(path_level, left_sidebar_index){
 
             // 点击左侧导航 视频特效
             ClickUtil.onClick('id_btn_sidebar_video_effect', () => {
-                window.location.href = "/video-effect"; // ../
+                window.location.href = "/video-effect"; 
             });
 
             // 点击左侧导航 博客
             ClickUtil.onClick('id_btn_sidebar_blog', () => {
-                window.location.href = "/blog"; // ../
+                window.location.href = "/blog"; 
             });
 
             // 点击左侧导航 我的创作
-            ClickUtil.onClick('id_btn_sidebar_my_works', () => {
-                window.location.href = "/my-"; // ../
+            ClickUtil.onClick('id_btn_sidebar_my_creations', () => {
+                window.location.href = "/my-creations"; 
             });
 
             // 点击左侧导航 价格

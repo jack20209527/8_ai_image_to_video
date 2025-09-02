@@ -271,3 +271,20 @@ body {
     transform: translateY(var(--parallax-y));
     transition: transform 0.1s ease-out;
 }
+
+
+@keyframes logoWobble {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+.logo-hover {
+    transform-origin: bottom center;
+    transition: transform 0.3s ease;
+}
+.logo-hover:hover {
+    animation: logoWobble 0.5s ease-in-out infinite;
+}
+
+
