@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux Kontext AI | Free AI Text-to-Image Editing with Character Consistency</title>
+    <meta name="description" content="Flux Kontext AI is a revolutionary free AI text-to-image editing tool. Instantly make precise, consistent edits to your photos and digital art using natural language instructions. Enjoy character consistency, fast results, and professional-grade image enhancement. No watermark, no registration required. Try Flux Kontext for creative, accurate, and user-friendly AI image editing.">
+    <meta name="keywords" content="photo hd converter, ai image upscaler, image quality enhancer, 4k image upscaler, image resolution enhancer, photo quality improver, ai photo enhancement, upscale image online, free image upscaler, batch image upscaler, image enlarger without quality loss, hd photo converter online, ai image enhancement tool, photo resolution increaser">
+    <meta name="google-site-verification" content="LU9ISzXzL8vVxqrtVvIAaow3GwG2r1XOkznfSp2ed_k" />
+    <script src="./tailwind.js"></script>
+    <link rel="stylesheet" href="./tailwind.css">
+    <link rel="stylesheet" href="./css/home.css">
+
+    <link rel="canonical" href="https://flux-kontext-ai.org"/>
+    
+
+       <!-- 散花效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./js/custom-toast.js"></script>
+    <script src="./js/my-common-util.js"></script>
+    <script src="./js/my-dropdown-menu.js"></script>
+    <script src="./js/my-loading-util.js"></script>
+    <script src="./js/my-local-storage-util.js"></script>
+    <script src="./js/my-login.js"></script>
+    <script src="./js/my-footer.js"></script>
+    
+    <script src="./js/my-lan-config.js"></script>
+    <script src="./js/my-lan-manager.js"></script>
+    <script src="./js/sw.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GNVQX6Z9"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-59GNVQX6Z9');
+    </script>
+
+    <style>
+        /* 基础样式 */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF3366 0%, #9D34DA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 上传区域样式 */
+        .upload-area {
+            width: 100%;
+            height: 260px;
+            /* 固定高度 */
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .upload-area.drag-over {
+            border-color: #FF3366;
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            padding: 4px;
+            background: linear-gradient(135deg, #FF3366, #9D34DA);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+    </style>
+
+    <!-- 下拉布局 -->
+    <script>
+        let isLoggedIn = true; // 模拟登录状态
+        let localUser = LocalStorageUtil.getUserObject();
+        refreshUser ();
+
+        function refreshUser () {
+            localUser = LocalStorageUtil.getUserObject();
+            console.log('localUser: ', localUser);
+            console.log(localUser == null);
+
+            if (localUser) {
+                isLoggedIn = true;
+                console.log('本地数据-昵称:', localUser.name);
+                console.log('本地数据-头像:', localUser.head_url);
+                console.log('本地数据-uid:', localUser.uid);
+                console.log('本地数据-project_id:', localUser.project_id);
+                console.log('本地数据-积分:', localUser.jifen);
+                console.log('本地数据-token:', localUser.token);
+                console.log('本地数据-token_expire:', localUser.token_expire);
+                refreshJifen();
+            } else {
+                console.log('本地数据为空');
+                isLoggedIn = false;
+            }
+        }
+
+        function refreshJifen() {
+            const jifenSpan = document.getElementById('id_credit_cart_text');
+            const localUser = LocalStorageUtil.getUserObject();
+            if (jifenSpan) {
+                jifenSpan.textContent = localUser && localUser.jifen ? localUser.jifen : '0';
+            }
+        }
+
+        function login() {
+            // 模拟登录操作
+            // isLoggedIn = true;
+            // updateUI();
+
+            // 在新窗口打开
+            // window.open('./pages/example.html', '_blank');
+            // 在当前窗口打开
+            window.open('./login', '_self');
+            // 跳转回首页
+            // window.location.href = './index.html';
+        }
+
+        function logout() {
+            console.log('登出...');
+            // 模拟登出操作
+            LocalStorageUtil.removeUserItem();
+            refreshUser ();
+            updateUI();
+            refreshJifen();
+
+            // window.open('./', '_self'); // 主要是弹窗消失的不好用
+
+            // DropdownMenuUtil.getInstance().hide();
+            // // 保险起见再模拟一次外部点击
+            // document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        }
+
+        function updateUI() {
+            const loginButton = document.getElementById('btn_login');
+            const userInfo = document.getElementById('user-info');
+            const userName = document.getElementById('user-name');
+            const userAvatar = document.getElementById('user-avatar');
+            // userAvatar.src = "https://lh3.googleusercontent.com/a/ACg8ocLM4mc1WEHl6uHsckRPhhWgAz3u5Jdft0n-JAr-rh2MaIU2Vg=s96-c";
+
+            if (isLoggedIn) {
+                loginButton.classList.add('hidden');
+                userInfo.classList.remove('hidden');
+                userName.textContent = localUser.name; // 可以根据实际情况动态设置
+                console.log('本地数据-头像22:', localUser.head_url);
+                userAvatar.src = localUser.head_url;// "https://i.pravatar.cc/150?img=32"; // 可以根据实际情况动态设置
+            } else {
+                loginButton.classList.remove('hidden');
+                userInfo.classList.add('hidden');
+            }
+            refreshJifen();
+        }
+
+        // 初始化代码
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('[Init] DOM加载完成，开始初始化');
+
+            updateUI()
+
+            // 多语言
+            // DropdownMenuUtil.init('id_blog', ['Blog1', 'Blog2', 'Blog3'], 0, 25, 100, (item, index) => {
+            //     console.log(`选择了: ${item}, 索引: ${index}    语言的值: ${lan}`);
+            // });
+
+            // 点击头像 - 显示退出
+            DropdownMenuUtil.init('user-avatar', ['Logout'], -20, 19, 80, (item, index) => {
+                logout();
+            });
+
+            DropdownMenuUtil.init('user-avatar-mobile', ['Logout'], -20, 19, 80, (item, index) => {
+                logout();
+            });
+
+            // 我的产品
+            ClickUtil.onClick('my_record', () => {
+
+                if (isLoggedIn) {
+                    window.open('./profile', '_self');
+                } else {
+                    login();
+                }
+            });
+            // 点击昵称，也是跳转到我的作品
+            ClickUtil.onClick('user-name', () => {
+            });
+        });
+    </script>
+
+</head>
+
+<body class="min-h-screen">
+    <!-- 粒子背景容器 -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none" style="z-index: -1;"></div>
+
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
+
+ <!-- 导航栏部分 -->
+<nav class="fixed w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-start h-20 items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-3 cursor-pointer">
+                <div class="w-10 h-10 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <span class="text-xl font-bold bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent">
+                    Flux Kontext AI
+                </span>
+            </a>
+
+            <!-- 右侧内容：桌面端导航 + 移动端头像和菜单 -->
+            <div class="flex items-center ml-auto">
+                <!-- 导航链接和按钮 - 桌面端 -->
+                <div class="hidden lg:flex items-center space-x-5">
+                    <a id="my_record" data-lan="nav.my_work"
+                        class="text-gray-300 cursor-pointer hover:text-white transition-colors">My Works</a>
+
+                    <a href="#pricing" id="pricing-link" data-lan="nav.price"
+                        class="text-gray-300 hover:text-white transition-colors">Price</a>
+                    <!-- <div id="id_blog" class="flex items-center space-x-3">
+                        <button class="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors">
+                            <span data-lan="nav.language">Blog</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                    </div> -->
+
+                    <!-- 在这里展示剩余的creditcart -->
+                    <a href="#pricing" data-lan="nav.price_card" class="text-gray-300 cursor-pointer hover:text-white transition-colors" >
+                        <div id="id_credit_cart" class="flex items-center space-x-1">
+                            <img src="./img/credit_cart.jpg" alt="credit_cart" class="w-6 h-6">
+                            <span id="id_credit_cart_text" class="text-gray-300 hover:text-white transition-colors">0</span>
+                        </div>
+                    </a>
+                    <!-- 桌面端登录状态 -->
+                    <button id="btn_login" data-lan="nav.btn_login"
+                        class="glow px-6 py-2.5 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[#FF3366]/20"
+                        onclick="login()">
+                        登录
+                    </button>
+
+                    <div id="user-info" class="hidden flex items-center space-x-3">
+                        <span id="user-name" class="text-white cursor-pointer">Jack Wilson</span>
+                        <img id="user-avatar" class="w-10 h-10 rounded-full ring-2 ring-[#FF3366]/30 cursor-pointer" 
+                            alt="用户头像">
+                    </div>
+                </div>
+
+                <!-- 移动端头像和用户信息 + 菜单按钮 -->
+                <div class="flex lg:hidden items-center">
+                    <!-- 未登录状态 -->
+                    <button id="btn_login_mobile" data-lan="nav.btn_login"
+                        class="glow px-4 py-2 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[#FF3366]/20 mr-3"
+                        onclick="login()">
+                        登录
+                    </button>
+
+                    <!-- 登录后状态 (默认隐藏) -->
+                    <div id="user-info-mobile" class="hidden items-center mr-3">
+                        <span id="user-name-mobile" class="text-white cursor-pointer text-sm mr-2">Jack Wilson</span>
+                        <img id="user-avatar-mobile" class="w-8 h-8 rounded-full ring-2 ring-[#FF3366]/30 cursor-pointer" 
+                            alt="用户头像">
+                    </div>
+
+                    <!-- 移动端更多按钮 -->
+                    <button id="id_btn_mobile_more" class="p-2 rounded-md bg-white/5 hover:bg-white/10" title="更多">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-300">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端菜单 -->
+        <div id="id_mobile_menu" class="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
+            <div class="px-4 py-4 space-y-4">
+                <div>
+                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">Seedance Model</div>
+                    <nav class="space-y-1">
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
+                            <span>文字生成视频</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                            <span>图片生成视频</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 20h16"/></svg>
+                            <span>动画</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 8h8v8H8z"/></svg>
+                            <span>多镜头叙事</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="border-t border-white/10"></div>
+
+                <div>
+                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">Popular Model</div>
+                    <nav class="space-y-1">
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.39 4.84L20 8l-4 3.9L17 18l-5-2.6L7 18l1-6.1L4 8l5.61-1.16L12 2z"/></svg>
+                            <span>视频特效</span>
+                            <span class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white">New</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
+                            <span>Veo3</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12s3-7 9-7 9 7 9 7-3 7-9 7-9-7-9-7z"/></svg>
+                            <span>Hailuo AI</span>
+                        </button>
+                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+                            <span>Kling AI</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- 语言选择弹窗 -->
+<!-- <div id="language-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                bg-[#1A1A1C] border border-white/10 rounded-xl p-4 w-[90%] max-w-sm">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-medium text-white" data-lan="nav.price">选择语言</h3>
+            <button id="close-language-modal" class="text-gray-400 hover:text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="space-y-2">
+            <button class="language-option w-full text-left px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10"
+                data-language="en">English</button>
+            <button class="language-option w-full text-left px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10"
+                data-language="zh">中文</button>
+            <button class="language-option w-full text-left px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10"
+                data-language="ko">한국어</button>
+        </div>
+    </div>
+</div> -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 获取必要的DOM元素
+    const mobileMenuButton = document.getElementById('id_btn_mobile_more');
+    const mobileMenu = document.getElementById('id_mobile_menu');
+    // const languageModal = document.getElementById('language-modal');
+    // const mobileLanguageBtn = document.getElementById('mobile-language-btn');
+    // const closeLanguageModal = document.getElementById('close-language-modal');
+    // const currentLanguageText = document.getElementById('mobile-current-language');
+    
+    // 移动端菜单按钮点击事件
+    mobileMenuButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileMenu.classList.toggle('hidden');
+        console.log('【移动端菜单】切换菜单显示状态');
+    });
+
+    // 点击菜单外部关闭菜单
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】点击外部关闭菜单');
+            }
+        }
+    });
+
+    // 监听窗口大小变化，在大屏幕时自动隐藏菜单
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            console.log('【移动端菜单】窗口变大，自动隐藏菜单');
+        }
+    });
+
+    // 打开语言选择弹窗
+    // mobileLanguageBtn.addEventListener('click', () => {
+    //     languageModal.classList.remove('hidden');
+    //     // 关闭移动端菜单
+    //     mobileMenu.classList.add('hidden');
+    // });
+
+    // 关闭语言选择弹窗
+    // closeLanguageModal.addEventListener('click', () => {
+    //     languageModal.classList.add('hidden');
+    // });
+
+    // 点击弹窗外部关闭弹窗
+    // languageModal.addEventListener('click', (e) => {
+    //     if (e.target === languageModal) {
+    //         languageModal.classList.add('hidden');
+    //     }
+    // });
+
+    // 语言选项点击事件
+    // document.querySelectorAll('.language-option').forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const selectedLanguage = button.textContent;
+    //         currentLanguageText.textContent = selectedLanguage;
+            
+    //         const languageCode = button.dataset.language;
+    //         LanguageManager.switchLanguage(languageCode);
+            
+    //         languageModal.classList.add('hidden');
+    //     });
+    // });
+
+    // 同步登录状态到移动端
+    function updateMobileUI() {
+        const loginButton = document.getElementById('btn_login_mobile');
+        const userInfo = document.getElementById('user-info-mobile');
+        const userName = document.getElementById('user-name-mobile');
+        const userAvatar = document.getElementById('user-avatar-mobile');
+        const mobileCreditCartText = document.getElementById('mobile-credit-cart-text');
+
+        if (isLoggedIn) {
+            loginButton.classList.add('hidden');
+            userInfo.classList.remove('hidden');
+            userInfo.classList.add('flex');
+            userName.textContent = localUser.name;
+            userAvatar.src = localUser.head_url;
+            
+            // 同步积分到移动端
+            if (mobileCreditCartText) {
+                mobileCreditCartText.textContent = localUser.credits || '0';
+            }
+        } else {
+            loginButton.classList.remove('hidden');
+            userInfo.classList.add('hidden');
+            userInfo.classList.remove('flex');
+            
+            // 重置移动端积分
+            if (mobileCreditCartText) {
+                mobileCreditCartText.textContent = '0';
+            }
+        }
+    }
+
+    // 在原有的updateUI函数中调用updateMobileUI
+    const originalUpdateUI = updateUI;
+    updateUI = function() {
+        originalUpdateUI();
+        updateMobileUI();
+    }
+
+    // 初始化时更新UI
+    updateUI();
+
+    // 移动端"我的作品"点击事件
+    document.getElementById('mobile-my-record').addEventListener('click', () => {
+        if (isLoggedIn) {
+            window.open('./profile', '_self');
+        } else {
+            login();
+        }
+    });
+
+    // 移动端菜单绑定
+    function bindMobileMenu(){
+        console.log('【移动端菜单】开始初始化移动端菜单');
+        var moreBtn = document.getElementById('id_btn_mobile_more');
+        var mobileMenu = document.getElementById('id_mobile_menu');
+        
+        if(!moreBtn || !mobileMenu){
+            console.warn('【移动端菜单】未找到移动端菜单相关控件');
+            return;
+        }
+        
+        // 切换菜单显示状态
+        function toggleMenu(){
+            var isHidden = mobileMenu.classList.contains('hidden');
+            if(isHidden){
+                mobileMenu.classList.remove('hidden');
+                console.log('【移动端菜单】显示菜单');
+            } else {
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】隐藏菜单');
+            }
+        }
+        
+        // 绑定更多按钮点击事件
+        moreBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            toggleMenu();
+        });
+        
+        // 点击菜单外部关闭菜单
+        document.addEventListener('click', function(e){
+            if(!mobileMenu.contains(e.target) && !moreBtn.contains(e.target)){
+                if(!mobileMenu.classList.contains('hidden')){
+                    mobileMenu.classList.add('hidden');
+                    console.log('【移动端菜单】点击外部关闭菜单');
+                }
+            }
+        });
+        
+        // 监听窗口大小变化，在大屏幕时自动隐藏菜单
+        window.addEventListener('resize', function(){
+            if(window.innerWidth >= 1024 && !mobileMenu.classList.contains('hidden')){
+                mobileMenu.classList.add('hidden');
+                console.log('【移动端菜单】窗口变大，自动隐藏菜单');
+            }
+        });
+        
+        console.log('【移动端菜单】初始化完成');
+    }
+
+    // 调用移动端菜单绑定函数
+    bindMobileMenu();
+});
+</script>
+
+    <!-- Hero Section -->
+    <section class="relative pt-28 pb-10 overflow-hidden">
+        <div class="relative z-10 text-center max-w-3xl mx-auto">
+            <h1 class="text-3xl md:text-5xl font-bold mb-8">
+                <span id="typewriter-text" class="inline-block bg-gradient-to-r from-[#FF3366] via-[#FF6B3D] to-[#9D34DA] bg-clip-text text-transparent">
+                    AI 视频生成
+                </span>
+            </h1>
+        </div>
+
+        <!-- 主要内容区域 - 左右两栏布局 -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col xl:flex-row gap-8">
+                <!-- 左侧输入区域 -->
+                <div class="w-full xl:w-1/2">
+                    <!-- 选项卡切换 -->
+                    <div class="flex justify-center mb-6">
+                        <div class="glass rounded-full p-1 inline-flex">
+                            <button id="text-to-video-btn" class="px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full font-medium transition-all duration-300">
+                                文本生成视频
+                            </button>
+                            <button id="image-to-video-btn" class="px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base text-gray-300 rounded-full font-medium transition-all duration-300 hover:text-white">
+                                图片生成视频
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 文本生成视频面板 -->
+                    <div id="text-to-video-panel">
+                        <!-- 提示词输入框 -->
+                        <div class="mt-4 sm:mt-6">
+                            <label for="video-prompt" class="block text-white text-sm font-medium mb-2">提示词 <span class="text-red-600">(必填)</span></label>
+                            <textarea id="video-prompt" placeholder="描述您想要创建的视频内容，例如：'一只老鹰在雪山上空翱翔，背景是壮丽的山脉和蓝天'"
+                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50" rows="3" sm:rows="4"></textarea>
+                        </div>
+                        
+                        <!-- 灵感提示 -->
+                        <div class="mt-3 sm:mt-4">
+                            <label class="block text-gray-300 text-sm font-medium mb-2">✨ 灵感 (点击使用)</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="inspiration-btn px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-white/5 border border-white/10 rounded-full text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
+                                    浪漫公园
+                                </button>
+                                <button class="inspiration-btn px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-white/5 border border-white/10 rounded-full text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
+                                    水下世界
+                                </button>
+                                <button class="inspiration-btn px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-white/5 border border-white/10 rounded-full text-gray-300 hover:bg-white/10 hover:text-white transition-colors">
+                                    夜间赛车
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 视频参数设置 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                            <!-- 宽高比 -->
+                            <div>
+                                <label for="aspect-ratio" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">宽高比</label>
+                                <div class="relative">
+                                    <select id="aspect-ratio" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="16:9">16:9</option>
+                                        <option value="9:16">9:16</option>
+                                        <option value="1:1">1:1</option>
+                                        <option value="4:3">4:3</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 分辨率 -->
+                            <div>
+                                <label for="resolution" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">分辨率</label>
+                                <div class="relative">
+                                    <select id="resolution" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="480p">480p</option>
+                                        <option value="720p">720p</option>
+                                        <option value="1080p">1080p</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 视频时长 -->
+                            <div>
+                                <label for="video-duration" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">视频时长</label>
+                                <div class="relative">
+                                    <select id="video-duration" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="5s">5秒</option>
+                                        <option value="10s">10秒</option>
+                                        <option value="15s">15秒</option>
+                                        <option value="30s">30秒</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 图片生成视频面板 (初始隐藏) -->
+                    <div id="image-to-video-panel" class="hidden">
+                        <!-- 上传区域 -->
+                        <div class="mt-4 sm:mt-6">
+                            <label class="block text-gray-300 text-sm font-medium mb-2">上传参考图片</label>
+                            <div id="upload-area" class="upload-area rounded-2xl flex flex-col items-center justify-center h-40 sm:h-[260px]">
+                                <input type="file" id="file-input" class="hidden" accept="image/*">
+                                <div class="space-y-2 sm:space-y-3 text-center">
+                                    <div class="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto">
+                                        <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-full blur-xl"></div>
+                                        <div class="relative bg-white/5 rounded-full p-3 sm:p-4 pulse-ring">
+                                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">点击或拖拽上传图片</h3>
+                                        <p class="text-gray-400 text-xs sm:text-sm">支持JPG、PNG或WEBP格式，最大20MB。清晰、光线良好的图片效果更佳。</p>
+                                    </div>
+                                    <button onclick="document.getElementById('file-input').click()" class="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full text-sm sm:text-base text-white font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                                        选择图片
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 提示词输入框 -->
+                        <div class="mt-4 sm:mt-6">
+                            <label for="image-video-prompt" class="block text-white text-sm font-medium mb-2">视频描述 <span class="text-red-600">(必填)</span></label>
+                            <textarea id="image-video-prompt" placeholder="描述您希望基于图片生成的视频效果，例如：'让图片中的老鹰飞行起来，展翅翱翔'"
+                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50" rows="3" sm:rows="4"></textarea>
+                        </div>
+                        
+                        <!-- 视频参数设置 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                            <!-- 宽高比 -->
+                            <div>
+                                <label for="img-aspect-ratio" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">宽高比</label>
+                                <div class="relative">
+                                    <select id="img-aspect-ratio" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="16:9">16:9</option>
+                                        <option value="9:16">9:16</option>
+                                        <option value="1:1">1:1</option>
+                                        <option value="4:3">4:3</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 分辨率 -->
+                            <div>
+                                <label for="img-resolution" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">分辨率</label>
+                                <div class="relative">
+                                    <select id="img-resolution" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="480p">480p</option>
+                                        <option value="720p">720p</option>
+                                        <option value="1080p">1080p</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 视频时长 -->
+                            <div>
+                                <label for="img-video-duration" class="block text-gray-300 text-sm font-medium mb-1 sm:mb-2">视频时长</label>
+                                <div class="relative">
+                                    <select id="img-video-duration" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FF3366]/50">
+                                        <option value="5s">5秒</option>
+                                        <option value="10s">10秒</option>
+                                        <option value="15s">15秒</option>
+                                        <option value="30s">30秒</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="id_start_generate_button" onclick="startGenerate()"
+                        class="mt-6 sm:mt-8 w-full py-3 sm:py-4 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-xl text-white font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                        生成视频
+                    </button>
+                </div>
+
+                <!-- 右侧视频展示区域 -->
+                <div class="w-full xl:w-1/2 mt-6 xl:mt-0">
+                    <div class="glass rounded-xl h-full min-h-[350px] sm:min-h-[400px] lg:min-h-[500px] relative overflow-hidden">
+                        <div class="absolute top-3 left-3 px-3 py-1 bg-black/50 rounded-full text-sm z-10">AI 视频生成演示</div>
+                        
+                        <!-- 视频播放器 -->
+                        <video id="demo-video" class="w-full h-full object-cover" autoplay loop muted playsinline>
+                            <source src="https://www.muse-steamer.com/caseVideos/e75beee00148cbf0a28c0cfcf2fdc199_1920_1080.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                        
+                        <!-- 视频下方说明文字 -->
+                        <div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-3 sm:p-4 text-center z-10">
+                            <p class="text-white text-xs sm:text-sm md:text-base">
+                                多镜头视频生成模型，通过文本和图像创建电影级视频，动作流畅，细节丰富，效果专业。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 预览容器 (初始隐藏) -->
+        <div id="preview-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 hidden">
+            <div class="glass rounded-xl h-[300px] sm:h-[350px] md:h-[400px]">
+                <div class="absolute top-3 left-3 px-3 py-1 bg-black/50 rounded-full text-sm">AI 生成视频</div>
+                <!-- 处理后的视频预览 -->
+                <video id="result-video" controls class="w-full h-full object-contain">
+                    <source src="" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+            </div>
+
+            <div class="flex flex-row justify-center mt-6">
+                <!-- 添加下载按钮 -->
+                <button id="download-button" 
+                    class="px-4 py-2 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full text-white text-sm font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300">
+                    下载视频
+                </button>
+                
+                <!-- 添加重置按钮 -->
+                <button id="reset-button" onclick="resetUpload()" 
+                class="ml-6 sm:ml-10 px-4 py-2 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full text-white text-sm font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300">
+                    创建新视频
+                </button>
+            </div>
+        </div>
+
+        <!-- 3D展示区域 -->
+        <div class="relative mt-20 max-w-6xl mx-auto px-4">
+            <!-- grid视频展示区域 -->
+            <div id="video-grid" class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[2px]"></div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const grid = document.getElementById('video-grid');
+                    for (let i = 1; i < 26; i++) {
+                        const imgUrl = `./img/image_content${i}.jpg`;
+                        const img = document.createElement('img');
+                        img.src = imgUrl;
+                        img.alt = `content${i}`;
+                        img.className = "w-full h-full aspect-square object-cover rounded-lg hover:scale-105 transition-transform duration-200";
+                        // 外层div只做方形格子
+                        const wrapper = document.createElement('div');
+                        wrapper.className = "w-full aspect-square bg-[#222]";
+                        // 新增：外层a标签
+                        const link = document.createElement('a');
+                        link.href = imgUrl;
+                        link.target = "_blank";
+                        link.rel = "noopener noreferrer";
+                        link.appendChild(img);
+                        wrapper.appendChild(link);
+                        grid.appendChild(wrapper);
+                    }
+                });
+            </script>
+        </div>
+    </section>
+ 
+    <!-- 添加视频生成功能相关脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 标签切换功能
+            const textToVideoBtn = document.getElementById('text-to-video-btn');
+            const imageToVideoBtn = document.getElementById('image-to-video-btn');
+            const textToVideoPanel = document.getElementById('text-to-video-panel');
+            const imageToVideoPanel = document.getElementById('image-to-video-panel');
+
+            textToVideoBtn.addEventListener('click', function() {
+                textToVideoBtn.classList.add('bg-gradient-to-r', 'from-[#FF3366]', 'to-[#9D34DA]');
+                textToVideoBtn.classList.remove('text-gray-300');
+                imageToVideoBtn.classList.remove('bg-gradient-to-r', 'from-[#FF3366]', 'to-[#9D34DA]');
+                imageToVideoBtn.classList.add('text-gray-300');
+                
+                textToVideoPanel.classList.remove('hidden');
+                imageToVideoPanel.classList.add('hidden');
+            });
+
+            imageToVideoBtn.addEventListener('click', function() {
+                imageToVideoBtn.classList.add('bg-gradient-to-r', 'from-[#FF3366]', 'to-[#9D34DA]');
+                imageToVideoBtn.classList.remove('text-gray-300');
+                textToVideoBtn.classList.remove('bg-gradient-to-r', 'from-[#FF3366]', 'to-[#9D34DA]');
+                textToVideoBtn.classList.add('text-gray-300');
+                
+                imageToVideoPanel.classList.remove('hidden');
+                textToVideoPanel.classList.add('hidden');
+            });
+
+            // 灵感按钮点击事件
+            const inspirationBtns = document.querySelectorAll('.inspiration-btn');
+            const videoPrompt = document.getElementById('video-prompt');
+            
+            inspirationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    videoPrompt.value = this.textContent.trim();
+                });
+            });
+
+            // 下载按钮点击事件
+            document.getElementById('download-button').addEventListener('click', function() {
+                const resultVideo = document.getElementById('result-video');
+                if (resultVideo && resultVideo.src) {
+                    // 新标签页打开视频
+                    window.open(resultVideo.src, '_blank', 'noopener');
+                }
+            });
+        });
+
+        // 文件上传相关
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        
+        // 拖拽上传
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                console.log("文件已选择:", file.name);
+                
+                // 创建文件URL
+                const fileUrl = URL.createObjectURL(file);
+                
+                // 清除原有内容
+                uploadArea.innerHTML = '';
+                
+                // 创建图片预览元素
+                const previewContainer = document.createElement('div');
+                previewContainer.className = 'w-full h-full flex flex-col items-center justify-center';
+                
+                // 创建图片元素
+                const imgPreview = document.createElement('img');
+                imgPreview.src = fileUrl;
+                imgPreview.className = 'max-h-[180px] max-w-full object-contain mb-4 rounded-lg shadow-md';
+                imgPreview.alt = '已选择的图片';
+                
+                // 创建文件名显示
+                const fileNameDisplay = document.createElement('p');
+                fileNameDisplay.className = 'text-sm text-gray-400';
+                fileNameDisplay.textContent = file.name;
+                
+                // 创建重新选择按钮
+                const reSelectButton = document.createElement('button');
+                reSelectButton.className = 'mt-3 px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition';
+                reSelectButton.textContent = '重新选择';
+                reSelectButton.onclick = function(e) {
+                    e.preventDefault();
+                    // 重置文件输入框
+                    fileInput.value = '';
+                    
+                    // 恢复原始上传区域
+                    resetUploadArea();
+                };
+                
+                // 添加元素到预览容器
+                previewContainer.appendChild(imgPreview);
+                previewContainer.appendChild(fileNameDisplay);
+                previewContainer.appendChild(reSelectButton);
+                
+                // 将预览容器添加到上传区域
+                uploadArea.appendChild(previewContainer);
+                
+                // 更改上传区域的样式
+                uploadArea.classList.add('has-preview');
+                
+                // 确保file-input元素仍然存在于DOM中
+                if (!document.getElementById('file-input')) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'file';
+                    hiddenInput.id = 'file-input';
+                    hiddenInput.className = 'hidden';
+                    hiddenInput.accept = 'image/*';
+                    uploadArea.appendChild(hiddenInput);
+                    
+                    // 重新绑定事件
+                    hiddenInput.addEventListener('change', (e) => {
+                        handleFile(e.target.files[0]);
+                    });
+                }
+            }
+        }
+        
+        // 添加重置上传区域的函数
+        function resetUploadArea() {
+            uploadArea.classList.remove('has-preview');
+            uploadArea.classList.remove('drag-over');
+            
+            // 恢复原始内容
+            uploadArea.innerHTML = `
+                <input type="file" id="file-input" class="hidden" accept="image/*">
+                <div class="space-y-2 sm:space-y-3 text-center">
+                    <div class="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-full blur-xl"></div>
+                        <div class="relative bg-white/5 rounded-full p-3 sm:p-4 pulse-ring">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">点击或拖拽上传图片</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm">支持JPG、PNG或WEBP格式，最大20MB。清晰、光线良好的图片效果更佳。</p>
+                    </div>
+                    <button onclick="document.getElementById('file-input').click()" class="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-full text-sm sm:text-base text-white font-medium hover:shadow-lg hover:shadow-[#FF3366]/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                        选择图片
+                    </button>
+                </div>
+            `;
+            
+            // 重新绑定事件
+            document.getElementById('file-input').addEventListener('change', (e) => {
+                handleFile(e.target.files[0]);
+            });
+        }
+        
+        // 添加样式
+        document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            .upload-area.has-preview {
+                border-style: solid;
+                background-color: rgba(255, 255, 255, 0.03);
+            }
+        </style>
+        `);
+        
+        // 重新加载页面
+        function resetUpload() {
+            window.location.reload();
+        }
+
+        async function startGenerate() {
+            if (isLoggedIn) {
+               // 如果登录了，什么都不做，往下执行
+            } else {
+                login();
+                return;
+            }
+
+            try {
+                // 判断当前是哪个面板
+                const isTextToVideo = !document.getElementById('text-to-video-panel').classList.contains('hidden');
+                
+                let prompt, hasFile = false, aspectRatio, resolution, duration;
+                
+                if (isTextToVideo) {
+                    // 文本生成视频
+                    prompt = document.getElementById('video-prompt').value || '';
+                    aspectRatio = document.getElementById('aspect-ratio').value;
+                    resolution = document.getElementById('resolution').value;
+                    duration = document.getElementById('video-duration').value;
+                } else {
+                    // 图片生成视频
+                    hasFile = fileInput && fileInput.files && fileInput.files[0];
+                    prompt = document.getElementById('image-video-prompt').value || '';
+                    aspectRatio = document.getElementById('img-aspect-ratio').value;
+                    resolution = document.getElementById('img-resolution').value;
+                    duration = document.getElementById('img-video-duration').value;
+                    
+                    if (!hasFile) {
+                        alert('请上传参考图片');
+                        return;
+                    }
+                }
+                
+                if (!prompt) {
+                    alert('请输入提示词');
+                    return;
+                }
+                // prompt = "Create an ASMR video with close-up shots of glass fruits—blood orange with reddish interior, lemon with crystalline interior, green apple-like fruit, red glass raspberry, and dragon fruit with pinkish-red skin and white interior—sliced slowly on a wooden cutting board. Use macro camera views, soft lighting, and ASMR audio like knife-cutting glass sounds and subtle kitchen ambiance. No text or subtitles. This is a reasoned guess based on the video's description, as the exact prompt isn't available.Shot in extreme macro perspective, a flawless, crystal-clear, and detail-rich [insert the object you want to cut, e.g., glass strawberry] rests on a wooden cutting board bathed in warm lighting. The camera gently pushes and pulls, capturing the rainbow-like glimmers and prismatic refractions on the surface of the [insert object, e.g., glass strawberry]. The angle alternates between top-down and a 45-degree side view, freezing the moment the knife slices into the fragile";
+                // prompt = "Cinematic, documentary-style video. A group of massive, heavily bearded Viking warriors, clad in leather, fur, and horned helmets, wander through a brightly lit, modern IKEA store. They look utterly bewildered and out of place.\nDynamic shots: One Viking tries to decipher the assembly instructions for a \"BILLY\" bookcase as if it were an ancient runestone. Another tests the durability of a \"POÄNG\" armchair by cautiously sitting in it, causing it to creak alarmingly. A third, massive Viking stands in the kitchen section, fascinated by a refrigerator's automatic ice dispenser, catching ice cubes in his helmet with childlike wonder.\nThe climax is them discovering the IKEA food court. They bypass the meatballs and instead try to pay for a hotdog with a single, large, ancient gold coin, causing chaos at the register. The scene is shot with a slightly comedic, Wes Anderson-style symmetry.\nAudio: The distant, sterile hum of the department store, mixed with the Vikings' deep, guttural Old Norse whispers, the clanking of their gear, and a quirky, upbeat instrumental track.";
+                prompt = "Realistic baby avatar witha playful yet professional demeanor, wearinga headset microphone, sitting behinda news desk ina contemporary TV studio filled with ambient lighting and tech equipment, ready to deliver the news."  ;
+
+                // 显示加载状态
+                LoadingUtil.show('正在生成视频', 'AI正在创建您的视频，请稍候...');
+
+                // 准备表单数据
+                const formData = new FormData();
+                
+                // 如果是图片生成视频且有文件
+                if (!isTextToVideo && hasFile) {
+                    formData.append('file', fileInput.files[0]);
+                    console.log("图片已选择并添加到 FormData");
+                }
+
+                // 准备参数
+                const jsonData = {
+                    "opt": isTextToVideo ? "0" : "1", // 0表示文生视频，1表示图生视频
+                    "uid": localUser ? localUser.uid : 0,
+                    "my_token": localUser ? localUser.token : "",
+                    "project_id": GlobalConfig.project_id,
+                    "product_id": GlobalConfig.product_id,
+                    "device_info": "6789",
+
+                    "prompt": prompt,
+                    "model": GlobalConfig.default_model,
+                    "title": "视频名称",
+                    "tags": "funny,video"
+                    // "aspect_ratio": aspectRatio,
+                    // "resolution": resolution,
+                    // "duration": duration,
+                    // "safety_tolerance": 2,
+                    // "seed": 0
+                };
+
+                formData.append('param', JSON.stringify(jsonData));
+
+                // 发送请求
+                const response = await fetch(GlobalConfig.url + "/go/v/cr", {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                console.log("处理结果:", result);
+
+                if (response.ok && result.code === 200) {
+                    // 显示生成的视频
+                    displayGeneratedVideo(result);
+                    LoadingUtil.hide();
+                } else if (result.code === 1000018) {
+                    alert('积分不足，请充值');
+                    LoadingUtil.hide();
+                } else {
+                    console.log(result.msg || '处理失败');
+                    LoadingUtil.hide();
+                    alert('视频生成失败: ' + (result.msg || '未知错误'));
+                }
+                
+            } catch (error) {
+                console.error('处理失败:', error);
+                LoadingUtil.hide();
+                alert('视频生成失败: ' + error.message);
+            }
+        }
+        
+        // 显示生成的视频
+        function displayGeneratedVideo(result) {
+            // 隐藏输入面板
+            document.querySelector('.flex.flex-col.lg\\:flex-row').classList.add('hidden');
+            
+            // 显示结果容器
+            document.getElementById('preview-container').classList.remove('hidden');
+            const resultVideo = document.getElementById('result-video');
+
+            // 后端实际返回的数据格式
+            if (result.data && result.data.result_url) {
+                resultVideo.src = result.data.result_url;
+                resultVideo.load(); // 重新加载视频
+
+                // 如果积分信息存在，更新用户积分
+                if (result.data.jifen && localUser) {
+                    console.log(`积分已更新: ${result.data.jifen}`);
+                    localUser.jifen = result.data.jifen;
+                    LocalStorageUtil.saveUserObject(localUser);
+                    refreshJifen();
+                }
+            }
+            // 兼容其他可能的格式
+            else if (result.data && Array.isArray(result.data) && result.data.length > 0 && result.data[0].url) {
+                resultVideo.src = result.data[0].url;
+                resultVideo.load(); // 重新加载视频
+            }
+            else {
+                console.error("未找到视频URL", result);
+                alert("生成视频失败: 未找到视频URL");
+                return;
+            }
+        }
+    </script>
+
+        <!-- 添加功能特点部分 -->
+        <section class="py-32 relative overflow-hidden">
+            <!-- 背景装饰 -->
+            <div class="absolute inset-0 bg-[#0A0A0B]">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#FF3366]/5 to-transparent"></div>
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml,...')] opacity-10"></div>
+            </div>
+
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+                        Discover Powerful AI Image Editing Features
+                    </h2>
+                    <p class="text-gray-400 text-lg max-w-2xl mx-auto"
+                                data-lan="hero.enhancement_desc" >
+                        Unlock next-level photo editing with Flux Kontext AI—precise, consistent, and creative results for every image.
+                    </p>
+                </div>
+
+                <!-- 功能卡片网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 功能卡片 1：超分辨率 -->
+                    <div class="group relative">
+                        <div
+                            class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                            <div
+                                class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#FF3366] to-[#FF3366]/50 flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#FF3366] transition-colors"
+                                    data-lan="hero.enhancement_resolution" >
+                                Ultra HD Upscaling</h3>
+                            <p class="text-gray-400" 
+                                    data-lan="hero.enhancement_resolution_desc">
+                                Transform low-res images into ultra-sharp, high-definition masterpieces with advanced AI upscaling. Every detail stays crisp and clear.
+                            </p>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 2：智能降噪 -->
+                    <div class="group relative">
+                        <div
+                            class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                            <div
+                                class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#9D34DA] to-[#9D34DA]/50 flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:-rotate-6">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#9D34DA] transition-colors"
+                                data-lan="hero.enhancement_noise" >
+                                    Smart Noise Removal</h3>
+                            <p class="text-gray-400"
+                                data-lan="hero.enhancement_noise_desc" >
+                                Effortlessly remove grain and noise while preserving important details. Enjoy cleaner, more professional images in every edit.
+                            </p>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 3：色彩优化 -->
+                    <div class="group relative">
+                        <div
+                            class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                            <div
+                                class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#FF3366] to-[#9D34DA] flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#FF3366] transition-colors"
+                                    data-lan="hero.enhancement_color"   >
+                                    Color & Style Consistency</h3>
+                            <p class="text-gray-400" data-lan="hero.enhancement_color_desc" >
+                                Instantly balance colors and enhance vibrancy. Flux Kontext AI keeps your style and character consistent across all edits.
+                            </p>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                        </div>
+                    </div>
+
+                    <!-- 功能卡片 4: 智能修复 -->
+                    <div class="group relative">
+                        <div
+                            class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1">
+                            <div
+                                class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#9D34DA] to-[#FF3366] flex items-center justify-center transform transition-transform group-hover:scale-110">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#9D34DA] transition-colors"
+                                     data-lan="hero.enhancement_repair"   >
+                                Intelligent Image Repair</h3>
+                            <p class="text-gray-400" data-lan="hero.enhancement_repair_desc" >
+                                Detect and fix imperfections, scratches, or unwanted objects. Restore your photos to perfection with AI-powered precision.
+                            </p>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 在功能特点部分后添加效果对比展示区域 -->
+        <section class="py-1 relative overflow-hidden">
+            <div class="absolute inset-0">
+                <!-- 动态背景效果 -->
+                <div class="absolute inset-0 opacity-30">
+                    <div
+                        class="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                    </div>
+                    <div
+                        class="absolute top-0 -right-4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                    </div>
+                    <div
+                        class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </section>
+
+    <!-- 使用流程部分 -->
+    <section class="py-12 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[#0A0A0B] opacity-90"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#FF3366]/10 via-transparent to-[#9D34DA]/10"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                      data-lan="hero.flow_title"
+                    >
+                    How to Edit Images with Flux Kontext AI in 3 Simple Steps
+                    </span>
+                </h2>
+                <p class="text-gray-400 text-lg" data-lan="hero.flow_desc" >
+                    No experience needed—anyone can create professional, consistent AI edits in minutes.
+                </p>
+            </div>
+
+            <!-- 步骤展示 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 步骤 1 -->
+                <div class="relative group">
+                    <div
+                        class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-[#FF3366] to-[#FF3366]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <span class="text-3xl font-bold text-white">1</span>
+                            </div>
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-r from-[#FF3366]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4"
+                            data-lan="hero.flow_1_title" >Upload Your Image</h3>
+                        <p class="text-gray-400" data-lan="hero.flow_1_desc" >
+                            Drag or select your photo, artwork, or design. JPG, PNG, and WEBP formats supported.
+                        </p>
+                    </div>
+                    <div
+                        class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+
+                <!-- 步骤 2 -->
+                <div class="relative group">
+                    <div
+                        class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-[#9D34DA] to-[#9D34DA]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <span class="text-3xl font-bold text-white">2</span>
+                            </div>
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-r from-[#9D34DA]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4" data-lan="hero.flow_2_title" >
+                            Enter Edit Instruction</h3>
+                        <p class="text-gray-400" data-lan="hero.flow_2_desc" >
+                            Tell Flux Kontext AI what to change—use clear, specific instructions for best results.
+                        </p>
+                    </div>
+                    <div
+                        class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+
+                <!-- 步骤 3 -->
+                <div class="relative group">
+                    <div
+                        class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                        <div class="relative mb-8">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-[#FF6B3D] to-[#FF6B3D]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <span class="text-3xl font-bold text-white">3</span>
+                            </div>
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-r from-[#FF6B3D]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4" data-lan="hero.flow_3_title" >
+                            Get Instant AI Results</h3>
+                        <p class="text-gray-400" data-lan="hero.flow_3_desc" >
+                            Click once and let Flux Kontext AI deliver fast, precise, and consistent image edits.
+                        </p>
+                    </div>
+                    <div
+                        class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#FF6B3D]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 装饰线条 -->
+            <div
+                class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent">
+            </div>
+        </div>
+    </section>
+
+    <!-- 价格方案部分 -->
+    <section class="py-20 relative overflow-hidden" id="pricing">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[#0A0A0B] opacity-90"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                        data-lan="hero.price_title" >
+                        Choose The Plan That Suits You
+                    </span>
+                </h2>
+                <p class="text-gray-400 text-lg" data-lan="hero.price_desc" >
+                    Flexible price plans to meet different needs
+                </p>
+            </div>
+
+            <!-- 价格卡片容器 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Basic 版本 -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl opacity-0 
+                            group-hover:opacity-100 blur-xl transition-all duration-500"></div>
+                    <div class="relative h-full bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 
+                            group-hover:border-[#FF3366]/50 transition-all duration-300">
+
+                        <div class="text-center mb-6 pt-6">
+                            <h3 class="text-2xl font-bold text-white mb-4"
+                            data-lan="hero.price_basic_title" >Basic</h3>
+                            <div class="flex items-center justify-center gap-2 mb-1">
+                                <span class="text-gray-400 line-through text-lg">$3.9</span>
+                                <span class="text-4xl font-bold text-blue-400">$2.9</span>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>30 Credits</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>0.09$ / Credit</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>AI image editing with Flux Kontext</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Basic character consistency</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Essential AI photo enhancement</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Standard AI repair & upscaling</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Simple color & noise correction</span>
+                            </li>
+                        </ul>
+
+                        <!-- PayPal按钮容器 (默认隐藏) -->
+                        <div id="paypal-button-container1"></div>
+
+                    </div>
+                </div>
+
+                <!-- Unlimited 版本 (推荐) -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/30 to-[#9D34DA]/30 rounded-2xl opacity-0 
+                            group-hover:opacity-100 blur-xl transition-all duration-500"></div>
+                    <div class="relative h-full bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-lg rounded-2xl p-8 
+                            border-2 border-[#FF3366] transform scale-105">
+
+                        <div class="absolute -top-4 right-4">
+                            <span class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm">Save 40%</span>
+                        </div>
+
+                        <div class="text-center mb-6 pt-6">
+                            <h3 class="text-2xl font-bold text-pink-500 mb-4" 
+                            data-lan="hero.price_popular" >Popular</h3>
+                            <div class="flex items-center justify-center gap-2 mb-1">
+                                <span class="text-gray-400 line-through text-lg">$16.9</span>
+                                <span class="text-4xl font-bold text-pink-500">$8.9</span>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>100 Credits</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>0.08$ / Credit</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Priority AI editing & enhancement</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Advanced character consistency</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>AI-powered photo repair</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>High-definition upscaling</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Consistent color & style</span>
+                            </li>
+                            <li class="flex items-center text-pink-500">
+                                <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Portrait beautification with AI</span>
+                            </li>
+                        </ul>
+
+                        <!-- PayPal按钮容器 (默认隐藏) -->
+                        <div id="paypal-button-container2"></div>
+
+                    </div>
+                </div>
+
+                <!-- Pro 版本 -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl opacity-0 
+                            group-hover:opacity-100 blur-xl transition-all duration-500"></div>
+                    <div class="relative h-full bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 
+                            group-hover:border-[#FF3366]/50 transition-all duration-300">
+
+                        <div class="text-center mb-6 pt-6">
+                            <h3 class="text-2xl font-bold text-white mb-4"
+                                data-lan="hero.price_advanced">Advanced</h3>
+                            <div class="flex items-center justify-center gap-2 mb-1">
+                                <span class="text-gray-400 line-through text-lg">$49.9</span>
+                                <span class="text-4xl font-bold text-blue-400">$26.9</span>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>400 Credits</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>0.06$ / Credit</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>VIP AI editing & enhancement</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Ultimate character consistency</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Pro AI photo repair & restoration</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Super-resolution upscaling</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Advanced color & style control</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>AI portrait beautification pro</span>
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <svg class="w-5 h-5 text-[#FF3366] mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>PHDR effect & enhancement</span>
+                            </li>
+                        </ul>
+
+                        <!-- PayPal按钮容器 (默认隐藏) -->
+                        <div id="paypal-button-container3"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 必须要最后引入这个 -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AepN0bzNSwlaIsO3ODJXlvnEffHWtx1k2aAbuW6QoPj9f-K2AiTOA3vBDnHkQHpDmZjx-MB32g1mnMAj&currency=USD"></script>
+    <script src="./js/my_pay.js"> </script>
+
+    <!-- 用户评价部分 -->
+    <section class="py-12 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <!-- 动态背景 -->
+            <div class="absolute inset-0 bg-[#0A0A0B]">
+                <div class="absolute inset-0 bg-gradient-to-b from-[#FF3366]/10 via-transparent to-[#9D34DA]/10"></div>
+            </div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                    data-lan="hero.feedback_title"  >
+                    User Feedback
+                    </span>
+                </h2>
+                <p class="text-gray-400 text-lg" data-lan="hero.feedback_desc"  >
+                    See what other users say about us
+                </p>
+            </div>
+
+            <!-- 评价卡片区域 -->
+            <div class="relative">
+                <!-- 渐变遮罩 -->
+                <div
+                    class="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-[#0A0A0B]/80 via-[#0A0A0B]/30 to-transparent z-10">
+                </div>
+                <div
+                    class="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-[#0A0A0B]/80 via-[#0A0A0B]/30 to-transparent z-10">
+                </div>
+
+                <div class="flex space-x-6 overflow-x-hidden py-8" id="reviews-container">
+                    <div class="flex reviews-track"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ部分 -->
+    <section class="py-12 relative overflow-hidden">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                      data-lan="hero.faq_title" >
+                      FAQ
+                    </span>
+                </h2>
+                <p class="text-gray-400 text-lg" data-lan="hero.faq_desc" >
+                    Learn more about EnhancePix
+                </p>
+            </div>
+
+            <!-- FAQ列表 -->
+            <div class="grid gap-6 max-w-3xl mx-auto" id="faq-container">
+            </div>
+
+            <script>
+                const faqs = [
+                    {
+                        id: 1,
+                        question: "What are the unique features of Flux Kontext AI's super-resolution and image enhancement?",
+                        answer: "Flux Kontext AI leverages advanced AI image editing and super-resolution technology to upscale images up to 4x without distortion. Key features include:<br><br>• Intelligent Scene Recognition: Automatically detects portraits, landscapes, and more for optimal AI enhancement<br>• Character Consistency: Ensures style and character remain consistent across edits<br>• Detail Restoration: Recovers fine details for professional results<br>• Smart Noise Reduction: Removes noise while preserving clarity and vibrancy"
+                    },
+                    {
+                        id: 2,
+                        question: "How does Flux Kontext AI restore and enhance old or damaged photos?",
+                        answer: "Our AI photo enhancement and repair tools can automatically fix tears, creases, stains, and faded colors. With Flux Kontext AI:<br><br>• AI-powered Damage Repair: Restores physical and digital damage<br>• Color & Clarity Enhancement: Revives faded, yellowed, or blurry images<br>• Consistent Style: Maintains character consistency even in restoration<br>• One-click AI editing for fast, high-quality results"
+                    },
+                    {
+                        id: 3,
+                        question: "How can batch AI image editing improve my workflow with Flux Kontext AI?",
+                        answer: "Flux Kontext AI supports efficient batch processing for large image collections:<br><br>• One-click AI optimization for up to 100 images<br>• Save and reuse custom AI editing presets<br>• Intelligent queue for background processing<br>• Consistent character and style across all images, boosting productivity and brand identity"
+                    },
+                    {
+                        id: 4,
+                        question: "How do professional photographers benefit from Flux Kontext AI's advanced features?",
+                        answer: "Professional users enjoy:<br><br>• RAW format support for lossless AI image editing<br>• Advanced color management and style consistency<br>• AI-powered detail enhancement and portrait beautification<br>• Pro-level sharpening and restoration for gallery-quality results<br>• Seamless integration of character consistency in every edit"
+                    },
+                    {
+                        id: 5,
+                        question: "Is Flux Kontext AI easy to use and available on all platforms?",
+                        answer: "Absolutely! Flux Kontext AI is cloud-based and cross-platform:<br><br>• No professional equipment required—AI editing runs in the cloud<br>• Instant preview and download of enhanced images<br>• Works on Windows, Mac, and mobile devices<br>• Offline processing available via client download<br>• Simple, user-friendly interface for all skill levels"
+                    },
+                    {
+                        id: 6,
+                        question: "How does Flux Kontext AI protect my data and privacy?",
+                        answer: "We take data security and privacy seriously:<br><br>• End-to-end encryption for all uploads and downloads<br>• Temporary storage—your images are deleted after processing<br>• No analysis or retention of your photo content<br>• GDPR-compliant and certified for international data protection<br>• Your AI image editing and enhancement are always private and secure"
+                    }
+                ];
+
+
+                function createFaqItem(faq) {
+                    return `
+        <div class="faq-item group" data-faq-id="${faq.id}">
+            <button
+                class="w-full flex items-center justify-between p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 
+                       hover:border-[#FF3366]/50 hover:bg-white/8 transition-all duration-300 focus:outline-none 
+                       focus:border-[#FF3366]/70 focus:ring-2 focus:ring-[#FF3366]/20"
+                onclick="toggleFaq(${faq.id})">
+                <h3 class="text-xl font-medium text-white text-left pr-8">${faq.question}</h3>
+                <svg class="w-6 h-6 text-gray-400 group-hover:text-[#FF3366] transition-all duration-500 faq-arrow flex-shrink-0"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div class="faq-answer overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+                <div class="p-6 bg-white/5 backdrop-blur-lg rounded-b-2xl border-x border-b border-white/10">
+                    <p class="text-gray-300 leading-relaxed text-[15px] transform transition-all duration-500 ease-in-out opacity-0 translate-y-4">
+                        ${faq.answer}
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const container = document.querySelector('#faq-container');
+                    container.innerHTML = faqs.map(createFaqItem).join('');
+                });
+
+                function toggleFaq(id) {
+                    const currentItem = document.querySelector(`[data-faq-id="${id}"]`);
+                    const answer = currentItem.querySelector('.faq-answer');
+                    const content = answer.querySelector('p');
+                    const arrow = currentItem.querySelector('.faq-arrow');
+
+                    // 获取内容实际高度
+                    const isOpen = answer.style.maxHeight !== '0px' && answer.style.maxHeight !== '';
+
+                    if (!isOpen) {
+                        // 打开
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        arrow.style.transform = 'rotate(180deg)';
+                        // 延显示内容，让展开动画更自然
+                        setTimeout(() => {
+                            content.style.opacity = '1';
+                            content.style.transform = 'translateY(0)';
+                        }, 200);
+                    } else {
+                        // 关闭
+                        content.style.opacity = '0';
+                        content.style.transform = 'translateY(4px)';
+                        arrow.style.transform = 'rotate(0deg)';
+                        // 延迟收起，让内容淡出动画完成
+                        setTimeout(() => {
+                            answer.style.maxHeight = '0px';
+                        }, 100);
+                    }
+                }
+            </script>
+
+            <style>
+                .faq-item {
+                    position: relative;
+                }
+
+                .faq-item button:hover {
+                    background-color: rgba(255, 255, 255, 0.08);
+                }
+
+                .faq-answer {
+                    transform-origin: top;
+                    will-change: max-height;
+                }
+
+                .faq-arrow {
+                    will-change: transform;
+                }
+
+                /* 添加缓动效果 */
+                @media (prefers-reduced-motion: no-preference) {
+                    .faq-answer {
+                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    .faq-answer p {
+                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- 技术展示部分 -->
+    <section class="py-32 relative overflow-hidden">
+        <!-- 炫酷背景效果 -->
+        <div class="absolute inset-0 bg-[#0A0A0B]">
+            <!-- 渐变网格 -->
+            <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(#FF3366 0.5px, transparent 0.5px), linear-gradient(to right, #FF3366 0.5px, transparent 0.5px); 
+                        background-size: 30px 30px;">
+            </div>
+            <!-- 动态光效 -->
+            <div class="absolute inset-0">
+                <div
+                    class="absolute top-0 -left-4 w-3/4 h-1/2 bg-gradient-to-br from-[#FF3366]/20 to-transparent rounded-full blur-2xl">
+                </div>
+                <div
+                    class="absolute bottom-0 -right-4 w-3/4 h-1/2 bg-gradient-to-tl from-[#9D34DA]/20 to-transparent rounded-full blur-2xl">
+                </div>
+            </div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="space-y-32">
+                <!-- 前两行代码保持不变 -->
+
+                <!-- 第三行：色彩增强技术 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative group perspective">
+                        <div class="relative transform transition-all duration-500 group-hover:rotate-y-12">
+                            <div
+                                class="bg-gradient-to-br from-[#FF3366]/10 to-[#9D34DA]/10 backdrop-blur-xl rounded-2xl p-1">
+                                <img src="./img/descreption_1.jpg" alt="色彩增强"
+                                    class="rounded-xl w-full h-[400px] object-cover">
+                            </div>
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity -z-10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-bold">
+                            <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                data-lan="hero.technology_color_title" >
+                                Smart Color Enhancement
+                            </span>
+                        </h2>
+                        <p class="text-gray-400 text-lg leading-relaxed"
+                                data-lan="hero.technology_color_desc" >
+                                Flux Kontext AI leverages deep learning-based AI image editing to deliver smart color enhancement. Our intelligent color optimization system restores true, vivid colors for every photo—landscape, portrait, or artwork—with professional character consistency and brand-level quality.
+                        </p>
+                        <div class="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10">
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 bg-gradient-to-br from-[#FF3366] to-[#FF3366]/50 rounded-lg flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                        </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-medium"
+                                        data-lan="hero.technology_color_sub_title" >
+                                        Smart Color Optimization</h3>
+                                    <p class="text-gray-400 text-sm"
+                                        data-lan="hero.technology_color_sub_desc" >
+                                        AI-powered color adjustment ensures every edit is consistent in style and rich in detail, elevating your visual experience.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第四行：人像美化技术 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 order-2 lg:order-1">
+                        <h2 class="text-4xl font-bold">
+                            <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                data-lan="hero.technology_beaut_title" >
+                                AI Portrait Beautification
+                            </span>
+                        </h2>
+                        <p class="text-gray-400 text-lg leading-relaxed" data-lan="hero.technology_beaut_desc" >
+                            Flux Kontext AI's AI portrait beautification intelligently detects facial features and automatically enhances skin tone and lighting for natural, professional, and consistent results. Enjoy seamless cross-platform experience—mobile, desktop, or tablet—for high-end retouching and social sharing.
+                        </p>
+                        <div class="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10">
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 bg-gradient-to-br from-[#9D34DA] to-[#9D34DA]/50 rounded-lg flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-medium" data-lan="hero.technology_beaut_sub_title" >
+                                        Smart portrait beautification</h3>
+                                    <p class="text-gray-400 text-sm" data-lan="hero.technology_beaut_sub_desc" >
+                                        AI-powered beautification refines natural beauty, ensures character consistency, and protects your data privacy.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group perspective order-1 lg:order-2">
+                        <div class="relative transform transition-all duration-500 group-hover:rotate-y-12">
+                            <div
+                                class="bg-gradient-to-br from-[#9D34DA]/10 to-[#FF3366]/10 backdrop-blur-xl rounded-2xl p-1">
+                                <img src="./img/descreption_2.jpg" alt="人像美化"
+                                    class="rounded-xl w-full h-[400px] object-cover">
+                            </div>
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-[#9D34DA] to-[#FF3366] rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity -z-10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 通用页脚组件 -->
+    <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+        <!-- footer.js 会将内容注入到这里 -->
+    </footer>
+
+    <script src="./js/typewriter.js"></script>
+    <script src="./js/particles.js"></script>
+    <script src="./js/scroll-effects.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化打字机效果
+            const typewriterElement = document.getElementById('typewriter-text');
+            new Typewriter(typewriterElement, [
+                'AI Editing',
+                'Image Enhance',
+                'Photo Repair'
+            ], {
+                typeSpeed: 100,
+                deleteSpeed: 50,
+                wait: 2000
+            });
+
+            // 初始化粒子效果
+            new ParticleSystem();
+
+            // 给需要视差效果的元素添加属性
+            document.querySelectorAll('.parallax-section').forEach(element => {
+                element.setAttribute('data-parallax', '0.5');
+            });
+
+            // 给需要渐入效果的元素添加属性
+            document.querySelectorAll('.fade-section').forEach(element => {
+                element.setAttribute('data-fade', 'true');
+            });
+
+            // 给需要缩放效果的元素添加属性
+            document.querySelectorAll('.scale-section').forEach(element => {
+                element.setAttribute('data-scale', 'true');
+            });
+        });
+    </script>
+
+    <script>
+        const reviews = [
+            {
+                name: "Jessica Brown",
+                avatar: "https://i.pravatar.cc/150?img=44",
+                role: "Professional Photographer",
+                content: "Flux Kontext AI's AI image editing and super-resolution features are incredible! My photos are upscaled with perfect detail and character consistency. It's the best tool for professional, gallery-ready results.",
+                rating: 5
+            },
+            {
+                name: "Michael Johnson",
+                avatar: "https://i.pravatar.cc/150?img=12",
+                role: "Family Album Collector",
+                content: "Thanks to Flux Kontext AI's AI photo enhancement, many of our old, damaged family photos have been restored with amazing clarity and style consistency. It's like bringing our memories back to life!",
+                rating: 5
+            },
+            {
+                name: "Emily Smith",
+                avatar: "https://i.pravatar.cc/150?img=23",
+                role: "E-commerce Visual Designer",
+                content: "Flux Kontext AI makes batch AI image editing so easy. Every product photo looks sharp, vibrant, and consistent—our brand image has never been stronger!",
+                rating: 5
+            },
+            {
+                name: "David Williams",
+                avatar: "https://i.pravatar.cc/150?img=15",
+                role: "Wedding Photography Studio",
+                content: "The character consistency and AI-powered portrait enhancement from Flux Kontext AI save us hours of editing. Our clients love the natural, professional results!",
+                rating: 5
+            },
+            {
+                name: "Linda Garcia",
+                avatar: "https://i.pravatar.cc/150?img=32",
+                role: "Travel Blogger",
+                content: "With Flux Kontext AI, my travel photos are enhanced with vibrant colors and perfect clarity. The AI editing tools work wonders even in challenging lighting!",
+                rating: 5
+            },
+            {
+                name: "James Martinez",
+                avatar: "https://i.pravatar.cc/150?img=18",
+                role: "Art Collector",
+                content: "I use Flux Kontext AI for digital preservation of artwork. The AI image editing and detail restoration are unmatched—every piece looks authentic and consistent.",
+                rating: 5
+            },
+            {
+                name: "Amy Rodriguez",
+                avatar: "https://i.pravatar.cc/150?img=28",
+                role: "Fashion Magazine Editor",
+                content: "Flux Kontext AI's batch processing and character consistency features keep every magazine photo high quality and on-brand. It's a must-have for creative teams!",
+                rating: 5
+            },
+            {
+                name: "Chris Lee",
+                avatar: "https://i.pravatar.cc/150?img=22",
+                role: "Digital Artist",
+                content: "The AI noise reduction and smart enhancement from Flux Kontext AI solve all my image quality issues. My digital art is now sharper and more vibrant than ever.",
+                rating: 5
+            },
+            {
+                name: "Sophie Wilson",
+                avatar: "https://i.pravatar.cc/150?img=33",
+                role: "Beauty Blogger",
+                content: "AI portrait beautification with Flux Kontext AI is both natural and professional. My photos look stunning while keeping my unique style consistent.",
+                rating: 5
+            },
+            {
+                name: "John Thompson",
+                avatar: "https://i.pravatar.cc/150?img=11",
+                role: "Photography Educator",
+                content: "I recommend Flux Kontext AI to all my students. Its AI image editing, character consistency, and data security set a new standard for modern photo enhancement.",
+                rating: 5
+            }
+        ];
+
+
+        function createReviewCard(review) {
+            return `
+            <div class="flex-none w-[400px] transform transition-all duration-500 hover:scale-[1.02] px-2">
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 
+                            hover:border-[#FF3366]/50 hover:bg-white/8 hover:shadow-xl hover:shadow-[#FF3366]/10 
+                            transition-all duration-500 h-full">
+                    <div class="flex items-center mb-6">
+                        <img src="${review.avatar}" alt="${review.name}" loading="lazy"
+                             class="w-14 h-14 rounded-full ring-2 ring-[#FF3366]/30 object-cover">
+                        <div class="ml-4">
+                            <h3 class="text-white font-medium text-lg">${review.name}</h3>
+                            <p class="text-gray-400 text-sm mt-0.5">${review.role}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed text-[15px]">"${review.content}"</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="flex space-x-1">
+                            ${Array(review.rating).fill(`
+                                <svg class="w-5 h-5 text-[#FF3366]" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                            `).join('')}
+                        </div>
+                        <span class="ml-2 text-gray-400">${review.rating}.0</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.querySelector('.reviews-track');
+            // 复制三份评论以确保无缝滚动
+            const reviewsHTML = [...reviews, ...reviews, ...reviews].map(createReviewCard).join('');
+            container.innerHTML = reviewsHTML;
+
+            let scrollSpeed = 0.5; // 降低默认滚动速度
+            let scrollPosition = 0;
+            const totalWidth = container.scrollWidth / 3;
+            let isHovered = false;
+            let animationFrameId = null;
+
+            function scroll() {
+                if (!isHovered) {
+                    scrollPosition += scrollSpeed;
+                    if (scrollPosition >= totalWidth) {
+                        scrollPosition = 0;
+                    }
+                    container.style.transform = `translateX(-${scrollPosition}px)`;
+                }
+                animationFrameId = requestAnimationFrame(scroll);
+            }
+
+            // 开始滚动
+            scroll();
+
+            // 鼠标悬停控制
+            container.addEventListener('mouseenter', () => {
+                isHovered = true;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isHovered = false;
+            });
+
+            // 清理动画
+            return () => {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                }
+            };
+        });
+    </script>
+
+
+</body>
+
+</html>
+</html>

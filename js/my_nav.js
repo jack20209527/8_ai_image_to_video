@@ -11,9 +11,9 @@ const nav_header_content = `
                     <div class="rounded-lg flex items-center justify-center">
                         <img id="id_nav_logo_image" alt="Super AI" class="w-10 h-10 logo-hover" src="/img/logo.png"/>
                     </div>
-                    <div id="id_nav_logo_text" class="text-xl ml-2 text-white hover:text-red-500 ">
-                        Super AI
-                    </div>
+                    <p id="id_nav_logo_text" class="bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent ml-2 hover:text-red-500">
+                    Super AI
+                    </p>
                 </a>
 
             </div>
@@ -232,7 +232,7 @@ function init_nav_event(path_level, left_sidebar_index){
                     rotateArrow('id_btn_nav_video', true);
                     DropdownMenuUtil.show('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index)=>{ 
                         if  (index == 0) {
-                            window.location.href = "/text-to-video"; 
+                            window.location.href = "/text-to-video";
                         } else if (index == 1) {
                             window.location.href = "/image-to-video"; 
                         }
@@ -240,6 +240,7 @@ function init_nav_event(path_level, left_sidebar_index){
                         DropdownMenuUtil.hide(); 
                     }, ()=>{ r
                         rotateArrow('id_btn_nav_video', false); 
+                        console.log(`选择了: ${item}, 索引: ${index}  `);
                     });
                 });
             }
