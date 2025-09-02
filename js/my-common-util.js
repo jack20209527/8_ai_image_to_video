@@ -36,6 +36,9 @@ class GlobalConfig {
     static API_V_VIDEO = "/go/v_video" // 支持: 文生、图生、模版生
     static API_GET_V_TASK_DETAIL = "/go/v/get_task_detail"
     static API_VEO3 = "/go/v/cr" // 只支持: 文生视频
+    static API_PAY_CREATE_ORDER = "/go/p/cr" // 创建订单
+    static API_PAY_CAPTURE_ORDER = "/go/p/ca" // 支付快照，验证订单是否支付成功
+    static API_PAY_GET_USER_INFO_BY_ORDER_COMPLETED = "/go/lo/" // 用户的订单是否支付成功 opt必须是9
     
     // 类型: 图片生成类型
     static TYPE_IMAGE_NANO = "0";   // 图片生成类型 nona

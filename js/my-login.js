@@ -1,50 +1,5 @@
 
-var KEY_R2_ORIGINAL = "original"
-var KEY_R2_GENERATED = "generated"
 
-
-function login() {
-  url = `${GlobalConfig.url}/go/lo/{"opt":"8", "google_token":"", "project_id":”${GlobalConfig.project_id}“, "device_info":"1234"}`;
-  // url = 'http://localhost:39603/go/lo/{"opt":"8", "google_token":"", "project_id":"0", "device_info":"1234"}';
-  // url = 'https://linkprohub.top/go/lo/{"opt":"8", "google_token":"", "project_id":"0", "device_info":"1234"}';
-  // url = 'http://fakeaddressgenerator.info:39601/go/lo/{"opt":"8", "google_token":"", "project_id":"0", "device_info":"1234"}';
-  // url = 'http://fakeaddressgenerator.info:39603/go/lo/{"opt":"0", "google_token":"", "project_id":"0", "device_info":"1234"}';
-  // http://localhost:39603/go/lo/{"opt":"0", "google_token":"", "project_id":"0", "device_info":"1234"}
-
-  // const jsonData = {
-  //   "opt": "0",
-  //   "google_token": response.credential,
-  //   "project_id": "0",
-  //   "device_info": "6789",
-  //   "pay_platform": "1", // "0":免费的  "1":kedoppay  "2":lemon
-  //   "is_test": "0" // 0:正式 1:测试
-  // };
-
-  // const jsonString = JSON.stringify(jsonData);
-  // console.log(jsonString);
-
-  // url = "http://localhost:39603/go/lo/" + jsonString
-
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      return response.text();
-    })
-    .then(data => {
-      // document.getElementById('response-container').textContent = data;
-      document.getElementById('user-name').innerText = `Hello, ${data}`;
-    })
-    .catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
-    });
-}
 
 
 function isUserLoggedIn() {
@@ -72,7 +27,6 @@ function showLoading() {
 function hideLoading() {
   window.LoadingUtil.hide();
 }
-
 
 
 // 获取更多图片

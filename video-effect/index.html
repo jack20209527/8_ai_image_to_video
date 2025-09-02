@@ -41,7 +41,7 @@
     <!-- 设置登录、初始化顶部导航、侧边栏 -->
     <script>
         // 设置导航条的按钮的点击事件
-        init_nav_event ("../", 6);
+        init_nav_event ("../", 4);
 
     </script>
 
@@ -63,16 +63,9 @@
 
             <!-- 主内容区域 -->
             <main class="min-h-[calc(100vh-64px)]">
-                <!-- 选择按钮区域 -->
-                <div class="flex items-center">
-                    <button id="id_btn_my_creations_images" class="bg-[#1a1d26] group flex items-center justify-center w-20  py-2 rounded-l-md text-slate-300 hover:bg-[#333] hover:text-red-500">
-                        <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h10M7 14h6"/></svg>
-                        <span class="text-[0.92rem] ml-1 group-hover:text-red-500">图片</span>
-                    </button>
-                    <button id="id_btn_my_creations_videos" class="bg-[#1a1d26] group flex items-center justify-center w-20  py-2 rounded-r-md text-red-500 hover:bg-[#333] ">
-                        <svg class="w-[18px] h-[18px] text-red-500 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
-                        <span class="text-[0.92rem] ml-1 group-hover:text-red-500">视频</span>
-                    </button>
+                <!-- 标题 -->
+                <div class="flex items-center justify-center">
+                    <h2 class="text-3xl font-bold">视频特效</h2>
                 </div>
 
 
@@ -165,113 +158,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            const id_btn_my_creations_images = document.getElementById('id_btn_my_creations_images');
-            const id_btn_my_creations_videos = document.getElementById('id_btn_my_creations_videos');
-
-            // 默认选中图片按钮
-            setActiveButton(id_btn_my_creations_images);
-            setInactiveButton(id_btn_my_creations_videos);
-
-            // 点击图片按钮
-            id_btn_my_creations_images.addEventListener('click', () => {
-                setActiveButton(id_btn_my_creations_images);
-                setInactiveButton(id_btn_my_creations_videos);
-                loadImages(); // 加载图片作品
-            });
-
-            // 点击视频按钮
-            id_btn_my_creations_videos.addEventListener('click', () => {
-                setActiveButton(id_btn_my_creations_videos);
-                setInactiveButton(id_btn_my_creations_images);
-                loadVideos(); // 加载视频作品
-            });
-
-
-
             const loadingState = document.getElementById('id_loading_state_layout');
             const emptyState = document.getElementById('id_empty_state_layout');
             const gridContainer = document.getElementById('grid_container');
 
-            // 默认加载图片作品
-            loadImages();
-
-            // 加载图片作品
-            function loadImages() {
-
-                gridContainer.innerHTML = ''; // 清空当前内容
-                loadingState.classList.remove('hidden'); // 显示加载状态
-
-                fetchImages().then(images => {
-
-                    loadingState.classList.add('hidden'); // 隐藏加载状态
-
-                    if (images.length === 0) {
-                        emptyState.classList.remove('hidden'); // 显示空状态
-                    } else {
-                        emptyState.classList.add('hidden'); // 隐藏空状态
-                        images.forEach(image => {
-                            const item = createImageCard(image);
-                            gridContainer.insertAdjacentHTML('beforeend', item);
-                        });
-                    }
-                }).catch(error => {
-                    console.error('加载图片失败:', error);
-                    loadingState.classList.add('hidden'); // 隐藏加载状
-                    emptyState.classList.remove('hidden'); // 显示空状态
-                });
-            }
-
-
-            // 创建图片卡片HTML
-            function createImageCard(image) {
-                return `
-                    <div class="image-card bg-white/5 backdrop-blur-lg rounded-lg overflow-hidden group cursor-pointer"
-                        onclick="window.open('${image.generatedUrl}', '_blank')">
-                        <div class="relative aspect-w-4 aspect-h-3">
-                            <img src="${image.generatedUrl}" 
-                                alt="AI generated image" 
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                        </div>
-                        <div class="p-2 text-center text-white">
-                            <h3 class="text-lg font-semibold">${image.title}</h3>
-                            <p class="text-sm text-gray-400">${image.description}</p>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // fetchImages 函数
-            async function fetchImages(page = 1) {
-                return new Promise((resolve, reject) => {
-                    get_more_images((images, totalPages, error) => {
-                        if (error) {
-                            console.error('获取图片失败:', error);
-                            reject(error);
-                            return;
-                        }
-
-                        if (!images || images.length === 0) {
-                            resolve([]);
-                            return;
-                        }
-
-                        // 转换数据格式以匹配现有的展示逻辑
-                        const formattedImages = images.map(image => ({
-                            id: image.id || Math.random().toString(36).substr(2, 9),
-                            imageUrl: image.image_original, // 使用原图
-                            generatedUrl: image.image_generated, // 生成的图片
-                            title: 'Image Enhancement',
-                            description: 'Use AI to enhance the quality of the photo',
-                            createTime: image.created_at || new Date().toLocaleString(),
-                            status: 'completed'
-                        }));
-
-                        resolve(formattedImages);
-                    });
-                });
-            }
-
-
+            loadVideos ()
+            
             // 加载视频作品
             function loadVideos() {
                 gridContainer.innerHTML = ''; // 清空当前内容
@@ -286,7 +178,7 @@
                     } else {
                         emptyState.classList.add('hidden'); // 隐藏空状态
                         videos.forEach(video => {
-
+                            
                         const item = document.createElement('div');
                         
                         item.className = 'bg-[#1a1d26] rounded-md overflow-hidden';

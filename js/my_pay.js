@@ -12,7 +12,7 @@ t_type = "1";
 function initAllPayPalButton (request_param_create_order, button_container) {
 
     paypal.Buttons({
-        // ...其它配置...
+        // 其它配置
         onClick: function(data, actions) {
             console.log('[PayPal] onClick 触发，当前登录状态:', typeof isUserLoggedIn !== 'undefined' ? isUserLoggedIn() : isLoggedIn);
             if (typeof isUserLoggedIn !== 'undefined' ? isUserLoggedIn() : isLoggedIn) {
@@ -33,7 +33,7 @@ function initAllPayPalButton (request_param_create_order, button_container) {
                 return actions.reject();
             }
             console.log('[PayPal] createOrder 参数:', request_param_create_order);
-            return fetch("https://linkprohub.top" + '/go/p/cr', {
+            return fetch(GlobalConfig.url + GlobalConfig.API_PAY_CREATE_ORDER, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ function initAllPayPalButton (request_param_create_order, button_container) {
                 vip_type: request_param_create_order.vip_type,
                 t: "0"
             });
-            return fetch( "https://linkprohub.top" + `/go/p/ca`, {
+            return fetch( GlobalConfig.url + GlobalConfig.API_PAY_CAPTURE_ORDER, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -158,15 +158,33 @@ function getCurrentUserPayParam(defaultParam) {
     return defaultParam;
 }
 
+let localUser = LocalStorageUtil.getUserObject();
+console.log("开始刷新支付组件了.")
+console.log('localUser: ', localUser);
+console.log(localUser == null);
+
+if (localUser) {
+    console.log('my_pay-昵称:', localUser.name);
+    console.log('my_pay-头像:', localUser.head_url);
+    console.log('my_pay-uid:', localUser.uid);
+    console.log('my_pay-project_id:', GlobalConfig.project_id);
+    console.log('my_pay-积分:', localUser.jifen);
+    console.log('my_pay-token:', localUser.token);
+    console.log('my_pay-token_expire:', localUser.token_expire);
+    console.log('my_pay-t_type:',  t_type);
+} 
+
 // 初始化PayPal按钮时动态获取用户信息
-let defaultParam1 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"9",  "vip_type":"vip_ji_fen", "t":t_type };
-let defaultParam2 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"10",  "vip_type":"vip_ji_fen", "t":t_type };
-let defaultParam3 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"11",  "vip_type":"vip_ji_fen", "t":t_type };
+// let defaultParam1 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"9",  "vip_type":"vip_ji_fen", "t":t_type };
+// let defaultParam2 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"10",  "vip_type":"vip_ji_fen", "t":t_type };
+// let defaultParam3 = { "uid":"12",  "email":"jack20219527@gmail.com", "project_id":GlobalConfig.project_id, "product_id":"11",  "vip_type":"vip_ji_fen", "t":t_type };
+let defaultParam1 = { "uid":localUser.uid,  "email":localUser.email, "project_id":GlobalConfig.project_id, "product_id":"9",  "vip_type":"vip_ji_fen", "t":t_type };
+let defaultParam2 = { "uid":localUser.uid,  "email":localUser.email, "project_id":GlobalConfig.project_id, "product_id":"10",  "vip_type":"vip_ji_fen", "t":t_type };
+let defaultParam3 = { "uid":localUser.uid,  "email":localUser.email, "project_id":GlobalConfig.project_id, "product_id":"11",  "vip_type":"vip_ji_fen", "t":t_type };
 
-
-
-
-
+console.log('defaultParam1 默认的: ', defaultParam1);
+console.log('defaultParam2 默认的: ', defaultParam2);
+console.log('defaultParam3 默认的: ', defaultParam3);
 
 initAllPayPalButton(getCurrentUserPayParam(defaultParam1), '#paypal-button-container1');
 initAllPayPalButton(getCurrentUserPayParam(defaultParam2), '#paypal-button-container2');
@@ -241,12 +259,12 @@ function get_user_info_by_order_id(order_id) {
     console.log(localUser == null);
 
     const jsonData = {
-        "opt": "9",
+        "opt": "9", // 必须是9
         // "google_token": response.credential,
-        "project_id": GlobalConfig.project_id,
-        "device_info": "6789",
         "uid": localUser.uid, // 从本地获取
         "order_id": order_id, // "1HL18739369889701",
+        "project_id": GlobalConfig.project_id,
+        "device_info": "6789",
         "my_token": "MTA0MjM3MDcwNDIyMDU4ODI3NTAwLTE3Mjk4MjcyNDA3NjEtYmY0Y2JkNWYtY2YxZC00MTIyLThmZjMtZGU3OGIyY2NlMjQwLTA3ZTlkNzcyZGMzNjUyMjc\u003d"
     };
 
@@ -255,7 +273,7 @@ function get_user_info_by_order_id(order_id) {
     const jsonString = JSON.stringify(jsonData);
     console.log(jsonString);
 
-    let real_url = url + jsonString
+    let real_url = GlobalConfig.url + GlobalConfig.API_PAY_GET_USER_INFO_BY_ORDER_COMPLETED + jsonString
     console.log(real_url);
 
     return fetch(real_url, {
@@ -319,12 +337,6 @@ function get_user_info_by_order_id(order_id) {
                 // 隐藏加载状态
                 LoadingUtil.hide();
   
-                confetti({
-                  particleCount: 150,
-                  spread: 70,
-                  origin: { y: 0.6 }
-                });
-                
                 polling = false
                 console.log("get_user_info_by_order_id: 设置了不在轮训了");
                 

@@ -17,8 +17,8 @@ const nav_header_content = `
                     AI 图片
                     <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <button id="id_btn_nav_see" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    探索
+                <button id="id_btn_nav_video_effect" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
+                    视频特效
                 </button>
                 <button id="id_btn_nav_blog" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     博客
@@ -144,9 +144,9 @@ const left_sidebar_content = `
             <div class="px-3 mt-4">
                 <div class="text-xs text-gray-400 mb-2">User Menus</div>
                 <nav class="space-y-2">
-                    <button id="id_btn_sidebar_see" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
+                    <button id="id_btn_sidebar_video_effect" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-                        <span class="text-[0.92rem]">探索</span>
+                        <span class="text-[0.92rem]">视频特效</span>
                     </button>
                     <button id="id_btn_sidebar_blog" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
@@ -168,7 +168,7 @@ const left_sidebar_content = `
 
 // 包括左侧和顶部导航的点击
 // path_level: ../ 或者 ./
-// left_sidebar_index: 按钮的序号，从上往下，从0开始
+// left_sidebar_index: 按钮的序号，从上往下，从0开始; 如果是-1，就是不显示左侧边栏
 function init_nav_event(path_level, left_sidebar_index){
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -181,10 +181,12 @@ function init_nav_event(path_level, left_sidebar_index){
             topHeaderElement.innerHTML = nav_header_content;
         }
 
-        // 添加 左侧边栏 布局内容
-        const leftHeaderElement = document.querySelector('aside');
-        if (leftHeaderElement) {
-            leftHeaderElement.innerHTML = left_sidebar_content;
+        // 添加 左侧边栏 布局内容;  如果是-1，就是不显示左侧边栏
+        if (left_sidebar_index != -1) {
+            const leftHeaderElement = document.querySelector('aside');
+            if (leftHeaderElement) {
+                leftHeaderElement.innerHTML = left_sidebar_content;
+            }
         }
 
         // 设置 导航栏的登录状态 - 初始值，必须等待dom加载完成
@@ -257,14 +259,9 @@ function init_nav_event(path_level, left_sidebar_index){
             }
         })();
 
-        // 点击顶部导航栏 探索
-        ClickUtil.onClick('id_btn_nav_see', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
-        });
-
-        // 点击顶部导航栏 探索
-        ClickUtil.onClick('id_btn_nav_see', () => {
-            window.location.href = path_level + "text-to-video/index.html"; // ../
+        // 点击顶部导航栏 视频特效
+        ClickUtil.onClick('id_btn_nav_video_effect', () => {
+            window.location.href = "/video-effect"; // ../
         });
 
         // 点击顶部导航栏 博客
@@ -280,11 +277,13 @@ function init_nav_event(path_level, left_sidebar_index){
         // 点击顶部导航栏 价格
         ClickUtil.onClick('id_btn_nav_pricing', () => {
             // 显示 价格弹窗
+            window.location.href = "/pricing";
         });
 
         // 点击顶部导航栏 积分布局
         ClickUtil.onClick('id_nav_credit_cart_layouot', () => {
             // 显示 价格弹窗
+
         });
 
         // 点击顶部导航栏 头像布局
@@ -305,48 +304,52 @@ function init_nav_event(path_level, left_sidebar_index){
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
-        //点击左侧导航: 文生视频
-        ClickUtil.onClick('id_btn_sidebar_text_to_video', () => {
-            window.location.href = "/text-to-video"; // ../
-        });
-        //点击左侧导航: 图生视频
-        ClickUtil.onClick('id_btn_sidebar_image_to_video', () => {
-            window.location.href = "/image-to-video";
-        });
+        if (left_sidebar_index != -1) {
+            //点击左侧导航: 文生视频
+            ClickUtil.onClick('id_btn_sidebar_text_to_video', () => {
+                window.location.href = "/text-to-video"; // ../
+            });
+            //点击左侧导航: 图生视频
+            ClickUtil.onClick('id_btn_sidebar_image_to_video', () => {
+                window.location.href = "/image-to-video";
+            });
 
-        //点击左侧导航: 文生图
-        ClickUtil.onClick('id_btn_sidebar_text_to_image', () => {
-            window.location.href = "/text-to-image"; // ../
-        });
-        //点击左侧导航: 图生图
-        ClickUtil.onClick('id_btn_sidebar_image_to_image', () => {
-            window.location.href = "/image-to-image";
-        });
+            //点击左侧导航: 文生图
+            ClickUtil.onClick('id_btn_sidebar_text_to_image', () => {
+                window.location.href = "/text-to-image"; // ../
+            });
+            //点击左侧导航: 图生图
+            ClickUtil.onClick('id_btn_sidebar_image_to_image', () => {
+                window.location.href = "/image-to-image";
+            });
 
-        // 点击左侧导航 探索
-        ClickUtil.onClick('id_btn_sidebar_see', () => {
-            window.location.href = "/text-to-video"; // ../
-        });
+            // 点击左侧导航 视频特效
+            ClickUtil.onClick('id_btn_sidebar_video_effect', () => {
+                window.location.href = "/video-effect"; // ../
+            });
 
-        // 点击左侧导航 博客
-        ClickUtil.onClick('id_btn_sidebar_blog', () => {
-            window.location.href = "/blog"; // ../
-        });
+            // 点击左侧导航 博客
+            ClickUtil.onClick('id_btn_sidebar_blog', () => {
+                window.location.href = "/blog"; // ../
+            });
 
-        // 点击左侧导航 我的创作
-        ClickUtil.onClick('id_btn_sidebar_my_works', () => {
-            window.location.href = "/my-creations"; // ../
-        });
+            // 点击左侧导航 我的创作
+            ClickUtil.onClick('id_btn_sidebar_my_works', () => {
+                window.location.href = "/my-"; // ../
+            });
 
-        // 点击左侧导航 价格
-        ClickUtil.onClick('id_btn_sidebar_pricing', () => {
-            // 显示 价格弹窗
-        });
+            // 点击左侧导航 价格
+            ClickUtil.onClick('id_btn_sidebar_pricing', () => {
+                // 显示 价格弹窗
+                window.location.href = "/pricing";
+            });
+
+            set_left_sidebar_active (left_sidebar_index);
+        }
 
         // 移动端菜单
         bindMobileMenu ();
-
-        set_left_sidebar_active (left_sidebar_index);
+        
 
     });
 }
