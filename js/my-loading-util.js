@@ -44,7 +44,7 @@ class LoadingUtil {
                     <!-- 动态背景细纹与渐变流动 -->
                     <div class="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-[#06B6D4]/10 animate-gradient"></div>
                     <div class="absolute inset-0 bg-grid opacity-10"></div>
-
+                    
                     <!-- 内容区域 -->
                     <div class="relative flex flex-col items-center justify-center h-full select-none">
                         <!-- 加载动画（中心图标 + 环绕小点） -->

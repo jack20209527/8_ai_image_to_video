@@ -1,7 +1,8 @@
 // 顶部导航栏、移动适配菜单、左侧边栏
 // <span class="text-[#6aa7ff]">Seedance</span>
 // <span class="text-white">AI</span>
-
+// <p id="id_nav_logo_text" class="bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent ml-2 hover:text-red-500">
+// <p id="id_nav_logo_text" class="font-medium bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent  text-transparent ml-2 hover:text-red-500"></p>
 // 页面顶部导航栏布局内容
 const nav_header_content = `
         <div class="mx-auto h-full px-4 flex items-center">
@@ -11,8 +12,10 @@ const nav_header_content = `
                     <div class="rounded-lg flex items-center justify-center">
                         <img id="id_nav_logo_image" alt="Super AI" class="w-10 h-10 logo-hover" src="/img/logo.png"/>
                     </div>
+
+                    
                     <p id="id_nav_logo_text" class="bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent ml-2 hover:text-red-500">
-                    Super AI
+                        Super AI
                     </p>
                 </a>
 
@@ -40,8 +43,8 @@ const nav_header_content = `
                     价格
                 </button>
             </nav>
+
             <div class="ml-auto flex items-center gap-3">
-            
                 <!-- 顶部导航: 积分 -->
                 <a class="text-white cursor-pointer hover:text-white transition-colors" >
                     <div id="id_nav_credit_cart_layouot" class="flex items-center h-8 px-2 space-x-1 rounded-[8px] bg-[#23232b] border border-white/10 hover:bg-[#33333b]">
@@ -314,7 +317,7 @@ function init_nav_event(path_level, left_sidebar_index){
         DropdownMenuUtil.init('id_nav_user_avatar', ['价格', '退出'], -190, 10, 220, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
             if(item == '价格'){
-                // window.location.href = path_level + "pricing/index.html"; 
+                window.location.href = "/pricing";
             }else if(item == '退出'){
                 logout();
             }
