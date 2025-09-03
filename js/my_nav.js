@@ -76,23 +76,15 @@ const nav_header_content = `
        <div id="id_mobile_menu" class="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
             <div class="px-4 py-4 space-y-4">
                 <div>
-                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">Seedance Model</div>
+                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">AI Video</div>
                     <nav class="space-y-1">
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                        <button id="id_btn_mobile_text2video" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
                             <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
-                            <span>文字生成视频</span>
+                            <span>Text to Video</span>
                         </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                        <button id="id_btn_mobile_image2video" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
                             <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-                            <span>图片生成视频</span>
-                        </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
-                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 20h16"/></svg>
-                            <span>动画</span>
-                        </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
-                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 8h8v8H8z"/></svg>
-                            <span>多镜头叙事</span>
+                            <span>Image to Video</span>
                         </button>
                     </nav>
                 </div>
@@ -100,22 +92,43 @@ const nav_header_content = `
                 <div class="border-t border-white/10"></div>
 
                 <div>
-                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">Popular Model</div>
+                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">AI Image</div>
                     <nav class="space-y-1">
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
-                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
-                            <span>Veo3</span>
-                        </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                        <button id="id_btn_mobile_text2image" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
                             <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12s3-7 9-7 9 7 9 7-3 7-9 7-9-7-9-7z"/></svg>
-                            <span>Hailuo AI</span>
+                            <span>Text to Image</span>
                         </button>
-                        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                        <button id="id_btn_mobile_image2image" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
                             <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
-                            <span>Kling AI</span>
+                            <span>Image to Image</span>
                         </button>
                     </nav>
                 </div>
+
+                <div class="border-t border-white/10"></div>
+
+                <div>
+                    <div class="text-[12px] tracking-wide text-gray-400 mb-2">User Menus</div>
+                    <nav class="space-y-1">
+                        <button id="id_btn_mobile_video_effect" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12s3-7 9-7 9 7 9 7-3 7-9 7-9-7-9-7z"/></svg>
+                            <span>Video Effect</span>
+                        </button>
+                        <button id="id_btn_mobile_blog" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+                            <span>Blog</span>
+                        </button>
+                        <button id="id_btn_mobile_my_creations" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+                            <span>My Creations</span>
+                        </button>
+                        <button id="id_btn_mobile_video_pricing" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:text-red-500 transition">
+                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+                            <span>Pricing</span>
+                        </button>
+                    </nav>
+                </div>
+
             </div>
         </div>
 `;
@@ -222,7 +235,7 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 悬停即显示：AI 视频
         DropdownMenuUtil.init('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index) => {
-            console.log(`选择了11111: ${item}, 索引: ${index}  `);
+            console.log(`选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
         }, () => { rotateArrow('id_btn_nav_video', false); });
         (function(){
@@ -230,25 +243,24 @@ function init_nav_event(path_level, left_sidebar_index){
             if(btn){
                 btn.addEventListener('mouseenter', function(){
                     rotateArrow('id_btn_nav_video', true);
-                    DropdownMenuUtil.show('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, (item, index)=>{ 
-                        if  (index == 0) {
-                            window.location.href = "/text-to-video";
-                        } else if (index == 1) {
-                            window.location.href = "/image-to-video"; 
-                        }
-                        console.log(`选择了3333333: ${item}, 索引: ${index}  `);
-                        DropdownMenuUtil.hide(); 
-                    }, ()=>{ r
-                        rotateArrow('id_btn_nav_video', false); 
-                        console.log(`选择了: ${item}, 索引: ${index}  `);
-                    });
+                    DropdownMenuUtil.show('id_btn_nav_video', ['Text to Video', 'Image to Video'], 0, 8, 200, 
+                        (item, index)=>{ 
+                            DropdownMenuUtil.hide(); 
+                            if  (index == 0) {
+                                window.location.href = "/text-to-video";
+                            } else if (index == 1) {
+                                window.location.href = "/image-to-video"; 
+                            }
+                            console.log(`选择了: ${item}, 索引: ${index}  `);
+                        }, 
+                        ()=>{ rotateArrow('id_btn_nav_video', false); });
                 });
             }
         })();
 
         // 悬停即显示：AI 图片
         DropdownMenuUtil.init('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, (item, index) => {
-            console.log(`2222222 选择了: ${item}, 索引: ${index}  `);
+            console.log(`选择了: ${item}, 索引: ${index}  `);
             DropdownMenuUtil.hide();
         }, () => { rotateArrow('id_btn_nav_image', false); });
         (function(){
@@ -256,20 +268,21 @@ function init_nav_event(path_level, left_sidebar_index){
             if(btn){
                 btn.addEventListener('mouseenter', function(){
                     rotateArrow('id_btn_nav_image', true);
-                    DropdownMenuUtil.show('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, (item, index)=>{ 
-                        if  (index == 0) {
-                            window.location.href = "/text-to-image"; 
-                        } else if (index == 1) {
-                            window.location.href = "/image-to-image"; 
-                        }
-                        DropdownMenuUtil.hide(); 
-                    }, ()=>{ 
-                        rotateArrow('id_btn_nav_image', false); 
-                        console.log(`选择了: ${item}, 索引: ${index}  `);
-                    });
+                    DropdownMenuUtil.show('id_btn_nav_image', ['Text to Image', 'Image to Image'], 0, 8, 200, 
+                        (item, index)=>{ 
+                            DropdownMenuUtil.hide(); 
+                            if  (index == 0) {
+                                window.location.href = "/text-to-image"; 
+                            } else if (index == 1) {
+                                window.location.href = "/image-to-image"; 
+                            }
+                            console.log(`选择了: ${item}, 索引: ${index}  `);
+                        }, 
+                        ()=>{ rotateArrow('id_btn_nav_image', false); });
                 });
             }
         })();
+
 
         // 点击顶部导航栏 视频特效
         ClickUtil.onClick('id_btn_nav_video_effect', () => {
@@ -288,14 +301,12 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 点击顶部导航栏 价格
         ClickUtil.onClick('id_btn_nav_pricing', () => {
-            // 显示 价格弹窗
             window.location.href = "/pricing";
         });
 
         // 点击顶部导航栏 积分布局
         ClickUtil.onClick('id_nav_credit_cart_layouot', () => {
-            // 显示 价格弹窗
-
+            window.location.href = "/pricing";
         });
 
         // 点击顶部导航栏 头像布局
@@ -313,6 +324,33 @@ function init_nav_event(path_level, left_sidebar_index){
         // 点击顶部导航栏 登录
         ClickUtil.onClick('id_btn_nav_login', () => {
             window.location.href = "/login"; 
+        });
+
+        // ----------------------------- 移动端菜单 -----------------------------
+        // 点击顶部导航栏 视频特效
+        ClickUtil.onClick('id_btn_mobile_text2video', () => {
+            window.location.href = "/text-to-video"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_image2video', () => {
+            window.location.href = "/image-to-video"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_text2image', () => {
+            window.location.href = "/text-to-image"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_image2image', () => {
+            window.location.href = "/image-to-image"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_video_effect', () => {
+            window.location.href = "/video-effect"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_blog', () => {
+            window.location.href = "/blog"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_my_creations', () => {
+            window.location.href = "/my-creations"; 
+        });
+        ClickUtil.onClick('id_btn_mobile_video_pricing', () => {
+            window.location.href = "/pricing"; 
         });
 
         // ----------------------------- 左侧导航栏 -----------------------------
