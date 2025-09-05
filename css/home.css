@@ -272,7 +272,7 @@ body {
     transition: transform 0.1s ease-out;
 }
 
-
+/* logo图标动的 */
 @keyframes logoWobble {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-10deg); }
@@ -287,4 +287,17 @@ body {
     animation: logoWobble 0.5s ease-in-out infinite;
 }
 
+/* 首页，顶部视频列表的滚动动画 */
+@keyframes home_top_video_list_scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+.home_top_video_list_scroll_inner {
+    animation: home_top_video_list_scroll 20s linear infinite; /* 调整时间以控制滚动速度 */
+    white-space: nowrap; /* 防止换行 */
+}
 

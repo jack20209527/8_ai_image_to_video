@@ -15,10 +15,6 @@
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     
     <script src="../js/my-common-util.js"></script>
-    <script>
-        global_type = GlobalConfig.TYPE_PAGE_IMAGE_TO_VIDEO;
-    </script>
-
     <script src="../js/my-local-storage-util.js"></script>
     <script src="../js/my-login.js"></script>
     <script src="../js/my_nav.js"></script>
@@ -30,22 +26,6 @@
     
     <script src="../js/my-lan-config.js"></script>
     <script src="../js/my-lan-manager.js"></script>
-    <style>
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        .trending-carousel {
-            animation: scroll 20s linear infinite; /* 调整时间以控制滚动速度 */
-            white-space: nowrap; /* 防止换行 */
-        }
-
-    </style>
 
     <!-- 设置登录、初始化顶部导航、侧边栏 -->
     <script>
@@ -54,10 +34,20 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // 自动播放顶部视频
-            const videoPlayer = document.getElementById('videoPlayer');
-                videoPlayer.play().catch(error => {
-                console.error("自动播放失败:", error);
-            });
+            const id_video_player_top = document.getElementById('id_video_player_top');
+            id_video_player_top.play().catch(error => {
+                    console.error("自动播放失败:", error);
+                });
+
+            // 英雄区左侧第一个视频
+            const id_video_player_left_1 = document.getElementById('id_video_player_left_1');
+            id_video_player_left_1.play().catch(error => {
+                    console.error("自动播放失败:", error);
+                });
+            const id_video_player_right_1 = document.getElementById('id_video_player_right_1');
+            id_video_player_right_1.play().catch(error => {
+                    console.error("自动播放失败:", error);
+                });
 
             // 设置顶部按钮点击
             ClickUtil.onClick('id_create_ai_video_button', () => {
@@ -87,7 +77,7 @@
 
             <!-- 顶部视频区域 -->
             <div class="relative">
-                <video id="videoPlayer" style="width: 100%; height: 500px; object-fit: cover;" muted playsinline loop>
+                <video id="id_video_player_top" style="width: 100%; height: 500px; object-fit: cover;" muted playsinline loop>
                     <source src="/img/videos/home.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                 </video>
@@ -109,7 +99,7 @@
             <!-- 中间的英雄区 -->
             <div class="">
 
-        <!-- 添加功能特点部分 -->
+                <!-- 添加功能特点部分 -->
                 <section class="py-12 relative overflow-hidden">
 
                     <div class="relative mx-auto">
@@ -123,53 +113,95 @@
                         </div>
                     </div>
 
-                <div class="relative overflow-hidden py-4 ">
-                    <!-- 左侧蒙层 -->
-                    <div class="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
-        
-                    <div class="trending-carousel">
-                        <div id="videoList" class="flex" ></div>
-                    </div>
-
-                    <!-- 右侧蒙层 -->
-                    <div class="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
-                </div>
-
-                <script>
-                    const videoSources = [
-                        "https://mstream.app/video/1747787516776_250413_161404_333_9374_37.mp4",
-                        "https://mstream.app/video/1747787522758_250413_162544_300_6887_37.mp4",
-                        "https://mstream.app/video/1747787728224_250413_163713_287_6141_37.mp4",
-                        "https://mstream.app/video/1747787731713_250413_164153_018_3707_37.mp4",
-                        "https://mstream.app/video/1747787735675_250413_165330_476_4350_37.mp4",
-                        "https://mstream.app/video/1747787740024_250413_171501_349_5557_37.mp4",
-                        "https://mstream.app/video/1747787743078_250413_171845_794_5710_37.mp4",
-                        "https://mstream.app/video/1747787747605_250413_172227_789_1156_37.mp4",
-                        "https://mstream.app/video/1747787753154_250413_172857_135_4041_37.mp4",
-                        "https://mstream.app/video/1747787761762_250413_174656_495_6007_37.mp4",
-                        "https://mstream.app/video/1747787772068_250413_175022_873_9919_37.mp4",
-                        "https://mstream.app/video/1747787778461_250413_175839_722_4670_37.mp4",
-                        "https://mstream.app/video/1747787788108_250413_180317_651_14_37.mp4",
-                        "https://mstream.app/video/1747787800218_250413_181002_054_8480_37.mp4"
-                    ];
+                    <div class="relative overflow-hidden py-4 ">
+                        <!-- 左侧蒙层 -->
+                        <div class="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
             
-                    const videoList = document.getElementById('videoList');
-            
-                    videoSources.forEach(src => {
-                        const videoCard = document.createElement('div');
-                        // 每个视频的大小
-                        videoCard.className = 'flex-shrink-0 w-[200px]';
-                        videoCard.innerHTML = `
-                            <div class="mr-4 aspect-[9/16] bg-muted rounded-lg overflow-hidden cursor-pointer">
-                                <video src="${src}" class="w-full h-full object-cover" loop muted playsinline autoplay></video>
-                            </div>
-                        `;
-                        videoList.appendChild(videoCard);
-                    });
-                </script>
+                        <div class="home_top_video_list_scroll_inner">
+                            <div id="videoList" class="flex" ></div>
+                        </div>
 
+                        <!-- 右侧蒙层 -->
+                        <div class="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
                     </div>
                 </section>
+
+                <!-- 添加一个左侧的视频演示 -->
+                <section class="mx-4 md:mx-8 lg:mx-12 py-12 relative overflow-hidden">
+                    <div class="flex">
+                        <!-- 左侧视频展示 -->
+                        <div class="relative w-1/2 mr-2 md:mr-2 lg:mr-4">
+                            <video id="id_video_player_left_1" style="width: 100%; height: 400px; object-fit: cover;" muted playsinline loop class="rounded-lg">
+                                <source src="/img/videos/home.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+        
+                        <!-- 右侧文字展示 -->
+                        <div class="relative w-1/2 flex flex-col justify-center p-4">
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">什么是 Seedance?</h1>
+                            <p class="mt-2 text-lg">Seedance 是一个先进的 AI 视频生成模型，专为专业级视频创作而设计，具有先进功能和卓越画质。</p>
+                            <p class="mt-2 text-lg">生成的视频具有多种宽高比和 5-10 秒时长的选项。</p>
+                            
+                            <div class="mt-4 space-y-2">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点一</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点二</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点三</span>
+                                </div>
+                            </div>
+                            
+                            <button class="bg-gradient-to-r from-purple-500 to-red-500 text-white py-2 w-[200px] rounded-lg mt-4">
+                                视频生成</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 添加一个右侧的视频演示 -->
+                <section class="mx-4 md:mx-8 lg:mx-12 py-12 relative overflow-hidden">
+                    <div class="flex">
+                        <!-- 左侧文字展示 -->
+                        <div class="relative w-1/2 flex flex-col justify-center p-4">
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">什么是 Seedance?</h1>
+                            <p class="mt-2 text-lg">Seedance 是一个先进的 AI 视频生成模型，专为专业级视频创作而设计，具有先进功能和卓越画质。</p>
+                            <p class="mt-2 text-lg">生成的视频具有多种宽高比和 5-10 秒时长的选项。</p>
+                            
+                            <div class="mt-4 space-y-2">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点一</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点二</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-purple-500 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7h20L12 2zM2 9l10 5 10-5v10H2V9z"/></svg>
+                                    <span>功能特点三</span>
+                                </div>
+                            </div>
+                            
+                            <button class="bg-gradient-to-r from-purple-500 to-red-500 text-white py-2 w-[200px] rounded-lg mt-4">
+                                视频生成</button>
+                        </div>
+                        
+                        <!-- 右侧视频展示 -->
+                        <div class="relative w-1/2 ml-2 md:ml-2 lg:ml-4">
+                            <video id="id_video_player_right_1" style="width: 100%; height: 400px; object-fit: cover;" muted playsinline loop class="rounded-lg">
+                                <source src="/img/videos/home.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </section>
+
 
                 <!-- 在功能特点部分后添加效果对比展示区域 -->
                 <section class="py-1 relative overflow-hidden">
@@ -296,7 +328,6 @@
 
 
                 <!-- FAQ部分 -->
-                <!-- 6. 下拉箭头的布局 -->
                 <section class="mx-4 md:mx-12 lg:mx-24 py-12">
                     <div class="mt-8 bg-[#1f202f] rounded-2xl shadow-lg p-6 mb-8">
                         <h2 class="text-2xl text-center font-bold mb-6">FAQ</h2>
@@ -432,8 +463,36 @@
 
 
 
-
-
+            <section class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700 text-white relative overflow-hidden">
+                <div class="absolute inset-0">
+                  <div class="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+                  <div class="absolute bottom-10 right-10 w-40 h-40 bg-yellow-400/20 rounded-full blur-xl"></div>
+                  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-purple-400/10 rounded-full blur-2xl"></div>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                  <div class="text-center">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-8 backdrop-blur-sm border border-white/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-10 w-10 text-white">
+                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+                        <path d="M20 3v4"></path>
+                        <path d="M22 5h-4"></path>
+                        <path d="M4 17v2"></path>
+                        <path d="M5 18H3"></path>
+                      </svg>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">使用 Seedance 将您的创意转化为令人惊叹的视频</h2>
+                    <p class="text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">加入成千上万的创作者，他们正在使用 Seedance 的先进 AI 视频生成技术革新他们的视频制作。在几分钟内开始创建具有电影级运动和多镜头叙事的专业品质视频。</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                      <a class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors shadow-lg group text-lg" href="/zh/dashboard/text-to-video">立即使用 Seedance 创建视频
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform">
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
             <!-- 通用页脚组件 -->
             <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
@@ -446,6 +505,8 @@
 
 
 
+    <script src="/js/home_top_video_list.js"></script>
+    
 </body>
 </html>
 
