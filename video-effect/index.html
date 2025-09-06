@@ -191,7 +191,7 @@
                                                 <div class="px-2 py-[0.2rem] bg-[#000]/50 rounded-md text-white text-[10px] md:text-xs text-center">${video.name}</div>
                                                 <div class="bg-[#FA4F4F] px-2 py-[0.2rem] rounded-md text-white text-[10px] md:text-xs font-bold text-center">HOT</div>
                                             </div>
-                                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer px-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-100 w-27 h-8 bg-[#3B82F6] rounded-full text-white text-xs text-center flex items-center justify-center">
+                                            <div id="id_use_this_template_button" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer px-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-100 w-27 h-8 bg-[#3B82F6] rounded-full text-white text-xs text-center flex items-center justify-center">
                                                 Use this template
                                             </div>
                                         </div>
@@ -217,6 +217,17 @@
                                 }
                             });
 
+                            // 添加点击事件
+                            const id_use_this_template_button = item.querySelector('#id_use_this_template_button');
+                            id_use_this_template_button.addEventListener('click', () => {
+                                localStorage.setItem('selectedVideo', JSON.stringify({
+                                    videoUrl: video.video_url,
+                                    title: video.name
+                                }));
+                                window.location.href = '/video-effect-detail'; // 跳转到详情页
+                            });
+
+                            // 添加布局
                             gridContainer.appendChild(item); // 添加到容器
 
                             index ++; // 序号+1
