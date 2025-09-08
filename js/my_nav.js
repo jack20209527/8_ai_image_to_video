@@ -10,12 +10,12 @@ const nav_header_content = `
 
                 <a href="/" class="flex items-center cursor-pointer">
                     <div class="rounded-lg flex items-center justify-center">
-                        <img id="id_nav_logo_image" alt="Super AI" class="w-10 h-10 logo-hover" src="/img/logo.png"/>
+                        <img id="id_nav_logo_image" alt="AI Photo To Video" class="w-10 h-10 logo-hover" src="/img/logo.png"/>
                     </div>
 
                     
-                    <p id="id_nav_logo_text" class="bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent ml-2 hover:text-red-500">
-                        Super AI
+                    <p id="id_nav_logo_text" style="font-family: Impact, sans-serif;" class="bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent ml-2 hover:text-red-500">
+                        Photo To Video
                     </p>
                 </a>
 
@@ -23,24 +23,24 @@ const nav_header_content = `
             <!-- 正常的顶部导航 -->
             <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
                 <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    AI 视频
+                    AI Video
                     <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
                 <button id="id_btn_nav_image" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    AI 图片
+                    AI Image
                     <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
                 <button id="id_btn_nav_video_effect" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    视频特效
+                    Video Effect
                 </button>
                 <button id="id_btn_nav_blog" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    博客
+                    Blog
                 </button>
                 <button id="id_btn_nav_my_creations" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    我的创作
+                    My Creations
                 </button>
                 <button id="id_btn_nav_pricing" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
-                    价格
+                    Pricing
                 </button>
             </nav>
 
@@ -62,7 +62,7 @@ const nav_header_content = `
 
                 <!-- 顶部导航: 登录按钮 -->
                 <button id="id_btn_nav_login" class="hidden w-16 h-8 rounded-[8px] bg-red-600 hover:bg-red-500 text-white font-medium flex items-center justify-center gap-2 transition-all duration-200 ">
-                    <span class="text-sm">登录</span>
+                    <span class="text-sm">Login</span>
                 </button>
 
                 <!-- 移动端菜单按钮 - 三条横线 -->
@@ -172,19 +172,19 @@ const left_sidebar_content = `
                 <nav class="space-y-2">
                     <button id="id_btn_sidebar_video_effect" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-                        <span class="text-[0.92rem]">视频特效</span>
+                        <span class="text-[0.92rem]">Video Effect</span>
                     </button>
                     <button id="id_btn_sidebar_blog" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
-                        <span class="text-[0.92rem]">博客</span>
+                        <span class="text-[0.92rem]">Blog</span>
                     </button>
                     <button id="id_btn_sidebar_my_creations" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h10M4 15h8"/></svg>
-                        <span class="text-[0.92rem]">我的创作</span>
+                        <span class="text-[0.92rem]">My Creations</span>
                     </button>
                     <button id="id_btn_sidebar_pricing" class="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-slate-300 hover:bg-white/5 hover:text-red-500">
                         <svg class="w-[18px] h-[18px] text-slate-400 group-hover:text-red-500 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-                        <span class="text-[0.92rem]">价格</span>
+                        <span class="text-[0.92rem]">Pricing</span>
                     </button>
                 </nav>
             </div>
@@ -314,11 +314,11 @@ function init_nav_event(path_level, left_sidebar_index){
 
         // 点击顶部导航栏 头像布局
         // 选择分辨率
-        DropdownMenuUtil.init('id_nav_user_avatar', ['价格', '退出'], -190, 10, 220, (item, index) => {
+        DropdownMenuUtil.init('id_nav_user_avatar', ['Pricing', 'Logout'], -190, 10, 220, (item, index) => {
             console.log(`选择了: ${item}, 索引: ${index}  `);
-            if(item == '价格'){
+            if(item == 'Pricing'){
                 window.location.href = "/pricing";
-            }else if(item == '退出'){
+            }else if(item == 'Logout'){
                 logout();
             }
             DropdownMenuUtil.hide();
