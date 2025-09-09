@@ -301,3 +301,23 @@ body {
     white-space: nowrap; /* 防止换行 */
 }
 
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+    width: 14px; /* 滚动条的宽度 */
+}
+::-webkit-scrollbar-track {
+    background: #2d2d2d; /* 滚动条轨道的背景色 */
+    border-radius: 2px; /* 圆角 */
+}
+::-webkit-scrollbar-thumb {
+    background: #6b6b6b; /* 滚动条的颜色 */
+    border-radius: 10px; /* 圆角 */
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #939393; /* 滚动条悬停时的颜色 */
+}
+/* 自定义滚动条的边距 */
+::-webkit-scrollbar-thumb:vertical {
+    border: 3px solid transparent; /* 透明边距 */
+    background-clip: padding-box; /* 确保背景不被边距遮挡 */
+}
