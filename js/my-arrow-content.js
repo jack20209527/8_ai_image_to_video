@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     faq_list = [
       {
         "title": "What is our AI Platform? What are its features?",
-        "content": "Our platform is an <span class=\"text-purple-300\">all-in-one AI Video & Image Generator</span>, integrating powerful features like text-to-video, photo-to-video, and text-to-image. We are dedicated to providing users with the simplest way to create professional-grade, high-quality content using AI, no professional skills required."
+        "content": "Our platform is an <span class=\"text-purple-300\">all-in-one AI Video & Image Generator</span>, integrating powerful features like text-to-video, our leading <span class=\"text-purple-300\">photo to video ai</span> tool, and text-to-image. We are dedicated to providing users with the simplest way to create professional-grade, high-quality content using AI, no professional skills required."
       },
       {
         "title": "How do I convert a photo to an AI video?",
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         "title": "Can I use the AI-generated content for commercial purposes?",
-        "content": "Yes, if you are a paid subscriber, you have commercial usage rights for any content generated through our platform. This means you can use these <span class=\"text-purple-300\">ai video generator</span> and <span class=\"text-purple-300\">ai image generator</span> creations for commercial purposes such as advertising, marketing, and education."
+        "content": "Yes, if you are a paid subscriber, you have commercial usage rights for any content generated through our platform. This means you can use these <span class=\"text-purple-300\">ai video generator</span> and <span class=\"text-purple-300\">ai image generator</span> creations, including those from our <span class=\"text-purple-300\">photo to video ai</span> tool, for commercial purposes such as advertising, marketing, and education."
       },
       {
         "title": "How long does it typically take to generate an AI video?",
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         "title": "Why might my video generation fail?",
-        "content": "Generation failures usually occur if your prompt violates our content policy. Our AI models have content moderation in place to prevent the creation of inappropriate content. Please review your text or images to ensure they comply with our terms of service. Rest assured, failed generations do not consume any credits."
+        "content": "Generation failures usually occur if your prompt violates our content policy. This applies to both our text-to-video and <span class=\"text-purple-300\">photo to video ai</span> tools. Our AI models have content moderation in place to prevent the creation of inappropriate content. Please review your text or images to ensure they comply with our terms of service. Rest assured, failed generations do not consume any credits."
       },
       {
         "title": "Can I add audio to videos generated with the Veo3 model?",
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         "title": "If I have more questions, how can I contact the support team?",
-        "content": "If you have any further questions or need help with our <span class=\"text-purple-300\">AI Image to video generator</span>, you can always visit our help center or contact our support team at contact@yourdomain.com (example). We are here to answer your questions and ensure you have the best creative experience."
+        "content": "If you have any further questions or need help with our <span class=\"text-purple-300\">photo to video ai</span> tool or any other features, you can always visit our help center or contact our support team at contact@yourdomain.com (example). We are here to answer your questions and ensure you have the best creative experience."
       }
     ]
 
