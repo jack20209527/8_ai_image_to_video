@@ -31,8 +31,8 @@ const footerContent = `
                     <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">About</h3>
                     <ul class="space-y-2">
                         <li><a href="/term" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Blogs</a></li>
-                        <li><a href="/term" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Terms Of Use</a></li>
-                        <li><a href="/privacy" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="/term" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Terms</a></li>
+                        <li><a href="/privacy" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Privacy</a></li>
                     </ul>
                 </div>
             </div>

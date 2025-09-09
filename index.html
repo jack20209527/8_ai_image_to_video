@@ -238,10 +238,34 @@
                     <div class="flex">
                         <!-- 3.左上 - 视频展示 -->
                         <div class="relative w-1/2 mr-2 md:mr-2 lg:mr-4">
-                            <video id="id_video_player_left_1" style="width: 100%; height: 400px; object-fit: cover;" muted playsinline loop class="rounded-lg">
-                                <source src="/img/videos/home_left_video.webm" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <!-- 图片轮播区域 -->
+                            <div id="image-carousel" class="relative w-full h-[400px] overflow-hidden rounded-lg">
+                                <img id="carousel-image" src="/img/image_content0.jpg" class="w-full h-full object-cover" alt="banner">
+                            </div>
+
+                            <script>
+                                // 图片数组
+                                const images = [
+                                    "/img/image_content0.jpg",
+                                    "/img/image_content1.jpg",
+                                    "/img/image_content2.jpg",
+                                    "/img/image_content3.jpg",
+                                    "/img/image_content4.jpg",
+                                    "/img/image_content5.jpg"
+                                ];
+
+                                let currentIndex = 0;
+
+                                // 切换图片的函数
+                                function changeImage() {
+                                    currentIndex = (currentIndex + 1) % images.length; // 循环索引
+                                    const carouselImage = document.getElementById('carousel-image');
+                                    carouselImage.src = images[currentIndex]; // 更新图片源
+                                }
+
+                                // 每3秒切换图片
+                                setInterval(changeImage, 3000);
+                            </script>
                         </div>
 
                         <!-- 3. 右侧文字展示 -->
@@ -327,10 +351,35 @@
                         
                         <!-- 右侧视频展示 -->
                         <div class="relative w-1/2 ml-2 md:ml-2 lg:ml-4">
-                            <video id="id_video_player_right_1" style="width: 100%; height: 400px; object-fit: cover;" muted playsinline loop class="rounded-lg">
-                                <source src="/img/videos/home_right_video.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <!-- 图片轮播区域 -->
+                            <div id="image-carousel1" class="relative w-full h-[400px] overflow-hidden rounded-lg">
+                                <img id="carousel-image1" src="/img/image_content0.jpg" class="w-full h-full object-cover" alt="banner">
+                            </div>
+
+                            <script>
+                                // 图片数组
+                                const images1 = [
+                                    "/img/image_content0.jpg",
+                                    "/img/image_content1.jpg",
+                                    "/img/image_content2.jpg",
+                                    "/img/image_content3.jpg",
+                                    "/img/image_content4.jpg",
+                                    "/img/image_content5.jpg"
+                                ];
+
+                                let currentIndex1 = 0;
+
+                                // 切换图片的函数
+                                function changeImage1() {
+                                    currentIndex1 = (currentIndex1 + 1) % images1.length; // 循环索引
+                                    const carouselImage1 = document.getElementById('carousel-image1');
+                                    carouselImage1.src = images1[currentIndex1]; // 更新图片源
+                                }
+
+                                // 每3秒切换图片
+                                setInterval(changeImage1 , 3000);
+                            </script>
+
                         </div>
                     </div>
                 </section>
