@@ -321,3 +321,11 @@ body {
     border: 3px solid transparent; /* 透明边距 */
     background-clip: padding-box; /* 确保背景不被边距遮挡 */
 }
+
+/** 标签内容最多4行，末尾显示...，如果超过4行的话 */
+.line-clamp-4 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }

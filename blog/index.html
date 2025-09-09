@@ -75,7 +75,7 @@
 
 
                 <!-- 博客列表 -->
-                <div id="blog_list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                <div id="blog_list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
 
                 </div>
 
@@ -102,32 +102,11 @@
         const blogs = [
             {
                 date: 'September 1, 2025',
-                title: 'How to Use Nano Banana?',
-                description: 'Discover how to use Nano Banana in 2025 with step-by-step tips, creative use cases, and practical guides to unlock its full potential in AI content creation.',
-                imageUrl: 'https://babyaivideogenerator.online/img/image_content6.jpg', // 使用在线图片
+                title: 'Nano Banana: Google\'s AI Revolutionizing Image Creation & Editing',
+                description: 'Discover Google DeepMind\'s new Nano Banana model, hailed as the ultimate AI photo editor. Learn how this powerful tool simplifies complex image tasks, offers amazing creative features like AI figures and cross-dimensional fusion, and transforms your digital artistry with unparalleled ease.',
+                imageUrl: '/img/blog/list_nano_banana.png', // 使用在线图片
                 link: '/blog/nano-banana-ai-image' // 跳转链接
             },
-            {
-                date: 'August 27, 2025',
-                title: 'Viddo.ai Officially Launches Nano Banana',
-                description: 'Viddo.ai officially launches Nano Banana, an AI image generator that creates high-quality visuals from text or images with precise editing and versatile styles.',
-                imageUrl: 'https://babyaivideogenerator.online/img/image_content7.jpg', // 使用在线图片
-                link: '/blog/nano-banana-launch' // 跳转链接
-            },
-            {
-                date: 'August 19, 2025',
-                title: 'Can Qwen-Image-Edit redefine image editing?',
-                description: 'Explore Qwen-Image-Edit, Alibaba Cloud\'s 2B-parameter open-source AI for multilingual text editing, style transfer, object changes, and high-fidelity images.',
-                imageUrl: 'https://babyaivideogenerator.online/img/image_content8.jpg', // 使用在线图片
-                link: '/blog/qwen-image-edit' // 跳转链接
-            },
-            {
-                date: 'August 19, 2025',
-                title: 'Can Qwen-Image-Edit redefine image editing?',
-                description: 'Explore Qwen-Image-Edit, Alibaba Cloud\'s 2B-parameter open-source AI for multilingual text editing, style transfer, object changes, and high-fidelity images.',
-                imageUrl: 'https://babyaivideogenerator.online/img/image_content8.jpg', // 使用在线图片
-                link: '/blog/qwen-image-edit' // 跳转链接
-            }
         ];
 
         // 动态生成博客项
@@ -138,7 +117,7 @@
                 <img src="${blog.imageUrl}" alt="${blog.title}" class="h-48 w-full object-cover">
                 <div class="px-4 pt-2 flex-grow">
                     <h3 class="text-xl font-bold text-white ">${blog.title}</h3>
-                    <p class="text-gray-400">${blog.description}</p>
+                    <p class="text-gray-400 line-clamp-4 ">${blog.description}</p>
                 </div>
                 <div class="px-4 text-gray-500 text-sm flex justify-between items-center">
                     <div>${blog.date}</div>
