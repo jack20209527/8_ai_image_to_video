@@ -21,7 +21,7 @@ const nav_header_content = `
 
             </div>
             <!-- 正常的顶部导航 -->
-            <nav class="ml-6 hidden lg:flex items-center gap-6 text-sm text-gray-300">
+            <nav class="ml-6 hidden md:hidden lg:flex items-center gap-6 text-sm text-gray-300">
                 <button id="id_btn_nav_video" class="group inline-flex items-center gap-1.5 hover:text-red-500 cursor-pointer">
                     AI Video
                     <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-red-500 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -76,7 +76,7 @@ const nav_header_content = `
         </div>
         
         <!-- 移动端菜单 -->
-       <div id="id_mobile_menu" class="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
+       <div id="id_mobile_menu" class="md:hidden lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
             <div class="px-4 py-4 space-y-4">
                 <div>
                     <div class="text-[12px] tracking-wide text-gray-400 mb-2">AI Video</div>
