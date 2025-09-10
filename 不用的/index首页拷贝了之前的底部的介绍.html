@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image to Video</title>
+    <meta name="description" content="Flux Kontext AI is a revolutionary free AI text-to-image editing tool. Instantly make precise, consistent edits to your photos and digital art using natural language instructions. Enjoy character consistency, fast results, and professional-grade image enhancement. No watermark, no registration required. Try Flux Kontext for creative, accurate, and user-friendly AI image editing.">
+    <meta name="keywords" content="photo hd converter, ai image upscaler, image quality enhancer, 4k image upscaler, image resolution enhancer, photo quality improver, ai photo enhancement, upscale image online, free image upscaler, batch image upscaler, image enlarger without quality loss, hd photo converter online, ai image enhancement tool, photo resolution increaser">
+    <script src="../tailwind.js"></script>
+    <link rel="stylesheet" href="../tailwind.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="canonical" href="https://phototovideoai.app"/>
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    
+    <script src="../js/my-common-util.js"></script>
+    <script>
+        global_type = GlobalConfig.TYPE_PAGE_IMAGE_TO_VIDEO;
+    </script>
+
+    <script src="../js/my-local-storage-util.js"></script>
+    <script src="../js/my-login.js"></script>
+    <script src="../js/my_nav.js"></script>
+    <script src="../js/custom-toast.js"></script>
+    <script src="../js/my-dropdown-menu.js"></script>
+    <script src="../js/my-loading-util.js"></script>
+    <script src="../js/my-footer.js"></script>
+    
+    <script src="../js/my-lan-config.js"></script>
+    <script src="../js/my-lan-manager.js"></script>
+
+    <!-- 设置登录、初始化顶部导航、侧边栏 -->
+    <script>
+        // 设置导航条的按钮的点击事件
+        init_nav_event ("./", -1);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 自动播放顶部视频
+            const videoPlayer = document.getElementById('videoPlayer');
+                videoPlayer.play().catch(error => {
+                console.error("自动播放失败:", error);
+            });
+
+            // 设置顶部按钮点击
+            ClickUtil.onClick('id_create_ai_video_button', () => {
+                window.location.href = "/image-to-video";
+            });
+
+            ClickUtil.onClick('id_create_ai_image_button', () => {
+                window.location.href = "/image-to-image";
+            });
+
+
+            
+        });
+
+
+    </script>
+
+</head>
+
+<body class="bg-[#0f1115] text-gray-200">
+
+    <!-- 通用顶部导航组件 -->
+    <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
+    </header>
+
+    <!-- Sidebar + Main -->
+    <div class="pt-14 mx-auto">
+        <div class="w-full mx-auto">
+
+            <!-- 主内容区域 -->
+            <main class="">
+
+                <div class="relative">
+                    <video id="videoPlayer" style="width: 100%; height: 500px; object-fit: cover;" muted playsinline loop>
+                        <source src="/img/videos/home.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- 蒙层 -->
+                    <div class="absolute inset-0 h-[500px] bg-black/20 flex flex-col items-center justify-center text-white">
+                        <h1 class="text-3xl font-bold">Veo 3: AI Video Generation with Realistic Sound</h1>
+                        <p class="mt-2 text-lg">Generate videos with perfectly synced audio, including sound effects, dialogue, and ambient noise.</p>
+                        <div class="mt-4 flex gap-4">
+                            <button id="id_create_ai_video_button" class="bg-gradient-to-r from-purple-500 to-red-500 text-white py-2 px-4 rounded">Create AI Video</button>
+                            <button id="id_create_ai_image_button" class="bg-gradient-to-r from-blue-500 to-green-500 text-white py-2 px-4 rounded">Create AI Image</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 中间的英雄区 -->
+                <!-- 添加功能特点部分 -->
+                <section class="py-32 relative overflow-hidden">
+                    <!-- 背景装饰 -->
+                    <div class="absolute inset-0 bg-[#0A0A0B]">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#FF3366]/5 to-transparent"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,...')] opacity-10"></div>
+                    </div>
+
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+                                Discover Powerful AI Image Editing Features
+                            </h2>
+                            <p class="text-gray-400 text-lg max-w-2xl mx-auto"
+                                        data-lan="hero.enhancement_desc" >
+                                Unlock next-level photo editing with Flux Kontext AI—precise, consistent, and creative results for every image.
+                            </p>
+                        </div>
+
+                        <!-- 功能卡片网格 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- 功能卡片 1：超分辨率 -->
+                            <div class="group relative">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                                    <div
+                                        class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#FF3366] to-[#FF3366]/50 flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#FF3366] transition-colors"
+                                            data-lan="hero.enhancement_resolution" >
+                                        Ultra HD Upscaling</h3>
+                                    <p class="text-gray-400" 
+                                            data-lan="hero.enhancement_resolution_desc">
+                                        Transform low-res images into ultra-sharp, high-definition masterpieces with advanced AI upscaling. Every detail stays crisp and clear.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                                </div>
+                            </div>
+
+                            <!-- 功能卡片 2：智能降噪 -->
+                            <div class="group relative">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                                    <div
+                                        class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#9D34DA] to-[#9D34DA]/50 flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:-rotate-6">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#9D34DA] transition-colors"
+                                        data-lan="hero.enhancement_noise" >
+                                            Smart Noise Removal</h3>
+                                    <p class="text-gray-400"
+                                        data-lan="hero.enhancement_noise_desc" >
+                                        Effortlessly remove grain and noise while preserving important details. Enjoy cleaner, more professional images in every edit.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                                </div>
+                            </div>
+
+                            <!-- 功能卡片 3：色彩优化 -->
+                            <div class="group relative">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1">
+                                    <div
+                                        class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#FF3366] to-[#9D34DA] flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#FF3366] transition-colors"
+                                            data-lan="hero.enhancement_color"   >
+                                            Color & Style Consistency</h3>
+                                    <p class="text-gray-400" data-lan="hero.enhancement_color_desc" >
+                                        Instantly balance colors and enhance vibrancy. Flux Kontext AI keeps your style and character consistent across all edits.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                                </div>
+                            </div>
+
+                            <!-- 功能卡片 4: 智能修复 -->
+                            <div class="group relative">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1">
+                                    <div
+                                        class="w-12 h-12 mb-6 rounded-xl bg-gradient-to-r from-[#9D34DA] to-[#FF3366] flex items-center justify-center transform transition-transform group-hover:scale-110">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-[#9D34DA] transition-colors"
+                                            data-lan="hero.enhancement_repair"   >
+                                        Intelligent Image Repair</h3>
+                                    <p class="text-gray-400" data-lan="hero.enhancement_repair_desc" >
+                                        Detect and fix imperfections, scratches, or unwanted objects. Restore your photos to perfection with AI-powered precision.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 在功能特点部分后添加效果对比展示区域 -->
+                <section class="py-1 relative overflow-hidden">
+                    <div class="absolute inset-0">
+                        <!-- 动态背景效果 -->
+                        <div class="absolute inset-0 opacity-30">
+                            <div
+                                class="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                            </div>
+                            <div
+                                class="absolute top-0 -right-4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                            </div>
+                            <div
+                                class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- 使用流程部分 -->
+                <section class="py-12 relative overflow-hidden">
+                    <!-- 背景装饰 -->
+                    <div class="absolute inset-0">
+                        <div class="absolute inset-0 bg-[#0A0A0B] opacity-90"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-[#FF3366]/10 via-transparent to-[#9D34DA]/10"></div>
+                    </div>
+
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                                <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                data-lan="hero.flow_title"
+                                >
+                                How to Edit Images with Flux Kontext AI in 3 Simple Steps
+                                </span>
+                            </h2>
+                            <p class="text-gray-400 text-lg" data-lan="hero.flow_desc" >
+                                No experience needed—anyone can create professional, consistent AI edits in minutes.
+                            </p>
+                        </div>
+
+                        <!-- 步骤展示 -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- 步骤 1 -->
+                            <div class="relative group">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                                    <div class="relative mb-8">
+                                        <div
+                                            class="w-16 h-16 bg-gradient-to-r from-[#FF3366] to-[#FF3366]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                            <span class="text-3xl font-bold text-white">1</span>
+                                        </div>
+                                        <div
+                                            class="absolute -inset-4 bg-gradient-to-r from-[#FF3366]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4"
+                                        data-lan="hero.flow_1_title" >Upload Your Image</h3>
+                                    <p class="text-gray-400" data-lan="hero.flow_1_desc" >
+                                        Drag or select your photo, artwork, or design. JPG, PNG, and WEBP formats supported.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#FF3366]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+
+                            <!-- 步骤 2 -->
+                            <div class="relative group">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                                    <div class="relative mb-8">
+                                        <div
+                                            class="w-16 h-16 bg-gradient-to-r from-[#9D34DA] to-[#9D34DA]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                            <span class="text-3xl font-bold text-white">2</span>
+                                        </div>
+                                        <div
+                                            class="absolute -inset-4 bg-gradient-to-r from-[#9D34DA]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4" data-lan="hero.flow_2_title" >
+                                        Enter Edit Instruction</h3>
+                                    <p class="text-gray-400" data-lan="hero.flow_2_desc" >
+                                        Tell Flux Kontext AI what to change—use clear, specific instructions for best results.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#9D34DA]/20 to-[#FF3366]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+
+                            <!-- 步骤 3 -->
+                            <div class="relative group">
+                                <div
+                                    class="relative z-10 bg-white/5 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/10 transition-all duration-500">
+                                    <div class="relative mb-8">
+                                        <div
+                                            class="w-16 h-16 bg-gradient-to-r from-[#FF6B3D] to-[#FF6B3D]/50 rounded-2xl flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                            <span class="text-3xl font-bold text-white">3</span>
+                                        </div>
+                                        <div
+                                            class="absolute -inset-4 bg-gradient-to-r from-[#FF6B3D]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-4" data-lan="hero.flow_3_title" >
+                                        Get Instant AI Results</h3>
+                                    <p class="text-gray-400" data-lan="hero.flow_3_desc" >
+                                        Click once and let Flux Kontext AI deliver fast, precise, and consistent image edits.
+                                    </p>
+                                </div>
+                                <div
+                                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#FF6B3D]/20 to-[#9D34DA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 装饰线条 -->
+                        <div
+                            class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent">
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- 用户评价部分 -->
+                <section class="py-12 relative overflow-hidden">
+                    <div class="absolute inset-0">
+                        <!-- 动态背景 -->
+                        <div class="absolute inset-0 bg-[#0A0A0B]">
+                            <div class="absolute inset-0 bg-gradient-to-b from-[#FF3366]/10 via-transparent to-[#9D34DA]/10"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                                <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                data-lan="hero.feedback_title"  >
+                                User Feedback
+                                </span>
+                            </h2>
+                            <p class="text-gray-400 text-lg" data-lan="hero.feedback_desc"  >
+                                See what other users say about us
+                            </p>
+                        </div>
+
+                        <!-- 评价卡片区域 -->
+                        <div class="relative">
+                            <!-- 渐变遮罩 -->
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-[#0A0A0B]/80 via-[#0A0A0B]/30 to-transparent z-10">
+                            </div>
+                            <div
+                                class="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-[#0A0A0B]/80 via-[#0A0A0B]/30 to-transparent z-10">
+                            </div>
+
+                            <div class="flex space-x-6 overflow-x-hidden py-8" id="reviews-container">
+                                <div class="flex reviews-track"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ部分 -->
+                <section class="py-12 relative overflow-hidden">
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                                <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                data-lan="hero.faq_title" >
+                                FAQ
+                                </span>
+                            </h2>
+                            <p class="text-gray-400 text-lg" data-lan="hero.faq_desc" >
+                                Learn more about EnhancePix
+                            </p>
+                        </div>
+
+                        <!-- FAQ列表 -->
+                        <div class="grid gap-6 max-w-3xl mx-auto" id="faq-container">
+                        </div>
+
+                        <script>
+                            const faqs = [
+                                {
+                                    id: 1,
+                                    question: "What are the unique features of Flux Kontext AI's super-resolution and image enhancement?",
+                                    answer: "Flux Kontext AI leverages advanced AI image editing and super-resolution technology to upscale images up to 4x without distortion. Key features include:<br><br>• Intelligent Scene Recognition: Automatically detects portraits, landscapes, and more for optimal AI enhancement<br>• Character Consistency: Ensures style and character remain consistent across edits<br>• Detail Restoration: Recovers fine details for professional results<br>• Smart Noise Reduction: Removes noise while preserving clarity and vibrancy"
+                                },
+                                {
+                                    id: 2,
+                                    question: "How does Flux Kontext AI restore and enhance old or damaged photos?",
+                                    answer: "Our AI photo enhancement and repair tools can automatically fix tears, creases, stains, and faded colors. With Flux Kontext AI:<br><br>• AI-powered Damage Repair: Restores physical and digital damage<br>• Color & Clarity Enhancement: Revives faded, yellowed, or blurry images<br>• Consistent Style: Maintains character consistency even in restoration<br>• One-click AI editing for fast, high-quality results"
+                                },
+                                {
+                                    id: 3,
+                                    question: "How can batch AI image editing improve my workflow with Flux Kontext AI?",
+                                    answer: "Flux Kontext AI supports efficient batch processing for large image collections:<br><br>• One-click AI optimization for up to 100 images<br>• Save and reuse custom AI editing presets<br>• Intelligent queue for background processing<br>• Consistent character and style across all images, boosting productivity and brand identity"
+                                },
+                                {
+                                    id: 4,
+                                    question: "How do professional photographers benefit from Flux Kontext AI's advanced features?",
+                                    answer: "Professional users enjoy:<br><br>• RAW format support for lossless AI image editing<br>• Advanced color management and style consistency<br>• AI-powered detail enhancement and portrait beautification<br>• Pro-level sharpening and restoration for gallery-quality results<br>• Seamless integration of character consistency in every edit"
+                                },
+                                {
+                                    id: 5,
+                                    question: "Is Flux Kontext AI easy to use and available on all platforms?",
+                                    answer: "Absolutely! Flux Kontext AI is cloud-based and cross-platform:<br><br>• No professional equipment required—AI editing runs in the cloud<br>• Instant preview and download of enhanced images<br>• Works on Windows, Mac, and mobile devices<br>• Offline processing available via client download<br>• Simple, user-friendly interface for all skill levels"
+                                },
+                                {
+                                    id: 6,
+                                    question: "How does Flux Kontext AI protect my data and privacy?",
+                                    answer: "We take data security and privacy seriously:<br><br>• End-to-end encryption for all uploads and downloads<br>• Temporary storage—your images are deleted after processing<br>• No analysis or retention of your photo content<br>• GDPR-compliant and certified for international data protection<br>• Your AI image editing and enhancement are always private and secure"
+                                }
+                            ];
+
+
+                            function createFaqItem(faq) {
+                                return `
+                                    <div class="faq-item group" data-faq-id="${faq.id}">
+                                        <button
+                                            class="w-full flex items-center justify-between p-6 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 
+                                                hover:border-[#FF3366]/50 hover:bg-white/8 transition-all duration-300 focus:outline-none 
+                                                focus:border-[#FF3366]/70 focus:ring-2 focus:ring-[#FF3366]/20"
+                                            onclick="toggleFaq(${faq.id})">
+                                            <h3 class="text-xl font-medium text-white text-left pr-8">${faq.question}</h3>
+                                            <svg class="w-6 h-6 text-gray-400 group-hover:text-[#FF3366] transition-all duration-500 faq-arrow flex-shrink-0"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        <div class="faq-answer overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+                                            <div class="p-6 bg-white/5 backdrop-blur-lg rounded-b-2xl border-x border-b border-white/10">
+                                                <p class="text-gray-300 leading-relaxed text-[15px] transform transition-all duration-500 ease-in-out opacity-0 translate-y-4">
+                                                    ${faq.answer}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const container = document.querySelector('#faq-container');
+                                container.innerHTML = faqs.map(createFaqItem).join('');
+                            });
+
+                            function toggleFaq(id) {
+                                const currentItem = document.querySelector(`[data-faq-id="${id}"]`);
+                                const answer = currentItem.querySelector('.faq-answer');
+                                const content = answer.querySelector('p');
+                                const arrow = currentItem.querySelector('.faq-arrow');
+
+                                // 获取内容实际高度
+                                const isOpen = answer.style.maxHeight !== '0px' && answer.style.maxHeight !== '';
+
+                                if (!isOpen) {
+                                    // 打开
+                                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                                    arrow.style.transform = 'rotate(180deg)';
+                                    // 延显示内容，让展开动画更自然
+                                    setTimeout(() => {
+                                        content.style.opacity = '1';
+                                        content.style.transform = 'translateY(0)';
+                                    }, 200);
+                                } else {
+                                    // 关闭
+                                    content.style.opacity = '0';
+                                    content.style.transform = 'translateY(4px)';
+                                    arrow.style.transform = 'rotate(0deg)';
+                                    // 延迟收起，让内容淡出动画完成
+                                    setTimeout(() => {
+                                        answer.style.maxHeight = '0px';
+                                    }, 100);
+                                }
+                            }
+                        </script>
+
+                        <style>
+                            .faq-item {
+                                position: relative;
+                            }
+
+                            .faq-item button:hover {
+                                background-color: rgba(255, 255, 255, 0.08);
+                            }
+
+                            .faq-answer {
+                                transform-origin: top;
+                                will-change: max-height;
+                            }
+
+                            .faq-arrow {
+                                will-change: transform;
+                            }
+
+                            /* 添加缓动效果 */
+                            @media (prefers-reduced-motion: no-preference) {
+                                .faq-answer {
+                                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                                }
+
+                                .faq-answer p {
+                                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                                }
+                            }
+                        </style>
+                    </div>
+                </section>
+
+                <!-- 技术展示部分 -->
+                <section class="py-32 relative overflow-hidden">
+                    <!-- 炫酷背景效果 -->
+                    <div class="absolute inset-0 bg-[#0A0A0B]">
+                        <!-- 渐变网格 -->
+                        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(#FF3366 0.5px, transparent 0.5px), linear-gradient(to right, #FF3366 0.5px, transparent 0.5px); 
+                                    background-size: 30px 30px;">
+                        </div>
+                        <!-- 动态光效 -->
+                        <div class="absolute inset-0">
+                            <div
+                                class="absolute top-0 -left-4 w-3/4 h-1/2 bg-gradient-to-br from-[#FF3366]/20 to-transparent rounded-full blur-2xl">
+                            </div>
+                            <div
+                                class="absolute bottom-0 -right-4 w-3/4 h-1/2 bg-gradient-to-tl from-[#9D34DA]/20 to-transparent rounded-full blur-2xl">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="space-y-32">
+                            <!-- 前两行代码保持不变 -->
+
+                            <!-- 第三行：色彩增强技术 -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                                <div class="relative group perspective">
+                                    <div class="relative transform transition-all duration-500 group-hover:rotate-y-12">
+                                        <div
+                                            class="bg-gradient-to-br from-[#FF3366]/10 to-[#9D34DA]/10 backdrop-blur-xl rounded-2xl p-1">
+                                            <img src="./img/descreption_1.jpg" alt="色彩增强"
+                                                class="rounded-xl w-full h-[400px] object-cover">
+                                        </div>
+                                        <div
+                                            class="absolute -inset-1 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity -z-10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    <h2 class="text-4xl font-bold">
+                                        <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                            data-lan="hero.technology_color_title" >
+                                            Smart Color Enhancement
+                                        </span>
+                                    </h2>
+                                    <p class="text-gray-400 text-lg leading-relaxed"
+                                            data-lan="hero.technology_color_desc" >
+                                            Flux Kontext AI leverages deep learning-based AI image editing to deliver smart color enhancement. Our intelligent color optimization system restores true, vivid colors for every photo—landscape, portrait, or artwork—with professional character consistency and brand-level quality.
+                                    </p>
+                                    <div class="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10">
+                                        <div class="flex items-center space-x-4">
+                                            <div
+                                                class="w-12 h-12 bg-gradient-to-br from-[#FF3366] to-[#FF3366]/50 rounded-lg flex items-center justify-center shrink-0">
+                                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                                    </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-white font-medium"
+                                                    data-lan="hero.technology_color_sub_title" >
+                                                    Smart Color Optimization</h3>
+                                                <p class="text-gray-400 text-sm"
+                                                    data-lan="hero.technology_color_sub_desc" >
+                                                    AI-powered color adjustment ensures every edit is consistent in style and rich in detail, elevating your visual experience.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第四行：人像美化技术 -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                                <div class="space-y-6 order-2 lg:order-1">
+                                    <h2 class="text-4xl font-bold">
+                                        <span class="bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent"
+                                            data-lan="hero.technology_beaut_title" >
+                                            AI Portrait Beautification
+                                        </span>
+                                    </h2>
+                                    <p class="text-gray-400 text-lg leading-relaxed" data-lan="hero.technology_beaut_desc" >
+                                        Flux Kontext AI's AI portrait beautification intelligently detects facial features and automatically enhances skin tone and lighting for natural, professional, and consistent results. Enjoy seamless cross-platform experience—mobile, desktop, or tablet—for high-end retouching and social sharing.
+                                    </p>
+                                    <div class="bg-white/5 backdrop-blur-lg p-4 rounded-xl border border-white/10">
+                                        <div class="flex items-center space-x-4">
+                                            <div
+                                                class="w-12 h-12 bg-gradient-to-br from-[#9D34DA] to-[#9D34DA]/50 rounded-lg flex items-center justify-center shrink-0">
+                                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-white font-medium" data-lan="hero.technology_beaut_sub_title" >
+                                                    Smart portrait beautification</h3>
+                                                <p class="text-gray-400 text-sm" data-lan="hero.technology_beaut_sub_desc" >
+                                                    AI-powered beautification refines natural beauty, ensures character consistency, and protects your data privacy.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative group perspective order-1 lg:order-2">
+                                    <div class="relative transform transition-all duration-500 group-hover:rotate-y-12">
+                                        <div
+                                            class="bg-gradient-to-br from-[#9D34DA]/10 to-[#FF3366]/10 backdrop-blur-xl rounded-2xl p-1">
+                                            <img src="./img/descreption_2.jpg" alt="人像美化"
+                                                class="rounded-xl w-full h-[400px] object-cover">
+                                        </div>
+                                        <div
+                                            class="absolute -inset-1 bg-gradient-to-r from-[#9D34DA] to-[#FF3366] rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity -z-10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+
+
+
+                <!-- 通用页脚组件 -->
+                <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+                    <!-- footer.js 会将内容注入到这里 -->
+                </footer>
+
+            </main>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
