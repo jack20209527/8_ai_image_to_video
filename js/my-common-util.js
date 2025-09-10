@@ -29,7 +29,7 @@ class GlobalConfig {
     static url = 'http://localhost:39603';
 
     // 接口: 图片生成类型
-    static API_NANO = "/go/generate_nano_image" // 支持: 文生图、图生图
+    static API_NANO = "/go/nano2" // "/go/generate_nano_image" // 支持: 文生图、图生图
     static API_FLUX = "/go/generate_flux_image" // 支持: 文生图、图生图
 
     // 接口: 视频类型

@@ -129,8 +129,8 @@ async function startGenerateImage (image_type, model_name) {
         var prompt = prompt_temp ? prompt_temp.value.trim() : '';
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
-        prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
-        if (!prompt) { 
+        // prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
+        if (prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }

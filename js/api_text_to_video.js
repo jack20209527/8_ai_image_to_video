@@ -93,7 +93,6 @@ id_btn_generate.addEventListener('click', function(){
     showLoading();
     // 生成过程中禁用按钮
     setGenerateButtonState(false);
-     // startGenerateImage  (GlobalConfig.TYPE_IMAGE_NANO); // nano类型
      
     var model = id_btn_model.innerText;
     // 0:veo3  1:veo3-fast 2:veo3-pro
@@ -132,8 +131,8 @@ async function startGenerateVideoByV(image_type) {
         var prompt = prompt_temp ? prompt_temp.value.trim() : '';
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
-        prompt = "让这个美女微笑，伸出手来，动作可以夸张点，表情也可以夸张点，类似哈哈大笑那种"
-        if (!prompt) { 
+        // prompt = "让这个美女微笑，伸出手来，动作可以夸张点，表情也可以夸张点，类似哈哈大笑那种"
+        if (prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }
@@ -417,8 +416,8 @@ async function startGenerateVideoByVeo3 (model_number) {
         var prompt = prompt_temp ? prompt_temp.value.trim() : '';
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
-        prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
-        if (!prompt) { 
+        // prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
+        if (prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }
