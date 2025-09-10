@@ -33,7 +33,7 @@ class GlobalConfig {
     static API_FLUX = "/go/generate_flux_image" // 支持: 文生图、图生图
 
     // 接口: 视频类型
-    static API_V_VIDEO = "/go/v_video" // 支持: 文生、图生、模版生
+    static API_V_VIDEO = "/go/v_video" // vidu-支持: 文生、图生、模版生
     static API_GET_V_TASK_DETAIL = "/go/v/get_task_detail"
     static API_VEO3 = "/go/v/cr" // 只支持: 文生视频
     static API_PAY_CREATE_ORDER = "/go/p/cr" // 创建订单

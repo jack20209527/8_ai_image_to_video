@@ -59,7 +59,7 @@
             console.log("selectedVideo: ", selectedVideo.videoUrl);
 
             // 选择模型 
-            DropdownMenuUtil.init('id_btn_model', ['On-premise Model'], 0, 1, 220, (item, index) => {
+            DropdownMenuUtil.init('id_btn_model', ['Vidu Model'], 0, 1, 220, (item, index) => {
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_model');
                 text.innerHTML = item;
@@ -201,7 +201,7 @@
                         <div class="mt-4 flex items-center gap-2 text-sm text-gray-400">
                             <img src="/img/credit_solid.png" alt="credit_cart" class="w-4 h-4">
                             <span>Credits required: </span>
-                            <span id="id_credit_required_number">20</span>
+                            <span id="id_credit_required_number">140</span>
                         </div>
 
                         <!-- 生成按钮 -->
@@ -210,7 +210,7 @@
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                 </svg>
-                                <span>生成预览</span>
+                                <span>Start Generate</span>
                             </button>
                         </div>
                     </section>
@@ -218,7 +218,7 @@
                     <!-- 右侧显示卡片和生成结果的区域 -->
                     <section class="bg-[#0b0e13] border border-white/5 rounded-lg p-3">
                         
-                        <div class="text-xs text-gray-400 mb-2">由 Seedance 1.0 Pro 驱动</div>
+                        <div class="text-xs text-gray-400 mb-2"></div>
                         <div class="relative aspect-video bg-[#0f131a] rounded-lg overflow-hidden border border-white/10">
                             
                             <img id="id_preview_image" src="/img/image_content3.jpg" alt="preview" class="w-full h-full object-cover hidden" />
@@ -244,8 +244,8 @@
                                             <span class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400"></span>
                                         </div>
                                     </div>
-                                    <div class="mt-4 text-gray-200">正在为你创作…</div>
-                                    <div class="text-xs text-gray-400 mt-1">您可以继续流量其他部分功能，完成后可以在作品页查看</div>
+                                    <div class="mt-4 text-gray-200">Generating ...</div>
+                                    <div class="text-xs text-gray-400 mt-1">You can continue to use other parts of the function, and you can view the work after completion.</div>
                                 </div>
                             </div>
                             
@@ -255,13 +255,13 @@
                                     <div class="mx-auto w-12 h-12 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mb-3">
                                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
                                     </div>
-                                    <div class="text-white font-medium">生成失败</div>
+                                    <div class="text-white font-medium">Failed to generate</div>
                                     <div class="text-xs text-gray-400 mt-1">Insufficient credits</div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="mt-3">
+                        <div class="hidden mt-3">
                             <div class="text-sm text-gray-300 mb-1">提示词</div>
                             <div id="id_prompt_result" class="text-xs text-gray-400 bg-white/5 border border-white/10 rounded p-3 leading-6">
                                 The ice blue Porsche speeds out from the night's high-rise...

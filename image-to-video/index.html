@@ -48,10 +48,16 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // 选择模型 
-            DropdownMenuUtil.init('id_btn_model', ['On-premise Model'], 0, 1, 220, (item, index) => {
+            DropdownMenuUtil.init('id_btn_model', ['Vidu Model'], 0, 1, 220, (item, index) => {
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_model');
                 text.innerHTML = item;
+
+                var id_credit_required_number = document.getElementById('id_credit_required_number');
+                if (index == 0) {
+                    id_credit_required_number.textContent = 140;
+                } 
+
                 DropdownMenuUtil.hide();
             });
 
@@ -191,7 +197,7 @@
                         <div class="mt-4 flex items-center gap-2 text-sm text-gray-400">
                             <img src="/img/credit_solid.png" alt="credit_cart" class="w-4 h-4">
                             <span>Credits required: </span>
-                            <span id="id_credit_required_number">20</span>
+                            <span id="id_credit_required_number">140</span>
                         </div>
 
                         <!-- 生成按钮 -->

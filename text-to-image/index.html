@@ -53,6 +53,16 @@
                 console.log(`选择了: ${item}, 索引: ${index}  `);
                 var text = document.getElementById('id_text_model');
                 text.innerHTML = item;
+
+                var id_credit_required_number = document.getElementById('id_credit_required_number');
+                if (index == 0) {
+                    id_credit_required_number.textContent = 2;
+                } else if (index == 1) {
+                    id_credit_required_number.textContent = 12;
+                } else if (index == 2) {
+                    id_credit_required_number.textContent = 24;
+                }
+
                 DropdownMenuUtil.hide();
             });
 
@@ -189,7 +199,7 @@
                         <div class="mt-4 flex items-center gap-2 text-sm text-gray-400">
                             <img src="/img/credit_solid.png" alt="credit_cart" class="w-4 h-4">
                             <span>Credits required: </span>
-                            <span id="id_credit_required_number">20</span>
+                            <span id="id_credit_required_number">2</span>
                         </div>
 
                         <!-- 生成按钮 -->
