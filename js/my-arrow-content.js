@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         "title": "If I have more questions, how can I contact the support team?",
-        "content": "If you have any further questions or need help with our <span class=\"text-purple-300\">photo to video ai</span> tool or any other features, you can always visit our help center or contact our support team at contact@yourdomain.com (example). We are here to answer your questions and ensure you have the best creative experience."
+        "content": "If you have any further questions or need help with our <span class=\"text-purple-300\">photo to video ai</span> tool or any other features, you can always visit our help center or contact our support team at support@phototovideoai.app. We are here to answer your questions and ensure you have the best creative experience."
       }
     ]
 
