@@ -129,7 +129,7 @@ async function startGenerateImage (image_type, model_name) {
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
         // prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
-        if (prompt) { 
+        if (!prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }
@@ -220,7 +220,6 @@ async function startGenerateImage (image_type, model_name) {
 
             } else {
                 showError();
-                alert('Generation succeeded but no playable url returned');
             }
         } else if (result.code === 1000018) {
             alert('Insufficient credits, please recharge');
@@ -228,12 +227,10 @@ async function startGenerateImage (image_type, model_name) {
         } else {
             console.log(result.msg || 'Processing failed');
             showError();
-            alert('Video generation failed: ' + (result.msg || 'Unknown error'));
         }
     } catch (error) {
         console.error('Processing failed:', error);
         showError();
-        alert('Video generation failed: ' + error.message);
     } finally {
         LoadingUtil.hide();
         setGenerateButtonState(true);

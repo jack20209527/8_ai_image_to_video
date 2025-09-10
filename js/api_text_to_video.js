@@ -132,7 +132,7 @@ async function startGenerateVideoByV(image_type) {
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
         // prompt = "让这个美女微笑，伸出手来，动作可以夸张点，表情也可以夸张点，类似哈哈大笑那种"
-        if (prompt) { 
+        if (!prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }
@@ -417,7 +417,7 @@ async function startGenerateVideoByVeo3 (model_number) {
         // prompt = "The woman in Figure 2 is wearing the necklace from Figure 1,Do not change the details of other Figure 2."
         // 生成美女图片
         // prompt = "A beautiful curvy woman with fair skin, realistic, detailed, high resolution, soft studio lighting, ultra-realistic photo."
-        if (prompt) { 
+        if (!prompt) { 
             alert('Please enter a prompt'); 
             return; 
         }

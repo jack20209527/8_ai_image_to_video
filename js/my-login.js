@@ -1,7 +1,7 @@
 
 
 
-
+// 1. 判断是否登录
 function isUserLoggedIn() {
   let localUser = LocalStorageUtil.getUserObject();
   console.log('localUser: ', localUser);
@@ -9,6 +9,7 @@ function isUserLoggedIn() {
   return localUser != null;
 }
 
+// 2. 退出
 function logout() {
   LocalStorageUtil.removeUserObject();
   document.getElementById('user-name').innerText = '未登录';
@@ -19,17 +20,18 @@ function logout() {
   avatarDiv.classList.add('bg-gray-400');
 }
 
-// 在文件末尾添加以下函数
+// 3.在文件末尾添加以下函数
 function showLoading() {
   window.LoadingUtil.show();
 }
 
+// 4. 隐藏加载指示器
 function hideLoading() {
   window.LoadingUtil.hide();
 }
 
 
-// 获取更多图片
+// 5. 获取更多图片
 function get_more_images(callback) {
 
   // 获取 JSON 对象
@@ -49,8 +51,8 @@ function get_more_images(callback) {
   const jsonData = {
     "opt": "10", // 10是获取视频列表
     // "google_token": response.credential,
-    "uid": "12", // localUser.uid,
-    "project_id": "0", // GlobalConfig.project_id,
+    "uid": localUser.uid, // "12", // localUser.uid,
+    "project_id": GlobalConfig.project_id,
     "product_id": GlobalConfig.product_id, // 默认产品ID
     "device_info": "6789",
     "page_number": "1",
@@ -117,6 +119,8 @@ function get_more_images(callback) {
     });
 }
 
+
+//6. 获取更多视频
 function get_more_videos(callback) {
 
   // 获取 JSON 对象

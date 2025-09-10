@@ -667,6 +667,7 @@ function bindMobileMenu(){
     // 绑定更多按钮点击事件
     moreBtn.addEventListener('click', function(e){
         e.stopPropagation();
+        console.log('【移动端菜单】点击更多按钮');
         toggleMenu();
     });
     
