@@ -76,7 +76,7 @@ const nav_header_content = `
         </div>
         
         <!-- 移动端菜单 -->
-       <div id="id_mobile_menu" class="md:hidden lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
+       <div id="id_mobile_menu" class="flex md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur border-b border-white/5 max-h-[400px] overflow-y-auto hidden z-40">
             <div class="px-4 py-4 space-y-4">
                 <div>
                     <div class="text-[12px] tracking-wide text-gray-400 mb-2">AI Video</div>
