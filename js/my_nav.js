@@ -194,7 +194,9 @@ const left_sidebar_content = `
 
 // 包括左侧和顶部导航的点击
 // path_level: ../ 或者 ./
-// left_sidebar_index: 按钮的序号，从上往下，从0开始; 如果是-1，就是不显示左侧边栏
+// left_sidebar_index: 按钮的序号，从上往下，从0开始; 
+//                              如果是-1，就是不显示左侧边栏；
+//                              如果是-2，就是显示默认的左侧边栏，不选中任何一个；
 function init_nav_event(path_level, left_sidebar_index){
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -480,84 +482,169 @@ function refreshJifen() {
 
 // ---------------------- 处理登录部分  end ----------------------------
 
-
-function set_left_sidebar_active(left_sidebar_index){
-    try{
+function set_left_sidebar_active(left_sidebar_index) {
+    try {
         // 收集左侧边栏内的所有按钮（按从上到下顺序）
         var aside = document.querySelector('aside');
-        if(!aside) return;
+        if (!aside) return;
         var btnList = aside.querySelectorAll('nav button');
-        if(!btnList || btnList.length===0) return;
-
-        // 若未传入序号，则不主动改动现有默认选中（保留初始模板中的选中态）
-        var hasIndex = (typeof left_sidebar_index === 'number') && left_sidebar_index >= 0 && left_sidebar_index < btnList.length;
-        if(!hasIndex){
-            // 仍需确保 hover 时图标跟随文字变红（为所有未绑定项补齐hover绑定）
-            for(var k=0;k<btnList.length;k++){
-                bindHoverIconColor(btnList[k]);
-            }
-            return;
-        }
+        if (!btnList || btnList.length === 0) return;
 
         // 统一的选中与未选中样式（基于 Tailwind）
         // 去掉外部边框
-        var activeBtnClasses = ['text-red-500','bg-[#18202b]'];
-        // var activeBtnClasses = ['text-red-500','bg-[#18202b]','outline','outline-1','outline-blue-500/35'];
-        var inactiveBtnBase = ['flex','items-center','gap-2','w-full','px-3','py-2','rounded-md'];
-        var inactiveColorClasses = ['text-slate-300','hover:bg-white/5','hover:text-red-500'];
+        var activeBtnClasses = ['text-red-500', 'bg-[#18202b]'];
+        var inactiveBtnBase = ['flex', 'items-center', 'gap-2', 'w-full', 'px-3', 'py-2', 'rounded-md'];
+        var inactiveColorClasses = ['text-slate-300', 'hover:bg-white/5', 'hover:text-red-500'];
 
         // hover 时图标颜色跟随
-        function bindHoverIconColor(btn){
-            if(btn.getAttribute('data-hover-bound') === '1') return;
-            btn.setAttribute('data-hover-bound','1');
-            btn.addEventListener('mouseenter', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.add('text-red-500'); } }catch(_){} });
-            btn.addEventListener('mouseleave', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.remove('text-red-500'); s.classList.add('text-slate-400'); } }catch(_){} });
+        function bindHoverIconColor(btn) {
+            if (btn.getAttribute('data-hover-bound') === '1') return;
+            btn.setAttribute('data-hover-bound', '1');
+            btn.addEventListener('mouseenter', function() {
+                try {
+                    var s = btn.querySelector('svg');
+                    if (s && !btn.classList.contains('text-red-500')) {
+                        s.classList.add('text-red-500');
+                    }
+                } catch (_) { }
+            });
+            btn.addEventListener('mouseleave', function() {
+                try {
+                    var s = btn.querySelector('svg');
+                    if (s && !btn.classList.contains('text-red-500')) {
+                        s.classList.remove('text-red-500');
+                        s.classList.add('text-slate-400');
+                    }
+                } catch (_) { }
+            });
         }
 
         // 清除所有按钮的选中样式，并恢复未选中配色
-        for(var i=0;i<btnList.length;i++){
+        for (var i = 0; i < btnList.length; i++) {
             var btn = btnList[i];
             // 去掉可能存在的选中样式
-            activeBtnClasses.forEach(function(c){ btn.classList.remove(c); });
+            activeBtnClasses.forEach(function(c) { btn.classList.remove(c); });
             // 确保基础布局类存在
-            inactiveBtnBase.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+            inactiveBtnBase.forEach(function(c) { if (!btn.classList.contains(c)) btn.classList.add(c); });
             // 恢复未选中配色
-            inactiveColorClasses.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+            inactiveColorClasses.forEach(function(c) { if (!btn.classList.contains(c)) btn.classList.add(c); });
 
             // 图标颜色：未选中为 text-slate-400
-            try{
+            try {
                 var svg = btn.querySelector('svg');
-                if(svg){
+                if (svg) {
                     svg.classList.remove('text-red-500');
-                    if(!svg.classList.contains('text-slate-400')) svg.classList.add('text-slate-400');
+                    if (!svg.classList.contains('text-slate-400')) svg.classList.add('text-slate-400');
                 }
-            }catch(_){ }
+            } catch (_) { }
 
             // 绑定 hover 时图标变红
             bindHoverIconColor(btn);
         }
 
-        // 设置目标按钮为选中态
-        var target = btnList[left_sidebar_index];
-        if(target){
-            // 去掉未选中配色中的文字色，避免冲突
-            target.classList.remove('text-slate-300');
-            // 添加选中配色
-            activeBtnClasses.forEach(function(c){ if(!target.classList.contains(c)) target.classList.add(c); });
 
-            // 图标设为 red-500（选中态常驻）
-            try{
-                var svg2 = target.querySelector('svg');
-                if(svg2){
-                    svg2.classList.remove('text-slate-400');
-                    if(!svg2.classList.contains('text-red-500')) svg2.classList.add('text-red-500');
-                }
-            }catch(_){ }
+        // -1 -2 都不处理
+        // 设置目标按钮为选中态
+        if (left_sidebar_index >= 0) {
+            var target = btnList[left_sidebar_index];
+            if (target) {
+                // 去掉未选中配色中的文字色，避免冲突
+                target.classList.remove('text-slate-300');
+                // 添加选中配色
+                activeBtnClasses.forEach(function(c) { if (!target.classList.contains(c)) target.classList.add(c); });
+    
+                // 图标设为 red-500（选中态常驻）
+                try {
+                    var svg2 = target.querySelector('svg');
+                    if (svg2) {
+                        svg2.classList.remove('text-slate-400');
+                        if (!svg2.classList.contains('text-red-500')) svg2.classList.add('text-red-500');
+                    }
+                } catch (_) { }
+            }
         }
-    }catch(err){
+        
+    } catch (err) {
         console.error('[左侧选中态] 设置失败: ', err);
     }
 }
+// function set_left_sidebar_active(left_sidebar_index){
+//     try{
+//         // 收集左侧边栏内的所有按钮（按从上到下顺序）
+//         var aside = document.querySelector('aside');
+//         if(!aside) return;
+//         var btnList = aside.querySelectorAll('nav button');
+//         if(!btnList || btnList.length===0) return;
+
+//         // 若未传入序号，则不主动改动现有默认选中（保留初始模板中的选中态）
+//         var hasIndex = (typeof left_sidebar_index === 'number') && left_sidebar_index >= 0 && left_sidebar_index < btnList.length;
+//         if(!hasIndex){
+//             // 仍需确保 hover 时图标跟随文字变红（为所有未绑定项补齐hover绑定）
+//             for(var k=0;k<btnList.length;k++){
+//                 bindHoverIconColor(btnList[k]);
+//             }
+//             return;
+//         }
+
+//         // 统一的选中与未选中样式（基于 Tailwind）
+//         // 去掉外部边框
+//         var activeBtnClasses = ['text-red-500','bg-[#18202b]'];
+//         // var activeBtnClasses = ['text-red-500','bg-[#18202b]','outline','outline-1','outline-blue-500/35'];
+//         var inactiveBtnBase = ['flex','items-center','gap-2','w-full','px-3','py-2','rounded-md'];
+//         var inactiveColorClasses = ['text-slate-300','hover:bg-white/5','hover:text-red-500'];
+
+//         // hover 时图标颜色跟随
+//         function bindHoverIconColor(btn){
+//             if(btn.getAttribute('data-hover-bound') === '1') return;
+//             btn.setAttribute('data-hover-bound','1');
+//             btn.addEventListener('mouseenter', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.add('text-red-500'); } }catch(_){} });
+//             btn.addEventListener('mouseleave', function(){ try{ var s=btn.querySelector('svg'); if(s && !btn.classList.contains('text-red-500')){ s.classList.remove('text-red-500'); s.classList.add('text-slate-400'); } }catch(_){} });
+//         }
+
+//         // 清除所有按钮的选中样式，并恢复未选中配色
+//         for(var i=0;i<btnList.length;i++){
+//             var btn = btnList[i];
+//             // 去掉可能存在的选中样式
+//             activeBtnClasses.forEach(function(c){ btn.classList.remove(c); });
+//             // 确保基础布局类存在
+//             inactiveBtnBase.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+//             // 恢复未选中配色
+//             inactiveColorClasses.forEach(function(c){ if(!btn.classList.contains(c)) btn.classList.add(c); });
+
+//             // 图标颜色：未选中为 text-slate-400
+//             try{
+//                 var svg = btn.querySelector('svg');
+//                 if(svg){
+//                     svg.classList.remove('text-red-500');
+//                     if(!svg.classList.contains('text-slate-400')) svg.classList.add('text-slate-400');
+//                 }
+//             }catch(_){ }
+
+//             // 绑定 hover 时图标变红
+//             bindHoverIconColor(btn);
+//         }
+
+//         // 设置目标按钮为选中态
+//         var target = btnList[left_sidebar_index];
+//         if(target){
+//             // 去掉未选中配色中的文字色，避免冲突
+//             target.classList.remove('text-slate-300');
+//             // 添加选中配色
+//             activeBtnClasses.forEach(function(c){ if(!target.classList.contains(c)) target.classList.add(c); });
+
+//             // 图标设为 red-500（选中态常驻）
+//             try{
+//                 var svg2 = target.querySelector('svg');
+//                 if(svg2){
+//                     svg2.classList.remove('text-slate-400');
+//                     if(!svg2.classList.contains('text-red-500')) svg2.classList.add('text-red-500');
+//                 }
+//             }catch(_){ }
+//         }
+//     }catch(err){
+//         console.error('[左侧选中态] 设置失败: ', err);
+//     }
+// }
 
 // 绑定移动端菜单 - 内部函数
 function bindMobileMenu(){

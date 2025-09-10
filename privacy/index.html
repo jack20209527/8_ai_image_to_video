@@ -1,268 +1,257 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free AI Image Enhancement Privacy Policy | Secure & Private Photo Upscaler - Flux Kontext AI</title>
-    
-    <meta name="description" content="Discover how Flux Kontext AI protects your privacy while providing free, secure, and watermark-free AI image enhancement and upscaling. Learn about our data protection, temporary storage, and encryption policies for your photos. No registration required.">
-    
-    <meta name="keywords" content="ai image enhancement privacy, free photo upscaler, secure ai photo editor, no watermark, online image privacy, data protection, ai upscaling, photo privacy policy, image security, flux kontext ai">
-
-    <link rel="canonical" href="https://flux-kontext-ai.org/privacy/"/>
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Privacy Policy - Free AI Image Enhancement & Secure Photo Upscaler | Flux Kontext AI">
-    <meta property="og:description" content="Your privacy is our priority. Learn how Flux Kontext AI keeps your photos secure and private during free AI enhancement and upscaling. No watermark, no registration, advanced encryption.">
-    <meta property="og:image" content="path/to/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Privacy Policy - Free AI Image Enhancement & Secure Photo Upscaler | Flux Kontext AI">
-    <meta name="twitter:description" content="Your privacy is our priority. Learn how Flux Kontext AI keeps your photos secure and private during free AI enhancement and upscaling. No watermark, no registration, advanced encryption.">
-    <meta name="twitter:image" content="path/to/og-image.jpg">
-
-    <!-- Additional SEO Meta Tags -->
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Photo HD Converter">
-
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GNVQX6Z9"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-59GNVQX6Z9');
-    </script>
-    
+    <title>Photo to Video AI: Your Privacy Policy & Data Protection</title>
+    <meta name="description" content="Learn how Photo to Video AI protects your data. Read our privacy policy to understand what information we collect and how we keep your photos and videos secure.">
+    <meta name="keywords" content="">
     <script src="/tailwind.js"></script>
     <link rel="stylesheet" href="/tailwind.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="canonical" href="https://flux-kontext-ai.org"/>
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    
     <script src="/js/my-common-util.js"></script>
-    <script src="/js/my-dropdown-menu.js"></script>
-    <script src="/js/my-loading-util.js"></script>
+    <script>
+        global_type = GlobalConfig.TYPE_PAGE_IMAGE_TO_VIDEO;
+    </script>
+
     <script src="/js/my-local-storage-util.js"></script>
     <script src="/js/my-login.js"></script>
+    <script src="/js/my_nav.js"></script>
+    <script src="/js/custom-toast.js"></script>
+    <script src="/js/my-dropdown-menu.js"></script>
+    <script src="/js/my-loading-util.js"></script>
     <script src="/js/my-footer.js"></script>
-
+    
+    <script src="/js/my-lan-config.js"></script>
+    <script src="/js/my-lan-manager.js"></script>
+    
     <style>
-        /* 基础样式 */
-        body {
-            background-color: #0A0A0B;
-            color: #fff;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #FF3366 0%, #9D34DA 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* 上传区域样式 */
-        .upload-area {
-            width: 100%;
-            height: 400px;
-            /* 固定高度 */
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .upload-area.drag-over {
-            border-color: #FF3366;
-            background: rgba(255, 51, 102, 0.1);
-        }
-
-        /* 预览区域样式 */
-        .preview-container {
-            width: 100%;
-            height: 400px;
-            /* 与上传区域保持相同高度 */
-            position: relative;
-        }
-
-        .preview-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* 测试面板样式 */
-        .test-panel {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 1rem;
-            z-index: 100;
-        }
-
-        @keyframes pulse-ring {
-            0% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1.3);
-                opacity: 0;
-            }
-        }
-
-        .pulse-ring::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: inherit;
-            padding: 4px;
-            background: linear-gradient(135deg, #FF3366, #9D34DA);
-            -webkit-mask:
-                linear-gradient(#fff 0 0) content-box,
-                linear-gradient(#fff 0 0);
-            mask:
-                linear-gradient(#fff 0 0) content-box,
-                linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
+        /* 旋转小点动画（让 orbit 容器转起来） */
+        @keyframes orbit-rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+        .orbit{animation:orbit-rot 2.6s linear infinite;will-change:transform}
+        /* 轻微上下浮动（用于中心图标，可选） */
+        @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-4px)}100%{transform:translateY(0)}}
+        .floaty{animation:floaty 2.2s ease-in-out infinite}
     </style>
 
+    <!-- 设置登录、初始化顶部导航、侧边栏 -->
+    <script>
+        // 设置导航条的按钮的点击事件
+        init_nav_event ("../../", -2);
+
+        // 以下是自身页面的点击
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+        });
+    </script>
 
 </head>
 
-<body class="min-h-screen">
-    <!-- 粒子背景容器 -->
-    <div id="particles-container" class="fixed inset-0 pointer-events-none" style="z-index: -1;"></div>
+<body class="bg-[#0f1115] text-gray-200">
 
-    <!-- 导航栏 -->
-   <!-- 导航栏部分 -->
-   <nav class="fixed w-full z-50 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-start h-20 items-center">
-                <!-- Logo -->
-                <a href="/" class="flex items-center space-x-3 cursor-pointer">
-                    <div class="w-10 h-10 bg-gradient-to-r from-[#FF3366] to-[#9D34DA] rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-[#FF3366] to-[#9D34DA] bg-clip-text text-transparent">
-                        Photo HD Converter
-                    </span>
-                </a>
-            </div>
-        </div>
-    </nav>
+    <!-- 通用顶部导航组件 -->
+    <header class="fixed top-0 inset-x-0 h-14 bg-[#0b0d12]/90 backdrop-blur border-b border-white/5 z-50">
+    </header>
 
-    <!-- 主要内容区域 -->
-    <div class="pt-24 pb-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- 页面标题 -->
-            <div class="text-center mb-12">
-                <h1 class="text-3xl font-bold gradient-text mb-4">Privacy Policy for Free AI Image Enhancement</h1>
-                <p class="text-gray-400">We protect your privacy while you enjoy free, secure, and watermark-free AI photo upscaling and enhancement online.</p>
-            </div>
+    <!-- Sidebar + Main -->
+    <div class="pt-14 mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
 
-            <!-- 隐私政策内容 -->
-            <div class="space-y-8 text-gray-300">
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">1. Information We Collect</h2>
-                    <p class="mb-4">When you use Flux Kontext AI's free online image enhancement and upscaling services, we may collect:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        <li>Images you upload for AI enhancement or upscaling</li>
-                        <li>Basic usage data (enhancement options, processing time, device/browser info)</li>
-                        <li>IP address for security and anti-abuse</li>
-                    </ul>
-                </section>
+            <!-- 通用侧边栏组件 -->
+            <aside class="hidden lg:block h-[calc(100vh-64px)] sticky top-14 bg-[#0b0e13] border border-white/5 rounded-lg overflow-hidden">
+            </aside>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">2. How We Use Your Information</h2>
-                    <p class="mb-4">We use your information only to:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        <li>Process and enhance your images with AI</li>
-                        <li>Improve our free AI enhancement algorithms and user experience</li>
-                        <li>Provide technical support and ensure service security</li>
-                        <li>Prevent abuse and maintain a safe, watermark-free platform</li>
-                    </ul>
-                </section>
+            <!-- Main -->
+            <main class="min-h-[calc(100vh-64px)]">
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">3. Image Data Privacy</h2>
-                    <p class="mb-4">Your privacy is our top priority. For all uploaded images:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        <li>All images are processed securely and encrypted in transit</li>
-                        <li>We do not permanently store your original or enhanced images</li>
-                        <li>Images are automatically deleted from our servers after processing</li>
-                        <li>We never share your images or data with third parties</li>
-                    </ul>
-                </section>
+                <!-- 内容 -->
+                <div class="bg-[#1a1d26] rounded-lg p-4 lg:p-6 text-gray-300">
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">4. Data Security</h2>
-                    <p class="mb-4">We use industry-leading security measures to protect your data:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        <li>SSL/TLS encrypted data transmission</li>
-                        <li>Secure, regularly audited server infrastructure</li>
-                        <li>Automatic deletion of all images after enhancement</li>
-                    </ul>
-                </section>
+                    
+                    <header>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-2">PhotoToVideo AI Privacy Policy</h1>
+                        <p class="text-center text-slate-500 mb-12">Last Updated: September 10, 2025</p>
+                    </header>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Commitment to Your Privacy</h2>
+                        <p class="mb-4">PhotoToVideo AI ("we," "our," or "PhotoToVideo AI") is dedicated to safeguarding the privacy and security of your personal information. This Privacy Policy outlines how we collect, store, use, process, and share ("process") your data when you visit and use our website <a href="https://phototovideoai.app" class="text-blue-400 hover:underline">https://phototovideoai.app</a> and all associated services, including but not limited to AI video generators, AI image creation, text-to-video, photo-to-video, text-to-image, and image-to-image services (collectively referred to as "Services").</p>
+                        <p class="mb-4">Please read this Privacy Policy carefully. If you have any questions or concerns about our policies and practices, feel free to contact us at <a href="mailto:support@phototovideoai.app" class="text-blue-400 hover:underline">support@phototovideoai.app</a>. If you disagree with our policies, please refrain from using our Services.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Scope of This Policy and Your Consent</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> This Privacy Policy applies to the personal information we process when you interact with us online (e.g., visiting our website <a href="https://phototovideoai.app" class="text-blue-400 hover:underline">https://phototovideoai.app</a> or any PhotoToVideo AI site linked to this policy) or through sales, marketing, or events.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> This policy does not cover data collected offline or through channels outside this website.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> By using our Services, you expressly consent to the terms of this Privacy Policy and agree to the processing of your information as described herein.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Types of Information We Collect</h2>
+                        <p class="mb-4">We may process various types of personal information based on your interactions with us, your preferences, and the products or features you use.</p>
+            
+                        <h3 class="text-xl font-semibold text-white mt-6 mb-2">Information You Provide Directly</h3>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> When you register an account, subscribe to our Services, or participate in promotional activities requiring registration, we may request:</p>
+                        <ul class="list-disc pl-6 mb-4">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Contact Information: Such as your name and email address. If you contact us directly (e.g., via email or online forms), we may collect the content of your messages and/or attachments, along with any additional information you choose to provide.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Account Information: When registering an account, we may ask for contact details like name, company name (if applicable), email address, and phone number.</li>
+                        </ul>
+            
+                        <h3 class="text-xl font-semibold text-white mt-6 mb-2">Information Collected Automatically</h3>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> When you visit, use, or browse our Services, we may automatically gather certain data, known as "usage data," which is essential for operating, maintaining, and enhancing our Services:</p>
+                        <ul class="list-disc pl-6 mb-4">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Device and Network Information: Your device’s Internet Protocol (IP) address, browser type and version, Internet Service Provider (ISP), time zone settings, operating system, unique device identifiers, and other diagnostic data.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Browsing Behavior Data: Pages you visit on our Services, dates and times of access, time spent on these pages, referral/exit pages, and possible click counts.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Mobile Device Specific Data: If you access Services via a mobile device, we may collect data about your device type, unique mobile ID, IP address, mobile operating system, and the type of mobile internet browser you use.</li>
+                        </ul>
+            
+                        <h3 class="text-xl font-semibold text-white mt-6 mb-2">Information We Do Not Process</h3>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> We do not process sensitive personal information (e.g., health data, religious beliefs, political opinions). Please do not provide such information to us.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> We do not receive any information from third parties.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">How We Use Your Information</h2>
+                        <p class="mb-4">We process your personal information to deliver, enhance, manage, and secure our Services, communicate with you, prevent fraud and security issues, and comply with legal obligations. We only process your data when we have a legitimate basis.</p>
+                        <p>Specific purposes include:</p>
+                        <ul class="list-disc pl-6">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Provide and Maintain Services: Operate, maintain, and manage our website and Services, including monitoring usage patterns.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Account Management: Administer your registration as a Service user, enabling access to features available to registered users.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Personalization and Improvement: Enhance, personalize, and expand our website, develop new products, services, features, and analyze how you use our site.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Fulfill Contracts: Execute purchase contracts for products, items, or services through the Services or any other agreements with us.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Communication: Engage with you directly or through partners, including customer support, updates related to the website, and informational or marketing communications (e.g., via email, phone, SMS, or mobile app push notifications), including security updates when necessary.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Marketing: Share news, special offers, and general information about our goods, services, and events similar to products you’ve purchased or inquired about, unless you opt out.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Manage Requests: Handle and process requests you submit to us.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Security and Fraud Prevention: Detect and prevent fraud, ensuring the safety of our Services and users.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Business Transfers: Use your information to evaluate or conduct mergers, asset sales, financing, or acquisitions of all or part of our business, where personal data of Service users may be among transferred assets.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Other Purposes: Utilize your data for data analysis, identifying usage trends, assessing the effectiveness of promotions, and improving our Services, products, marketing, and your experience.</li>
+                        </ul>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Information Sharing</h2>
+                        <p class="mb-4">We commit to not sharing your data with third parties unless explicitly stated in this Privacy Policy. We may share your personal information in the following cases:</p>
+                        <ul class="list-disc pl-6">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> With Service Providers: We may share your data with service providers to monitor and analyze our Services’ usage or to contact you. These providers are authorized to act on our behalf for specific tasks and are bound by confidentiality obligations.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Business Transfers: During negotiations or completion of mergers, sales of company assets, financing, or acquisitions of all or part of our business, we may share or transfer your data to another entity.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> With Affiliates: We may share your information with our affiliates, requiring them to adhere to this Privacy Policy. Affiliates include our parent company and any subsidiaries, joint ventures, or companies under common control.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> With Business Partners: We may share your data with business partners to offer certain products, services, or promotions.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> With Your Consent: After obtaining your consent, we may disclose your data for any other purpose.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Legal Compliance and Enforcement: In certain cases, if required by law or in response to valid requests from public authorities (e.g., courts or government agencies), we may disclose your data.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Other Legal Requirements: We may disclose your data in good faith if we believe it is necessary to:
+                                <ul class="list-disc pl-6">
+                                    <li>Comply with legal obligations.</li>
+                                    <li>Protect and defend our rights or property.</li>
+                                    <li>Investigate or prevent potential misconduct related to the Services.</li>
+                                    <li>Safeguard the personal safety of Service users or the public.</li>
+                                    <li>Avoid legal liability.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Log Files, Cookies, and Tracking Technologies</h2>
+                        <p class="mb-4">PhotoToVideo AI follows standard procedures using log files to record visitor activity on our website. This is a common practice among hosting companies for analytical purposes. Log file data includes Internet Protocol (IP) addresses, browser types, Internet Service Providers (ISPs), date and time stamps, referral/exit pages, and click counts. This information is not linked to any personally identifiable information and is used to analyze trends, manage the site, track user movement, and gather demographic insights.</p>
+            
+                        <h3 class="text-xl font-semibold text-white mt-6 mb-2">Cookies and Web Beacons</h3>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Like other websites, PhotoToVideo AI uses "Cookies" to store information, including visitor preferences and pages visited. This data helps us tailor web content to your browser type and other details for an optimized user experience.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> We use Cookies and similar tracking technologies to monitor activities on our Services and store certain data. These technologies include beacons (web beacons), tags, and scripts to collect and track information, improving and analyzing our Services.</p>
+                        <table class="w-full border-collapse mb-4">
+                            <thead>
+                                <tr class="bg-gray-700">
+                                    <th class="border border-gray-600 p-2">Technology</th>
+                                    <th class="border border-gray-600 p-2">Description</th>
+                                    <th class="border border-gray-600 p-2">Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-600 p-2">Cookies or Browser Cookies</td>
+                                    <td class="border border-gray-600 p-2">Small files placed on your computer, mobile device, or other equipment containing browsing history details.</td>
+                                    <td class="border border-gray-600 p-2">You can set your browser to refuse Cookies, but some Service features may not work without them unless adjusted.</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-600 p-2">Web Beacons</td>
+                                    <td class="border border-gray-600 p-2">Small electronic files in parts of our Services and emails, known as transparent GIFs, pixel tags, or single-pixel GIFs.</td>
+                                    <td class="border border-gray-600 p-2">Allow us to count users who visited pages or opened emails and gather related website statistics.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Cookies can be "persistent" or "session" Cookies. Persistent Cookies remain on your device when offline, while session Cookies are deleted when you close your browser.</p>
+                        <p>We use session and persistent Cookies for:</p>
+                        <ul class="list-disc pl-6">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Essential/Necessary Cookies (Session Cookies, managed by us): Critical for providing Services and enabling certain features, such as user authentication and fraud prevention.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Cookie Policy/Notice Acceptance Cookies (Persistent Cookies, managed by us): Identify if you’ve accepted Cookie use on our site.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Functional Cookies (Persistent Cookies, managed by us): Remember your choices, like login details or language preferences, for a personalized experience.</li>
+                        </ul>
+                        <p>For more details on our Cookie usage and your choices, please refer to our Cookie Policy or the Cookie section of this Privacy Policy.</p>
+            
+                        <h3 class="text-xl font-semibold text-white mt-6 mb-2">Third-Party Ads and Links</h3>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Our Services may contain links to other websites not operated by us. Clicking third-party links directs you to their sites. We strongly recommend reviewing the privacy policies of any third-party sites you visit. We are not responsible for the content, privacy policies, or practices of third-party websites or services.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Data Retention and Transfer</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Data Retention: We will retain your personal data only for the duration necessary to fulfill the purposes outlined in this Privacy Policy. We may retain and use your data to comply with legal obligations, resolve disputes, and enforce our legal agreements and policies. Usage data is typically retained for a shorter period unless used to enhance security or improve functionality, or if we are legally required to retain it longer.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Data Transfer: Your information, including personal data, may be processed at our operating offices and by parties involved in processing. This may involve transferring data to computers outside your state, province, country, or other governmental jurisdiction where data protection laws may differ. By submitting your information and agreeing to this Privacy Policy, you consent to such transfers. We will take all reasonably necessary steps to ensure your data is handled securely and in line with this Privacy Policy, and we will not transfer your data to organizations or countries without adequate safeguards for its security and other personal information.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Your Data Protection Rights</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> We aim to ensure you are fully aware of your data protection rights. Every user is entitled to the following rights:</p>
+                        <ul class="list-disc pl-6">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Access: You may request a copy of your personal data, for which we may charge a small fee.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Correction: You may request us to correct any information you believe is inaccurate or to complete information you think is incomplete.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Deletion: Under certain conditions, you may request the deletion of your personal data.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Restrict Processing: Under certain conditions, you may request us to limit the processing of your personal data.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Object to Processing: Under certain conditions, you may object to our processing of your personal data.</li>
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Right to Data Portability: Under certain conditions, you may request us to transfer data we’ve collected to another organization or directly to you.</li>
+                        </ul>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> We have one month to respond to your requests. To exercise any of these rights, please contact us at <a href="mailto:support@phototovideoai.app" class="text-blue-400 hover:underline">support@phototovideoai.app</a>.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Children’s Privacy</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> Our Services are not intended for individuals under 13 years of age. We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and learn that your child has provided us with personal data, please contact us.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> If we discover we’ve collected personal data from a child under 13 without parental consent, we will take steps to remove it from our servers.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg> If consent is required as a legal basis for processing your information and your country mandates parental consent, we may require your parent’s approval before collecting and using that data.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Changes to This Privacy Policy</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> We may update our Privacy Policy periodically. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> We will inform you of changes via email and/or a prominent notice on our Services before they take effect, updating the “Last Updated” date at the top of this policy. We recommend reviewing this Privacy Policy regularly for updates. Changes take effect when published on this page.</p>
+                    </section>
+            
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4">Contact Us</h2>
+                        <p class="flex items-center mb-2"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> If you have any questions about this Privacy Policy, please contact us:</p>
+                        <ul class="list-disc pl-6">
+                            <li class="flex items-center mb-1"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Via Email: <a href="mailto:support@phototovideoai.app" class="text-blue-400 hover:underline">support@phototovideoai.app</a></li>
+                        </ul>
+                    </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">5. Your Rights</h2>
-                    <p class="mb-4">You have the right to:</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4">
-                        <li>Request deletion of your data at any time</li>
-                        <li>Access information about your data usage</li>
-                        <li>Opt-out of data collection where applicable</li>
-                    </ul>
-                </section>
 
-                <section>
-                    <h2 class="text-2xl font-semibold text-white mb-4">6. Contact Us</h2>
-                    <p class="mb-4">If you have any questions about our privacy policy or how we protect your photos, please contact us at:</p>
-                    <p class="ml-4">robert20249527@gmail.com</p>
-                </section>
+                </div>
 
-            </div>
 
+                <!-- 通用页脚组件 -->
+                <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
+                    <!-- footer.js 会将内容注入到这里 -->
+                </footer>
+            </main>
         </div>
     </div>
-    </div>
 
-    <!-- 页脚 -->
-    <!-- 通用页脚组件 -->
-    <footer class="bg-[#0A0A0B] text-white py-12 md:py-20">
-        <!-- footer.js 会将内容注入到这里 -->
-    </footer>
 
-    <script src="/js/particles.js"></script>
-    <script>
-        // 初始化粒子效果
-        document.addEventListener('DOMContentLoaded', () => {
-            new ParticleSystem();
-        });
 
-        // 文件上传相关
-        const uploadArea = document.querySelector('.upload-area');
-        const fileInput = document.getElementById('file-input');
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
-        const statusModal = document.getElementById('status-modal');
-
-    </script>
 </body>
-
 </html>
+
+
