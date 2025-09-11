@@ -25,8 +25,8 @@ class GlobalConfig {
     static project_id = "3";
     static product_id = "9";
     static default_model = "veo3-fast";
-    // static url = 'https://linkprohub.top';
-    static url = 'http://localhost:39603';
+    static url = 'https://linkprohub.top';
+    // static url = 'http://localhost:39603';
 
     // 接口: 图片生成类型
     static API_NANO = "/go/nano2" // "/go/generate_nano_image" // 支持: 文生图、图生图

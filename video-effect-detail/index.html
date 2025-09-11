@@ -59,7 +59,7 @@
     <!-- 设置登录、初始化顶部导航、侧边栏 -->
     <script>
         // 设置导航条的按钮的点击事件
-        init_nav_event ("../", 1);
+        init_nav_event ("../", -2);
 
         // 以下是自身页面的点击
         document.addEventListener('DOMContentLoaded', () => {
@@ -112,10 +112,10 @@
                     <section class="bg-[#0b0e13] border border-white/5 rounded-lg p-4">
                         <!-- 选择模型 -->
                         <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">选择模型</label>
+                            <label class="block text-sm text-gray-300 mb-1">Model</label>
                             <div class="relative mt-2 w-full sm:w-40">
                                 <button id="id_btn_model" class="w-[220px] appearance-none px-3 py-2 pr-7 rounded bg-white/5 border border-white/10 text-sm hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-blue-500/40 flex items-center justify-between">
-                                    <span id="id_text_model">On-Ppremise Model</span>
+                                    <span id="id_text_model">Vidu Model</span>
                                     <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                                 </button>
                             </div>
@@ -123,7 +123,7 @@
 
                         <!-- Input method -->
                         <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">图像</label>
+                            <label class="block text-sm text-gray-300 mb-1">Upload Image</label>
                         </div>
                         <!-- Upload area -->
                         <div id="upload_card" class="mt-2 relative rounded-lg border border-white/10 bg-[#0f131a] h-48 flex flex-col items-center justify-center text-sm cursor-pointer">
@@ -134,10 +134,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 7.5L12 3m0 0L7.5 7.5M12 3v13.5" />
                                 </svg>
                             </div>
-                            <div class="text-gray-300">点击上传或拖拽到此处</div>
+                            <div class="text-gray-300">Click to upload or drag here</div>
                             <div class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF, WEBP</div>
                                 <button id="chooseFile" class="mt-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm">
-                                    选择图片</button>
+                                    Choose Image</button>
                         </div>
                             <!-- 预览图片 -->
                             <img id="uploadPreview" src="" alt="preview" class="hidden absolute inset-0 w-full h-full object-contain p-3" />
@@ -148,12 +148,12 @@
 
                         <!-- 输入提示词 -->
                         <div class="mt-4">
-                            <label class="block text-sm text-gray-300 mb-1">输入提示词</label>
-                            <textarea id="id_prompt_input" rows="6" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="描述你的视频..."></textarea>
+                            <label class="block text-sm text-gray-300 mb-1">Enter Prompt</label>
+                            <textarea id="id_prompt_input" rows="6" class="w-full mt-2 px-2 py-2 rounded bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-sm" placeholder="Describe your video..."></textarea>
                         </div>
 
                         <!-- 选择宽高比（与图片一致的卡片式样式） -->
-                        <div class="mt-6">
+                        <div class="hidden mt-6">
                             <div class="flex items-end justify-between">
                                 <div>
                                     <h3 class="text-white text-base font-semibold">Aspect Ratio</h3>
@@ -289,83 +289,6 @@
                     
                 </div>
 
-                <!-- Veo3 产品介绍（通用模块：标题 + 亮点 + 口碑 + FAQ + CTA） -->
-                <section class="bg-[#0b0e13] border border-white/5 mt-4 rounded-lg p-4 lg:p-6">
-                    <!-- 标题与简介 -->
-                    <div class="text-center mb-6 lg:mb-8">
-                        <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">
-                            <span class="text-white">Veo3</span>
-                            <span class="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"> 音频视频生成器</span>
-                        </h2>
-                        <p class="text-gray-300 text-sm leading-6 max-w-3xl mx-auto">
-                            基于前沿的视频生成大模型，Veo3 为图片到视频、文本到视频提供一站式创作能力。它支持镜头运动、风格化控制、角色一致性
-                            与原生音频合成，让作品兼具“画面张力”和“声音叙事”。无论你是营销团队、工作室，还是独立创作者，都能以更低成本、
-                            更高效率产出专业级短片。
-                        </p>
-                    </div>
-
-                    <!-- 核心能力亮点（3列，移动端1列） -->
-                    <div class="text-center mb-4">
-                        <h3 class="text-lg font-semibold text-white">核心能力亮点</h3>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-10">
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
-                            <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-3">
-                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-                            </div>
-                            <h4 class="text-white font-semibold mb-2">原生音频 · 同步对白/音乐/音效</h4>
-                            <p class="text-gray-400 text-sm leading-6">一键生成多轨音频并自动与画面对齐，免去复杂的配乐与音效剪辑工作，直出即可用于社媒与广告物料。</p>
-                        </div>
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
-                            <div class="w-12 h-12 bg-indigo-500/20 rounded-full flex items-center justify-center mb-3">
-                                <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                            <h4 class="text-white font-semibold mb-2">镜头/运动/风格控制</h4>
-                            <p class="text-gray-400 text-sm leading-6">支持提示词指定景别、机位、运动轨迹与光影风格；可套用预设并叠加微调，保证画面统一和风格一致。</p>
-                        </div>
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4">
-                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-3">
-                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <h4 class="text-white font-semibold mb-2">更清晰的画质与角色一致性</h4>
-                            <p class="text-gray-400 text-sm leading-6">720P 清晰度、细节保真与运动连贯性优化，人物与主体在多个镜头中保持一致，适合品牌物料与剧情短片。</p>
-                        </div>
-                    </div>
-
-                    <!-- 口碑评价（6卡：1/2/3列自适应） -->
-                    <div class="text-center mb-4">
-                        <h3 class="text-lg font-semibold text-white">创作者如何评价</h3>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-10">
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">亚历克斯，创意总监</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">节省了数小时的后期制作成本，现在我们可以在几分钟内从概念生成艺术短场景。</p></div>
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">米娅，婚礼工作室老板</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">将一张照片动画化并构建完整氛围是不可思议的，我的客户都惊呆了。</p></div>
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">杰森，广告代理机构策略师</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">从静态到影像的转化极大提升了创作效率，也改变了我们的视频制作流程。</p></div>
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">莉拉，数字艺术家</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">终于有一个真正理解创意提示的工具，我的艺术第一次感觉如此生动。</p></div>
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">托马斯，独立电影制作人</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">拍摄前做试镜头非常有用，仅一张图片的运动看起来出奇真实。</p></div>
-                        <div class="bg-[#141820] border border-white/10 rounded-xl p-4"><div class="text-white font-semibold">萨拉，社交媒体创作者</div><div class="mt-2 text-yellow-400">★★★★★</div><p class="mt-3 text-gray-400 text-sm leading-6">一个提示就能把照片变成动感短片，非常适合在 Instagram 讲故事。</p></div>
-                    </div>
-
-                    <!-- FAQ -->
-                    <div class="text-center mb-4">
-                        <h3 class="text-lg font-semibold text-white">常见问题</h3>
-                    </div>
-                    <div class="space-y-4 mb-6 lg:mb-10">
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">1</span><div><h4 class="text-white font-semibold">什么是图像转视频生成器？</h4><p class="mt-1 text-gray-400 text-sm leading-6">它是将静态图片转化为动态视频的AI工具，特别适合广告创意、产品展示与社交媒体内容，帮助你以更低成本快速产出专业短片。</p></div></div></div>
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-sm">2</span><div><h4 class="text-white font-semibold">需要设计或剪辑基础吗？</h4><p class="mt-1 text-gray-400 text-sm leading-6">不需要。上传图片与提示词，选择时长与宽高比，即可自动生成。也可叠加风格预设获得一致的品牌表现。</p></div></div></div>
-                        <div class="bg-[#151924] border border-white/10 rounded-xl p-4"><div class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-300 flex items-center justify-center text-sm">3</span><div><h4 class="text-white font-semibold">可以自定义结果风格吗？</h4><p class="mt-1 text-gray-400 text-sm leading-6">支持。你可以通过提示词与参数控制风格、镜头与运动；也可以使用预设模板快速复用配置，适用于团队协作。</p></div></div></div>
-                    </div>
-
-                    <!-- CTA -->
-                    <div class="rounded-2xl p-5 lg:p-8 bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 border border-white/10">
-                        <div class="text-center">
-                            <h3 class="text-xl lg:text-2xl font-bold text-white">准备让你的图片动起来了吗？</h3>
-                            <p class="text-gray-200 text-sm lg:text-base mt-2 max-w-3xl mx-auto">加入数千创作者，用 Seedance AI 将静态图片转为精彩短片。今天升级，解锁更快渲染与更高质量，并优先体验顶级模型。</p>
-                            <div class="mt-4">
-                                <a href="#" class="inline-flex items-center justify-center px-5 py-2.5 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-sm lg:text-base">立即开始创作</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
 
                 <!-- 通用页脚组件 -->

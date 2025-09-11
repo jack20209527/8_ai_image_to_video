@@ -94,7 +94,7 @@
             console.log(jsonString);
 
             // url = "http://localhost:39603/go/lo/" + jsonString
-            url = "https://linkprohub.top/go/lo/" + jsonString
+            url = GlobalConfig.url + "/go/lo/" + jsonString
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -122,6 +122,7 @@
                         console.log(userData.head_url);
                         console.log(userData.email);
                         console.log(userData.name);
+                        console.log(userData.jifen);
                         console.log(userData.google_id);
                         console.log(userData.project_id);
                         console.log(userData.user_key);
@@ -209,10 +210,10 @@
 
             <!-- 标题与副标题（发光） -->
             <h1 class="text-3xl md:text-2xl font-bold text-white text-center tracking-tight">
-                欢迎登录 Seedance AI
+                Welcome to PhotoToVideoAI
             </h1>
             <p class="mt-2 text-center text-sm md:text-base text-gray-300">
-                解锁更快的生成、更清晰的画质与更稳定的创作体验。
+                Unlock faster generation, clearer quality, and more stable creation experience.
             </p>
         </div>
 
@@ -226,9 +227,8 @@
                     <div class="flex items-center justify-between mb-5">
                         <div class="flex items-center gap-2">
                             <span class="inline-flex w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.6)]"></span>
-                            <span class="text-sm text-gray-300">使用 Google 账号一键登录</span>
+                            <span class="text-sm text-gray-300">Use Google account to login</span>
                         </div>
-                        <span class="text-[11px] text-gray-400">安全加密</span>
                     </div>
 
                     <div class="relative flex justify-center py-2">
@@ -243,18 +243,12 @@
 
                     <!-- 协议提示 -->
                     <div class="mt-5 text-[12px] text-gray-400 leading-6 text-center">
-                        登录即表示你同意我们的
-                        <a href="/term/" class="text-gray-300 hover:text-red-400 underline underline-offset-4">服务条款</a>
+                        By logging in, you agree to our
+                        <a href="/term" class="text-gray-300 hover:text-red-400 underline underline-offset-4">Term</a>
                         与
-                        <a href="/privacy/" class="text-gray-300 hover:text-red-400 underline underline-offset-4">隐私政策</a>
+                        <a href="/privacy" class="text-gray-300 hover:text-red-400 underline underline-offset-4">Privacy</a>
                     </div>
 
-                    <!-- 卖点徽标（可选） -->
-                    <div class="mt-6 grid grid-cols-3 gap-3 text-center text-[11px] md:text-xs text-gray-400">
-                        <div class="rounded-md bg-white/5 py-2 border border-white/10">更快生成</div>
-                        <div class="rounded-md bg-white/5 py-2 border border-white/10">720P清晰</div>
-                        <div class="rounded-md bg-white/5 py-2 border border-white/10">角色一致</div>
-                    </div>
                 </div>
             </div>
         </div>

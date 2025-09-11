@@ -1,11 +1,9 @@
         
 is_mock = false; // 是否使用本地测试
-url = "https://linkprohub.top"
 t_type = "1";
 
 // if (is_mock) {
 //     console.log('text');
-//     url = "http://localhost:39603"
 //     t_type = "0";//测试
 // } 
 
