@@ -21,12 +21,23 @@ class ClickUtil {
  */
 class GlobalConfig {
 
+    // static url = 'https://linkprohub.top';
+    static url = 'http://localhost:39603';
+
     // 项目相关配置
     static project_id = "3";
     static product_id = "9";
+    static product_id_basic = "9"; // 基础版
+    static product_id_popular = "10"; // 流行版
+    static product_id_advanced = "11"; // 高级版
+    static creem_product_id_basic = "prod_py0jvVhSqZOFVPlisRQEs"; // 基础版
+    static creem_product_id_popular = "prod_2wtCngeJ6Qh8UxMBkDWfOW"; // 流行版
+    static creem_product_id_advanced = "prod_4dTl2lOSeNZ7miMaOFprsl"; // 高级版
+
+    // 会员方式, 必须要传的
+    static VIP_TYPE_JI_FEN = "vip_ji_fen" // 按照积分设置的会员
+
     static default_model = "veo3-fast";
-    static url = 'https://linkprohub.top';
-    // static url = 'http://localhost:39603';
 
     // 接口: 图片生成类型
     static API_NANO = "/go/nano2" // "/go/generate_nano_image" // 支持: 文生图、图生图
