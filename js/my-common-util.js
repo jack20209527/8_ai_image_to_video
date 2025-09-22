@@ -21,8 +21,8 @@ class ClickUtil {
  */
 class GlobalConfig {
 
-    // static url = 'https://linkprohub.top';
-    static url = 'http://localhost:39603';
+    static url = 'https://linkprohub.top';
+    // static url = 'http://localhost:39603';
 
     // 项目相关配置
     static project_id = "3";
